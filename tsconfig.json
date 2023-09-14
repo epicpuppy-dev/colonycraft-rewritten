@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "strict": true,
+        "noImplicitReturns": true,
+        "noImplicitAny": true,
+        "module": "ES6",
+        "moduleResolution": "bundler",
+        "target": "ES6",
+        "allowJs": true
+    },
+    "include": [
+        "./src/**/*"
+    ]
+}
