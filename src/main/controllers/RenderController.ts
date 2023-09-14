@@ -2,7 +2,7 @@ import { ColonyCraft } from "../ColonyCraft";
 
 export class RenderController {
     public canvas: OffscreenCanvas;
-    private ctx: OffscreenCanvasRenderingContext2D;
+    public ctx: OffscreenCanvasRenderingContext2D;
 
     constructor () {
         this.canvas = new OffscreenCanvas(ColonyCraft.width, ColonyCraft.height);
