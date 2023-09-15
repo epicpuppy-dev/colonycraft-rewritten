@@ -2,6 +2,9 @@ import { ClockController } from "./controllers/ClockController";
 import { ScreenController } from "./controllers/ScreenController";
 import { FontData } from "./data/FontData";
 import { TextRenderer } from "./render/TextRenderer";
+import { LayerUI } from "./render/layers/LayerUI";
+import { ScreenPerformance } from "./render/screens/ScreenPerformance";
+import { ScreenTitle } from "./render/screens/ScreenTitle";
 import fontImage from "./resources/ui/font.png";
 import fontImageSmall from "./resources/ui/fontsmall.png";
 
@@ -40,6 +43,13 @@ export class ColonyCraft {
         this.clock = new ClockController(60, 1);
         this.clock.startFrame();
         this.clock.startTick();
+
+        //Initialize Screens
+        this.renderer.addLayerWithScreens(new LayerUI(), [
+            new ScreenTitle(this.width, this.height),
+            new ScreenPerformance(this.width, this.height)
+        ]);
+        this.renderer.current.push("title");
     }
 
     public static tick() {

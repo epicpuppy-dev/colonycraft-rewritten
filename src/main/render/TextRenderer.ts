@@ -45,6 +45,11 @@ export class TextRenderer {
         ctx.drawImage(this.canvas, 0, 0);
     }
 
+    public renderCenter (ctx: OffscreenCanvasRenderingContext2D, text: string, x: number, y: number, size: number, color: string) {
+        const textWidth = this.getWidth(text, size);
+        this.render(ctx, text, Math.floor(x - textWidth / 2), y, size, color);
+    }
+
     public getWidth (text: string, size: number): number {
         let width = 0;
         let scale = size / 14;

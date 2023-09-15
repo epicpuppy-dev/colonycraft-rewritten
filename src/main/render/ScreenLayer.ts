@@ -1,10 +1,11 @@
 import { ColonyCraft } from '../ColonyCraft';
+import { ScreenController } from '../controllers/ScreenController';
 import { Screen } from './Screen';
 
 export class ScreenLayer {
     private screens: Screen[];
-    private canvas: OffscreenCanvas;
     private ctx: OffscreenCanvasRenderingContext2D;
+    public readonly canvas: OffscreenCanvas;
     public z: number;
 
     constructor (z: number) {
@@ -18,9 +19,10 @@ export class ScreenLayer {
         this.screens.push(screen);
     }
 
-    public render (game: ColonyCraft) {
+    public render (game: typeof ColonyCraft, renderer: ScreenController) {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         for (const screen of this.screens) {
-            if (screen.active(game)) {
+            if (screen.active(game, renderer)) {
                 screen.render(game, this.ctx);
             }
         }
