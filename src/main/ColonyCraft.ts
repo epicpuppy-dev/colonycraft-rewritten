@@ -40,7 +40,7 @@ export class ColonyCraft {
         this.fontSmall = new TextRenderer(FontData.small, fontImageSmall, 7, 9, 1);
 
         //Create clock controller and start frame and tick
-        this.clock = new ClockController(60, 1);
+        this.clock = new ClockController(60, 2);
         this.clock.startFrame();
         this.clock.startTick();
 

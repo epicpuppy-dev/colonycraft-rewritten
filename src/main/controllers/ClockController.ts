@@ -2,7 +2,7 @@ import { ColonyCraft } from "../ColonyCraft";
 
 export class ClockController {
     private static FRAME_CACHE_SIZE: number = 60;
-    private static TICK_CACHE_SIZE: number = 10;
+    private static TICK_CACHE_SIZE: number = 20;
     private frameTime: number[];
     private tickTime: number[];
     private frameStart: number;
@@ -51,5 +51,15 @@ export class ClockController {
 
     getTickTime (): number {
         return ColonyCraft.clock.tickTime.reduce((a, b) => a + b) / ColonyCraft.clock.tickTime.length;
+    }
+
+    changeTPS (tps: number) {
+        ColonyCraft.clock.tps = tps;
+        ColonyCraft.clock.tickTime = [1000 / tps];
+    }
+
+    changeFPS (fps: number) {
+        ColonyCraft.clock.fps = fps;
+        ColonyCraft.clock.frameTime = [1000 / fps];
     }
 }
