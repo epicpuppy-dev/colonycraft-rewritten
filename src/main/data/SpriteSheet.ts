@@ -10,8 +10,8 @@ export class SpriteSheet {
         this.sprites = {};
     }
 
-    public renderSprite(name: string, ctx: CanvasRenderingContext2D, x: number, y: number): void {
-        this.sprites[name].render(ctx, x, y);
+    public renderSprite(name: string, ctx: OffscreenCanvasRenderingContext2D, x: number, y: number, width: number, height: number): void {
+        this.sprites[name].render(ctx, x, y, width, height);
     }
 
     public addSprite(name: string, x: number, y: number, width: number, height: number): void {

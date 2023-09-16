@@ -8,7 +8,8 @@ export class ScreenTitle extends Screen {
     }
 
     public render(game: typeof ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
-        game.font.renderCenter(ctx, "ColonyCraft", this.width / 2, this.height / 2 - 50, 42, "white");
+        game.draw.textCenter(ctx, "ColonyCraft", Math.floor(this.width / 2), Math.floor(this.height / 2 - 100), 42, "white");
+        game.draw.sprite(ctx, "play", Math.floor(this.width / 2 - 24), Math.floor(this.height / 2 + 25), 48, 48);
     }
 
     public active(game: typeof ColonyCraft, renderer: ScreenController): boolean {

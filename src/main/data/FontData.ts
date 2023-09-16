@@ -82,7 +82,13 @@ export const FontData: { [key: string]: {[key: string]: FontEntry} } = {
         ";": new FontEntry(";", 72, 140, 5),
         "{": new FontEntry("{", 84, 140, 8),
         "}": new FontEntry("}", 96, 140, 8),
-        " ": new FontEntry(" ", 108, 140, 8),
+        "(": new FontEntry("(", 108, 140, 6),
+        ")": new FontEntry(")", 0, 160, 6),
+        "*": new FontEntry("*", 12, 160, 12),
+        "%": new FontEntry(" ", 24, 160, 12),
+        "<": new FontEntry("<", 36, 160, 10),
+        ">": new FontEntry(">", 48, 160, 10),
+        " ": new FontEntry(" ", 60, 160, 8),
     },
     //small font, same as above but half all values
     small: {
@@ -165,6 +171,12 @@ export const FontData: { [key: string]: {[key: string]: FontEntry} } = {
         ";": new FontEntry(";", 36, 70, 2),
         "{": new FontEntry("{", 42, 70, 4),
         "}": new FontEntry("}", 48, 70, 4),
-        " ": new FontEntry(" ", 54, 70, 4),
+        "(": new FontEntry("(", 54, 70, 3),
+        ")": new FontEntry(")", 0, 80, 3),
+        "*": new FontEntry("*", 6, 80, 6),
+        "%": new FontEntry(" ", 12, 80, 6),
+        "<": new FontEntry("<", 18, 80, 5),
+        ">": new FontEntry(">", 24, 80, 5),
+        " ": new FontEntry(" ", 30, 80, 4),
     }
 } as const;

@@ -5,8 +5,8 @@ export class SpriteRenderer {
     private sheets: {[key: string]: SpriteSheet};
     private sprites: {[key: string]: Sprite};
 
-    public renderSprite(name: string, ctx: CanvasRenderingContext2D, x: number, y: number): void {
-        this.sprites[name].render(ctx, x, y);
+    public renderSprite(name: string, ctx: OffscreenCanvasRenderingContext2D, x: number, y: number, width: number, height: number): void {
+        this.sprites[name].render(ctx, x, y, width, height);
     }
 
     public addSprite(name: string, sheet: SpriteSheet, x: number, y: number, width: number, height: number): void {
@@ -23,6 +23,10 @@ export class SpriteRenderer {
         for (const sprite in sprites) {
             this.addSprite(sprite, this.sheets[name], sprites[sprite][0], sprites[sprite][1], sprites[sprite][2], sprites[sprite][3]);
         }
+    }
+
+    public getLoaded(name: string): boolean {
+        return this.sheets[name].getLoaded();
     }
 
     constructor() {

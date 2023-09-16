@@ -13,7 +13,10 @@ export class Sprite {
         this.height = height;
     }
 
-    public render(ctx: CanvasRenderingContext2D, x: number, y: number): void {
-        ctx.drawImage(this.image, this.x, this.y, this.width, this.height, x, y, this.width, this.height);
+    public render(ctx: OffscreenCanvasRenderingContext2D, x: number, y: number, width: number, height: number): void {
+        const setting = ctx.imageSmoothingEnabled;
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height, x, y, width, height);
+        ctx.imageSmoothingEnabled = setting;
     }
 }

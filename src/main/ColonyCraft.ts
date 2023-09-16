@@ -1,23 +1,28 @@
 import { ClockController } from "./controllers/ClockController";
 import { ScreenController } from "./controllers/ScreenController";
 import { FontData } from "./data/FontData";
+import { RenderUtil } from "./render/RenderUtil";
+import { SpriteRenderer } from "./render/SpriteRenderer";
 import { TextRenderer } from "./render/TextRenderer";
 import { LayerUI } from "./render/layers/LayerUI";
 import { ScreenPerformance } from "./render/screens/ScreenPerformance";
 import { ScreenTitle } from "./render/screens/ScreenTitle";
 import fontImage from "./resources/ui/font.png";
 import fontImageSmall from "./resources/ui/fontsmall.png";
+import speedcontrols from "./resources/ui/speedcontrols.png";
 
 export class ColonyCraft {
     public static width: number;
     public static height: number;
     public static clock: ClockController;
-    public static font: TextRenderer;
-    public static fontSmall: TextRenderer;
+    public static draw: RenderUtil;
 
+    private static font: TextRenderer;
+    private static fontSmall: TextRenderer;
     private static canvas: HTMLCanvasElement;
     private static ctx: CanvasRenderingContext2D;
     private static renderer: ScreenController;
+    private static sprites: SpriteRenderer;
 
     public static main () {
         //Set width and height
@@ -38,6 +43,8 @@ export class ColonyCraft {
         this.renderer = new ScreenController();
         this.font = new TextRenderer(FontData.normal, fontImage, 14, 18, 2);
         this.fontSmall = new TextRenderer(FontData.small, fontImageSmall, 7, 9, 1);
+        this.sprites = new SpriteRenderer();
+        this.draw = new RenderUtil(this.font, this.fontSmall, this.sprites);
 
         //Create clock controller and start frame and tick
         this.clock = new ClockController(60, 2);
@@ -50,6 +57,12 @@ export class ColonyCraft {
             new ScreenPerformance(this.width, this.height)
         ]);
         this.renderer.current.push("title");
+
+        //Initialize Sprites
+        this.sprites.addSheetWithSprites("speedcontrols", speedcontrols, {
+            "play": [0, 0, 24, 24],
+            "pause": [24, 0, 24, 24],
+        });
     }
 
     public static tick() {
@@ -73,5 +86,9 @@ export class ColonyCraft {
         this.canvas.width = this.width;
         this.canvas.height = this.height;
         this.renderer.resize();
+    }
+
+    public static sheetLoaded(name: string): boolean {
+        return this.sprites.getLoaded(name);
     }
 }
