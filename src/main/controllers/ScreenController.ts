@@ -7,12 +7,10 @@ export class ScreenController {
     private ctx: OffscreenCanvasRenderingContext2D;
     private layers: ScreenLayer[];
     public canvas: OffscreenCanvas;
-    public current: string[];
 
     constructor () {
         this.screens = [];
         this.layers = [];
-        this.current = [];
         this.canvas = new OffscreenCanvas(ColonyCraft.width, ColonyCraft.height);
         this.ctx = this.canvas.getContext('2d') as OffscreenCanvasRenderingContext2D;
     }

@@ -31,8 +31,5 @@ export class ScreenLayer {
     public resize (width: number, height: number) {
         this.canvas.width = width;
         this.canvas.height = height;
-        for (const screen of this.screens) {
-            screen.resize(width, height);
-        }
     }
 }

@@ -1,10 +1,15 @@
 import { ClockController } from "./controllers/ClockController";
+import { MouseController } from "./controllers/MouseController";
 import { ScreenController } from "./controllers/ScreenController";
 import { FontData } from "./data/FontData";
 import { RenderUtil } from "./render/RenderUtil";
 import { SpriteRenderer } from "./render/SpriteRenderer";
 import { TextRenderer } from "./render/TextRenderer";
+import { LayerGame } from "./render/layers/LayerGame";
+import { LayerOverlay } from "./render/layers/LayerOverlay";
 import { LayerUI } from "./render/layers/LayerUI";
+import { OverlayInventory } from "./render/screens/OverlayInventory";
+import { OverlayInventoryMonitor } from "./render/screens/OverlayInventoryMonitor";
 import { ScreenPerformance } from "./render/screens/ScreenPerformance";
 import { ScreenTitle } from "./render/screens/ScreenTitle";
 import fontImage from "./resources/ui/font.png";
@@ -16,6 +21,8 @@ export class ColonyCraft {
     public static height: number;
     public static clock: ClockController;
     public static draw: RenderUtil;
+    public static mouse: MouseController;
+    public static currentScreens: string[];
 
     private static font: TextRenderer;
     private static fontSmall: TextRenderer;
@@ -45,6 +52,9 @@ export class ColonyCraft {
         this.fontSmall = new TextRenderer(FontData.small, fontImageSmall, 7, 9, 1);
         this.sprites = new SpriteRenderer();
         this.draw = new RenderUtil(this.font, this.fontSmall, this.sprites);
+        this.mouse = new MouseController();
+
+        this.currentScreens = [];
 
         //Create clock controller and start frame and tick
         this.clock = new ClockController(60, 2);
@@ -54,9 +64,16 @@ export class ColonyCraft {
         //Initialize Screens
         this.renderer.addLayerWithScreens(new LayerUI(), [
             new ScreenTitle(this.width, this.height),
-            new ScreenPerformance(this.width, this.height)
+            new ScreenPerformance(this.width, this.height),
+            new OverlayInventoryMonitor(this.width, this.height),
         ]);
-        this.renderer.current.push("title");
+        this.renderer.addLayerWithScreens(new LayerGame(), [
+            
+        ]);
+        this.renderer.addLayerWithScreens(new LayerOverlay(), [
+           new OverlayInventory(this.width, this.height), 
+        ]);
+        this.currentScreens.push("title");
 
         //Initialize Sprites
         this.sprites.addSheetWithSprites("speedcontrols", speedcontrols, {
@@ -72,6 +89,9 @@ export class ColonyCraft {
     public static render() {
         //clear current screen
         this.renderer.clear();
+
+        //perform button update
+        this.mouse.update();
 
         //render screens
         this.renderer.render();
