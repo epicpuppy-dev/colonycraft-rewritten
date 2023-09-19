@@ -10,7 +10,7 @@ export class ScreenTitle extends Screen {
         super(width, height, 0, 0);
         this.startButton = new Button(Math.floor(this.width / 2 - 36), Math.floor(this.height / 2 + 24), 72, 72, (game: typeof ColonyCraft) => {
             game.currentScreens.splice(game.currentScreens.indexOf("title"), 1);
-            game.currentScreens.push("game", "inventory");
+            game.currentScreens.push("game");
         }, (game: typeof ColonyCraft) => {
             return game.currentScreens.includes("title");
         });

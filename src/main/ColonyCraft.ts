@@ -12,12 +12,14 @@ import { LayerGame } from "./render/layers/LayerGame";
 import { LayerOverlay } from "./render/layers/LayerOverlay";
 import { LayerUI } from "./render/layers/LayerUI";
 import { OverlayInventory } from "./render/screens/OverlayInventory";
-import { OverlayInventoryMonitor } from "./render/screens/OverlayInventoryMonitor";
+import { OverlayHUD } from "./render/screens/OverlayHUD";
 import { ScreenPerformance } from "./render/screens/ScreenPerformance";
 import { ScreenTitle } from "./render/screens/ScreenTitle";
 import fontImage from "./resources/ui/font.png";
 import fontImageSmall from "./resources/ui/fontsmall.png";
 import buttons from "./resources/ui/buttons.png";
+import items from "./resources/inventory/items.png";
+import icons from "./resources/inventory/icons.png";
 
 export class ColonyCraft {
     public static width: number;
@@ -61,16 +63,11 @@ export class ColonyCraft {
 
         this.currentScreens = [];
 
-        //Create clock controller and start frame and tick
-        this.clock = new ClockController(60, 1);
-        this.clock.startFrame();
-        this.clock.startTick();
-
         //Initialize Screens
         this.renderer.addLayerWithScreens(new LayerUI(), [
             new ScreenTitle(this.width, this.height),
             new ScreenPerformance(this.width, this.height),
-            new OverlayInventoryMonitor(this.width, this.height),
+            new OverlayHUD(this.width, this.height),
         ]);
         this.renderer.addLayerWithScreens(new LayerGame(), [
             
@@ -85,6 +82,14 @@ export class ColonyCraft {
             "play": [0, 0, 24, 24],
             "pause": [24, 0, 24, 24],
             "close": [0, 24, 24, 24]
+        });
+
+        this.sprites.addSheetWithSprites("items", items, {
+            "storage": [0, 0, 32, 32],
+        });
+
+        this.sprites.addSheetWithSprites("icons", icons, {
+            "iconStorage": [0, 0, 16, 16],
         });
 
         //Initialize Inventory
@@ -105,14 +110,23 @@ export class ColonyCraft {
             new Item("leaves", 0.4) //TODO: Measure
         ]);
         this.inventory.addCategoryWithItems(new ItemGroup("lumber"), [
-            new Item("logs", 1), //TODO: Measure
-            new Item("planks", 0.5), //TODO: Measure
-            new Item("beams", 0.1), //TODO: Measure
+            new Item("logs", 4), //TODO: Measure
+            new Item("planks", 1), //TODO: Measure
+            new Item("beams", 0.5), //TODO: Measure
         ]);
+        this.inventory.addCategoryWithItems(new ItemGroup("test"), [
+            new Item("weight", 10),
+            new Item("weight2", 100),
+        ]);
+
+        //Create clock controller and start frame and tick
+        this.clock = new ClockController(60, 1);
+        this.clock.startFrame();
+        this.clock.startTick();
     }
 
     public static tick() {
-        
+        this.inventory.calculateStorageUsed();
     }
 
     public static render() {

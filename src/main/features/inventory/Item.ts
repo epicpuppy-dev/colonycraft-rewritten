@@ -5,11 +5,10 @@ export class Item {
     //size per 1 unit of item
     public volume: number;
     //current stock
-    public amount: number;
+    public amount: number = 0;
 
-    constructor(key: string, volume: number, amount: number = 0) {
+    constructor(key: string, volume: number) {
         this.key = key;
         this.volume = volume;
-        this.amount = amount;
     }
 }

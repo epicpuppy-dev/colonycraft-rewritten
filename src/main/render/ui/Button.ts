@@ -30,7 +30,7 @@ export class Button {
     }
 
     public click(game: typeof ColonyCraft): void {
-        if (game.mouse.x >= this.x && game.mouse.x <= this.x + this.width && game.mouse.y >= this.y && game.mouse.y <= this.y + this.height) {
+        if (this.active(game) && game.mouse.x >= this.x && game.mouse.x <= this.x + this.width && game.mouse.y >= this.y && game.mouse.y <= this.y + this.height) {
             this.activate(game);
         }
     }

@@ -10,6 +10,8 @@ export class ScreenPerformance extends Screen {
     public render(game: typeof ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
         game.draw.textSmall(ctx, `FPS: ${game.clock.getFPS().toFixed(0)}`, 6, 6, 7, "white");
         game.draw.textSmall(ctx, `TPS: ${game.clock.getTPS().toFixed(2)}`, 6, 16, 7, "white");
+        game.draw.textSmall(ctx, `Used: ${game.inventory.storageUsed.toFixed(3)}`, 6, 26, 7, "white");
+        game.draw.textSmall(ctx, `Capacity: ${game.inventory.storageCapacity.toFixed(3)}`, 6, 36, 7, "white");
     }
 
     public active(game: typeof ColonyCraft): boolean {
