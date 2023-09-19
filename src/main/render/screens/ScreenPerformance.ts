@@ -12,7 +12,7 @@ export class ScreenPerformance extends Screen {
         game.draw.textSmall(ctx, `TPS: ${game.clock.getTPS().toFixed(2)}`, 6, 16, 7, "white");
     }
 
-    public active(game: typeof ColonyCraft, renderer: ScreenController): boolean {
+    public active(game: typeof ColonyCraft): boolean {
         return true;
     }
 

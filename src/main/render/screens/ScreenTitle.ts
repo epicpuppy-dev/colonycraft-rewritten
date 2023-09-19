@@ -8,9 +8,9 @@ export class ScreenTitle extends Screen {
 
     constructor(width: number, height: number) {
         super(width, height, 0, 0);
-        this.startButton = new Button(Math.floor(this.width / 2 - 24), Math.floor(this.height / 2 + 25), 48, 48, (game: typeof ColonyCraft) => {
+        this.startButton = new Button(Math.floor(this.width / 2 - 36), Math.floor(this.height / 2 + 24), 72, 72, (game: typeof ColonyCraft) => {
             game.currentScreens.splice(game.currentScreens.indexOf("title"), 1);
-            game.currentScreens.push("game");
+            game.currentScreens.push("game", "inventory");
         }, (game: typeof ColonyCraft) => {
             return game.currentScreens.includes("title");
         });
@@ -19,17 +19,17 @@ export class ScreenTitle extends Screen {
     }
 
     public render(game: typeof ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
-        game.draw.textCenter(ctx, "ColonyCraft", Math.floor(this.width / 2), Math.floor(this.height / 2 - 100), 42, "white");
-        game.draw.sprite(ctx, "play", Math.floor(this.width / 2 - 24), Math.floor(this.height / 2 + 25), 48, 48);
+        game.draw.textCenter(ctx, "ColonyCraft", Math.floor(this.width / 2), Math.floor(this.height / 2 - 100), 56, "white");
+        game.draw.sprite(ctx, "play", Math.floor(this.width / 2 - 36), Math.floor(this.height / 2 + 24), 72, 72);
     }
 
-    public active(game: typeof ColonyCraft, renderer: ScreenController): boolean {
+    public active(game: typeof ColonyCraft): boolean {
         return game.currentScreens.includes("title");
     }
 
     public resize(width: number, height: number): void {
         this.width = width;
         this.height = height;
-        this.startButton.reposition(Math.floor(this.width / 2 - 24), Math.floor(this.height / 2 + 25), 48, 48);
+        this.startButton.reposition(Math.floor(this.width / 2 - 36), Math.floor(this.height / 2 + 24), 72, 72);
     }
 }

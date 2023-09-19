@@ -43,7 +43,7 @@ export class ScreenController {
     public render () {
         this.layers.sort((a, b) => a.z - b.z);
         for (const layer of this.layers) {
-            layer.render(ColonyCraft, this);
+            layer.render(ColonyCraft);
             this.ctx.drawImage(layer.canvas, 0, 0);
         }
     }

@@ -15,5 +15,5 @@ export abstract class Screen {
     }
 
     public abstract render(game: typeof ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void;
-    public abstract active(game: typeof ColonyCraft, renderer: ScreenController): boolean;
+    public abstract active(game: typeof ColonyCraft): boolean;
 }

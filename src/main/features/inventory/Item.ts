@@ -1,7 +1,7 @@
 export class Item {
-    //localization key
-    //loc: items -> [key]
-    private key: string;
+    //localization key, also the internal id used to access the item
+    //loc: inventory -> items -> [key]
+    public key: string;
     //size per 1 unit of item
     public volume: number;
     //current stock
