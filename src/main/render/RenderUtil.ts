@@ -31,4 +31,12 @@ export class RenderUtil {
     sprite(ctx: OffscreenCanvasRenderingContext2D, name: string, x: number, y: number, width: number, height: number): void {
         this.sprites.renderSprite(name, ctx, x, y, width, height);
     }
+
+    textWidth(text: string, size: number = 14): number {
+        return this.font.getWidth(text, size);
+    }
+
+    textSmallWidth(text: string, size: number = 7): number {
+        return this.fontSmall.getWidth(text, size);
+    }
 }

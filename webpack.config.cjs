@@ -33,6 +33,13 @@ const config = {
         generator: {
           filename: 'assets/[hash][ext][query]'
         }
+      },
+      {
+        test: /\.json$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/[hash][ext][query]'
+        }
       }
     ]
   },

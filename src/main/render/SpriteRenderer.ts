@@ -6,7 +6,8 @@ export class SpriteRenderer {
     private sprites: {[key: string]: Sprite};
 
     public renderSprite(name: string, ctx: OffscreenCanvasRenderingContext2D, x: number, y: number, width: number, height: number): void {
-        this.sprites[name].render(ctx, x, y, width, height);
+        if (this.sprites[name]) this.sprites[name].render(ctx, x, y, width, height);
+        else this.sprites.temp.render(ctx, x, y, width, height);
     }
 
     public addSprite(name: string, sheet: SpriteSheet, x: number, y: number, width: number, height: number): void {
