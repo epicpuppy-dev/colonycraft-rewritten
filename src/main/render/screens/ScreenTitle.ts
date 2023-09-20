@@ -1,5 +1,4 @@
 import { ColonyCraft } from "../../ColonyCraft";
-import { ScreenController } from "../../controllers/ScreenController";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
 
@@ -11,7 +10,7 @@ export class ScreenTitle extends Screen {
         this.startButton = new Button(Math.floor(this.width / 2 - 36), Math.floor(this.height / 2 + 24), 72, 72, (game: typeof ColonyCraft) => {
             game.currentScreens.splice(game.currentScreens.indexOf("title"), 1);
             game.currentScreens.push("game");
-            game.simulation.running = true;
+            game.simulation.toggleRunning(true);
         }, (game: typeof ColonyCraft) => {
             return game.currentScreens.includes("title");
         });
@@ -20,8 +19,9 @@ export class ScreenTitle extends Screen {
     }
 
     public render(game: typeof ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
-        game.draw.textCenter(ctx, "ColonyCraft", Math.floor(this.width / 2), Math.floor(this.height / 2 - 100), 56, "white");
+        game.draw.textCenter("ColonyCraft", Math.floor(this.width / 2), Math.floor(this.height / 2 - 100), 56, "white");
         game.draw.sprite(ctx, "play", Math.floor(this.width / 2 - 36), Math.floor(this.height / 2 + 24), 72, 72);
+        game.draw.renderText(ctx);
     }
 
     public active(game: typeof ColonyCraft): boolean {

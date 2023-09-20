@@ -7,8 +7,13 @@ export class SimulationController {
         this.running = false;
     }
 
-    public toggle () {
-        this.running = !this.running;
+    public toggleRunning (running: boolean) {
+        this.running = running;
+        if (this.running) {
+            setTimeout(ColonyCraft.clock.startTick, 1000 / ColonyCraft.clock.tps);
+        } else {
+            ColonyCraft.clock.stopTick();
+        }
     }
 
     public changeSpeed (speed: number) {

@@ -28,7 +28,7 @@ export class OverlayInventory extends Screen {
         ctx.lineWidth = 2;
         ctx.stroke();
         game.draw.sprite(ctx, "close", Math.floor(7 * this.width / 8 - 31), Math.floor(this.height / 8 + 6), 24, 24);
-        game.draw.textCenter(ctx, "Inventory", Math.floor(this.width / 2), Math.floor(this.height / 8 + 12), 28, "white");
+        game.draw.textCenter("Inventory", Math.floor(this.width / 2), Math.floor(this.height / 8 + 12), 28, "white");
 
         //Storage bar
         game.draw.sprite(ctx, "storage", Math.floor(this.width / 8 + 8), Math.floor(7 * this.height / 8 - 40), 32, 32);
@@ -38,7 +38,7 @@ export class OverlayInventory extends Screen {
         ctx.strokeRect(Math.floor(this.width / 8 + 48), Math.floor(7 * this.height / 8 - 18), Math.floor((3 * this.width / 4 - 56) * Math.min((game.inventory.storageCapacity / game.inventory.storageUsed), 1)), 10);
         ctx.strokeStyle = '#777777';
         ctx.strokeRect(Math.floor(this.width / 8 + 48), Math.floor(7 * this.height / 8 - 18), Math.floor(3 * this.width / 4 - 56), 10);
-        game.draw.text(ctx, `Storage: ${parseFloat(game.inventory.storageUsed.toFixed(1)).toLocaleString()} / ${parseInt(game.inventory.storageCapacity.toFixed(0)).toLocaleString()}`, Math.floor(this.width / 8 + 48), Math.floor(7 * this.height / 8 - 38), 14, "white");
+        game.draw.text(`Storage: ${parseFloat(game.inventory.storageUsed.toFixed(1)).toLocaleString()} / ${parseInt(game.inventory.storageCapacity.toFixed(0)).toLocaleString()}`, Math.floor(this.width / 8 + 48), Math.floor(7 * this.height / 8 - 38), 14, "white");
 
         //Render the inventory itself
         /*
@@ -78,7 +78,7 @@ export class OverlayInventory extends Screen {
             if (!hasItems) continue;
             //if the current row is greater than the scroll value and less than the max rows plus scroll value, render the category header
             if (currentRow >= this.rowScroll && currentRow < this.rowScroll + maxRows) {
-                game.draw.textCenter(ctx, game.inventory.categories[Object.keys(game.inventory.categories)[i]].name, Math.floor(this.width / 2), Math.floor(this.height / 8 + 48 + 20 * (currentRow - this.rowScroll)), 14, "white");
+                game.draw.textCenter(game.inventory.categories[Object.keys(game.inventory.categories)[i]].name, Math.floor(this.width / 2), Math.floor(this.height / 8 + 48 + 20 * (currentRow - this.rowScroll)), 14, "white");
                 //add 1 rows for the category header
                 currentRow++;
             }
@@ -96,7 +96,7 @@ export class OverlayInventory extends Screen {
                     
                     const amountWidth = game.draw.textWidth(`${game.inventory.categories[Object.keys(game.inventory.categories)[i]].items[j].amount.toLocaleString()}`, 14);
                     const widthDiff = maxwidth - amountWidth;
-                    game.draw.text(ctx, `${game.inventory.categories[Object.keys(game.inventory.categories)[i]].items[j].amount.toLocaleString()}x ${game.inventory.categories[Object.keys(game.inventory.categories)[i]].items[j].name}`, Math.floor(this.width / 8 + 30 + (3 * this.width / 8) * currentColumn) + widthDiff, Math.floor(this.height / 8 + 48 + 20 * (currentRow - this.rowScroll) + 1), 14, "white");
+                    game.draw.text(`${game.inventory.categories[Object.keys(game.inventory.categories)[i]].items[j].amount.toLocaleString()}x ${game.inventory.categories[Object.keys(game.inventory.categories)[i]].items[j].name}`, Math.floor(this.width / 8 + 30 + (3 * this.width / 8) * currentColumn) + widthDiff, Math.floor(this.height / 8 + 48 + 20 * (currentRow - this.rowScroll) + 1), 14, "white");
                     //add 1 row for the item
                     currentColumn++;
                     if (currentColumn > 1) {
@@ -105,6 +105,7 @@ export class OverlayInventory extends Screen {
                     }
                 }
             }
+            game.draw.renderText(ctx);
         }
     }
 

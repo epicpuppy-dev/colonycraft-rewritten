@@ -27,8 +27,7 @@ export class TextRenderer {
         this.canvas.height = ColonyCraft.height;
     }
 
-    public render (ctx: OffscreenCanvasRenderingContext2D, text: string, x: number, y: number, size: number, color: string) {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    public draw (text: string, x: number, y: number, size: number, color: string) {
         let xOffset = 0;
         let scale = size / this.size;
         for (const char of text) {
@@ -38,16 +37,20 @@ export class TextRenderer {
                 xOffset += entry.width * scale;
             }
         }
-        this.ctx.globalCompositeOperation = 'source-in';
+        this.ctx.globalCompositeOperation = 'source-atop';
         this.ctx.fillStyle = color;
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.fillRect(x, y, xOffset, this.height * scale);
         this.ctx.globalCompositeOperation = 'source-over';
-        ctx.drawImage(this.canvas, 0, 0);
     }
 
-    public renderCenter (ctx: OffscreenCanvasRenderingContext2D, text: string, x: number, y: number, size: number, color: string) {
+    public drawCenter (text: string, x: number, y: number, size: number, color: string) {
         const textWidth = this.getWidth(text, size);
-        this.render(ctx, text, Math.floor(x - textWidth / 2), y, size, color);
+        this.draw(text, Math.floor(x - textWidth / 2), y, size, color);
+    }
+
+    public renderAll (ctx: OffscreenCanvasRenderingContext2D) {
+        ctx.drawImage(this.canvas, 0, 0);
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
     public getWidth (text: string, size: number): number {
@@ -59,6 +62,6 @@ export class TextRenderer {
                 width += entry.width * scale;
             }
         }
-        return Math.round(width);
+        return width;
     }
 }

@@ -122,19 +122,35 @@ export class ColonyCraft {
             new Item("planks", 1, "Planks"), //TODO: Balance
             new Item("beams", 0.5, "Beams"), //TODO: Balance
         ]);
-        this.inventory.addCategoryWithItems(new ItemGroup("test", "TestTestTestTest"), [
-            new Item("weight", 10, "WOOO TESTING"),
-            new Item("weight2", 10, "YAHAHA"),
-            new Item("weight3", 10, "WOOO TESTING (2)"),
-            new Item("weight4", 10, "YAHAHA (2)"),
-            new Item("weight5", 10, "WOOO TESTING (3)"),
-            new Item("weight6", 10, "YAHAHA (3)"),
-            new Item("weight7", 10, "WOOO TESTING (4)"),
-            new Item("weight8", 10, "YAHAHA (4)"),
-            new Item("weight9", 10, "WOOO TESTING (5)"),
-            new Item("weight10", 10, "YAHAHA (5)"),
-            new Item("weight11", 10, "WOOO TESTING (6)"),
-            new Item("weight12", 10, "YAHAHA (6)"),
+        this.inventory.addCategoryWithItems(new ItemGroup("mining", "Mining"), [
+            new Item("stone", 5, "Stone"), //TODO: Balance
+            new Item("coal", 5, "Coal"), //TODO: Balance
+            new Item("ironOre", 5, "Magnetite Ore"), //TODO: Balance
+            new Item("tinOre", 5, "Casserite Ore"), //TODO: Balance
+            new Item("copperOre", 5, "Chalcopyrite Ore"), //TODO: Balance
+            new Item("zincOre", 5, "Sphalerite Ore"), //TODO: Balance
+            new Item("goldOre", 8, "Gold Ore"), //TODO: Balance
+        ]);
+        this.inventory.addCategoryWithItems(new ItemGroup("building", "Building Materials"), [
+            new Item("Stone Bricks", 2, "Stone Bricks"), //TODO: Balance
+            
+        ]);
+        this.inventory.addCategoryWithItems(new ItemGroup("metallurgy", "Metallurgy"), [
+            new Item("iron", 2, "Iron"), //TODO: Balance
+            new Item("tin", 2, "Tin"), //TODO: Balance
+            new Item("copper", 2, "Copper"), //TODO: Balance
+            new Item("zinc", 2, "Zinc"), //TODO: Balance
+            new Item("bronze", 2, "Bronze"), //TODO: Balance
+            new Item("steel", 2, "Steel"), //TODO: Balance
+            new Item("silicon", 2, "Silicon"), //TODO: Balance
+            new Item("gold", 2, "Gold"), //TODO: Balance
+        ]);
+        this.inventory.addCategoryWithItems(new ItemGroup("industrial", "Industrial Materials"), [
+            new Item("metalBeam", 1, "Metal Beams"), //TODO: Balance
+            new Item("machineParts", 2, "Machine Parts"), //TODO: Balance
+        ]);
+        this.inventory.addCategoryWithItems(new ItemGroup("electronics", "Electronics"), [
+            //TODO: Electronics
         ]);
 
         this.simulation = new SimulationController();
@@ -142,7 +158,7 @@ export class ColonyCraft {
         //Create clock controller and start frame and tick
         this.clock = new ClockController(60, 1);
         this.clock.startFrame();
-        this.clock.startTick();
+        //this.clock.startTick();
     }
 
     public static tick() {

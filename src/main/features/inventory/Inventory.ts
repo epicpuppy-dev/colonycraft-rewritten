@@ -26,7 +26,7 @@ export class Inventory {
     public calculateStorageUsed(): void {
         this.storageUsed = 0;
         for (let key in this.items) {
-            //this.items[key].amount++;
+            this.items[key].amount++;
             this.storageUsed += this.items[key].volume * this.items[key].amount * 0.001;
         }
     }
