@@ -92,7 +92,7 @@ export class OverlayInventory extends Screen {
                     }
 
                     //render the item
-                    game.draw.sprite(ctx, game.inventory.categories[Object.keys(game.inventory.categories)[i]].items[j].key, Math.floor(this.width / 8 + 8 + (3 * this.width / 8) * currentColumn), Math.floor(this.height / 8 + 48 + 20 * (currentRow - this.rowScroll)), 16, 16);
+                    game.draw.sprite(ctx, game.inventory.categories[Object.keys(game.inventory.categories)[i]].items[j].key + "Small", Math.floor(this.width / 8 + 8 + (3 * this.width / 8) * currentColumn), Math.floor(this.height / 8 + 48 + 20 * (currentRow - this.rowScroll)), 16, 16);
                     
                     const amountWidth = game.draw.textWidth(`${game.inventory.categories[Object.keys(game.inventory.categories)[i]].items[j].amount.toLocaleString()}`, 14);
                     const widthDiff = maxwidth - amountWidth;

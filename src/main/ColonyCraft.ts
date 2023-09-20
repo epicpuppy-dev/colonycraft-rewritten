@@ -20,8 +20,8 @@ import { SimulationController } from "./controllers/SimulationController";
 import fontImage from "./resources/ui/font.png";
 import fontImageSmall from "./resources/ui/fontsmall.png";
 import buttons from "./resources/ui/buttons.png";
-import items from "./resources/inventory/items.png";
-import icons from "./resources/inventory/icons.png";
+import sprites from "./resources/inventory/sprites.png";
+import spritesSmall from "./resources/inventory/spritesSmall.png";
 import temp from "./resources/ui/temp.png";
 
 export class ColonyCraft {
@@ -88,12 +88,14 @@ export class ColonyCraft {
             "close": [0, 24, 24, 24]
         });
 
-        this.sprites.addSheetWithSprites("items", items, {
+        this.sprites.addSheetWithSprites("sprites", sprites, {
             "storage": [0, 0, 32, 32],
+            "logs": [32, 0, 32, 32],
         });
 
-        this.sprites.addSheetWithSprites("icons", icons, {
-            "iconStorage": [0, 0, 16, 16],
+        this.sprites.addSheetWithSprites("spritesSmall", spritesSmall, {
+            "storageSmall": [0, 0, 16, 16],
+            "logsSmall": [16, 0, 16, 16],
         });
 
         this.sprites.addSheetWithSprites("temp", temp, {
