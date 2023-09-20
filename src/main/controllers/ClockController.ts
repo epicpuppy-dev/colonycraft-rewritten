@@ -1,6 +1,17 @@
 import { ColonyCraft } from "../ColonyCraft";
 
 export class ClockController {
+    public year: number;
+    public season: number;
+    public day: number;
+    /*
+    year = 4 seasons
+    season = 30 days
+    1 = spring
+    2 = summer
+    3 = fall
+    4 = winter
+    */
     private static FRAME_CACHE_SIZE: number = 60;
     private static TICK_CACHE_SIZE: number = 20;
     private frameTime: number[];
@@ -13,19 +24,22 @@ export class ClockController {
     constructor (fps: number, tps: number) {
         this.fps = fps;
         this.tps = tps;
-        this.frameStart = performance.now();
-        this.tickStart = performance.now();
+        this.frameStart = 0;
+        this.tickStart = 0;
         this.frameTime = [1000 / fps];
         this.tickTime = [1000 / tps];
+        this.year = 1;
+        this.season = 1;
+        this.day = 1;
     }
 
     startTick() {
+        ColonyCraft.clock.tickStart = performance.now();
         ColonyCraft.tick();
         const timePassed = performance.now() - ColonyCraft.clock.tickStart;
         ColonyCraft.clock.tickTime.push(Math.max(timePassed, 1000 / ColonyCraft.clock.tps));
         if (ColonyCraft.clock.tickTime.length > ClockController.TICK_CACHE_SIZE) ColonyCraft.clock.tickTime.shift();
-        setTimeout(ColonyCraft.clock.startTick, Math.max((1000 / ColonyCraft.clock.tps) - timePassed), 0);
-        ColonyCraft.clock.tickStart = performance.now();
+        setTimeout(ColonyCraft.clock.startTick, 1000 / ColonyCraft.clock.tps - timePassed);
     }
 
     startFrame() {

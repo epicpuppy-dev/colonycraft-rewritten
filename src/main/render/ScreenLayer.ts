@@ -19,10 +19,10 @@ export class ScreenLayer {
         this.screens.push(screen);
     }
 
-    public render (game: typeof ColonyCraft, renderer: ScreenController) {
+    public render (game: typeof ColonyCraft) {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         for (const screen of this.screens) {
-            if (screen.active(game, renderer)) {
+            if (screen.active(game)) {
                 screen.render(game, this.ctx);
             }
         }
@@ -31,8 +31,5 @@ export class ScreenLayer {
     public resize (width: number, height: number) {
         this.canvas.width = width;
         this.canvas.height = height;
-        for (const screen of this.screens) {
-            screen.resize(width, height);
-        }
     }
 }

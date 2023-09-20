@@ -7,12 +7,10 @@ export class ScreenController {
     private ctx: OffscreenCanvasRenderingContext2D;
     private layers: ScreenLayer[];
     public canvas: OffscreenCanvas;
-    public current: string[];
 
     constructor () {
         this.screens = [];
         this.layers = [];
-        this.current = [];
         this.canvas = new OffscreenCanvas(ColonyCraft.width, ColonyCraft.height);
         this.ctx = this.canvas.getContext('2d') as OffscreenCanvasRenderingContext2D;
     }
@@ -45,7 +43,7 @@ export class ScreenController {
     public render () {
         this.layers.sort((a, b) => a.z - b.z);
         for (const layer of this.layers) {
-            layer.render(ColonyCraft, this);
+            layer.render(ColonyCraft);
             this.ctx.drawImage(layer.canvas, 0, 0);
         }
     }
