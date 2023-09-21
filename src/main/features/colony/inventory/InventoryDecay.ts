@@ -3,7 +3,7 @@ import { TickingEntity } from "../../TickingEntity";
 
 export class InventoryDecay extends TickingEntity {
     constructor () {
-        super(99);
+        super(98);
     }
 
     public tick(game: typeof ColonyCraft): void {

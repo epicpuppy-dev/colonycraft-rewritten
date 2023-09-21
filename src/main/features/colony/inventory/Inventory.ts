@@ -9,6 +9,7 @@ export class Inventory {
     public storageCapacity: number = 10;
     public storageUsed: number = 0;
     private monitor: InventoryMonitor = new InventoryMonitor();
+    private decay: InventoryDecay = new InventoryDecay();
 
     public addCategory(category: ItemGroup) {
         this.categories[category.key] = category;
