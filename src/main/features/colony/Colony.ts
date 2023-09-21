@@ -8,7 +8,7 @@ export class Colony {
 
     constructor () {
         this.inventory = new Inventory();
-        this.population = new Population(0, 4, 12, 0);
+        this.population = new Population(0, 2, 10, 0);
 
         InventoryData.addItems(this.inventory);
 
