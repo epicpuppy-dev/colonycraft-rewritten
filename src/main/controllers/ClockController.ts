@@ -18,8 +18,9 @@ export class ClockController {
     private tickTime: number[];
     private frameStart: number;
     private tickStart: number;
-    private fps: number;
-    private tps: number;
+    public fps: number;
+    public tps: number;
+    private nextTick: number = 0;
 
     constructor (fps: number, tps: number) {
         this.fps = fps;
@@ -39,7 +40,7 @@ export class ClockController {
         const timePassed = performance.now() - ColonyCraft.clock.tickStart;
         ColonyCraft.clock.tickTime.push(Math.max(timePassed, 1000 / ColonyCraft.clock.tps));
         if (ColonyCraft.clock.tickTime.length > ClockController.TICK_CACHE_SIZE) ColonyCraft.clock.tickTime.shift();
-        setTimeout(ColonyCraft.clock.startTick, 1000 / ColonyCraft.clock.tps - timePassed);
+        this.nextTick = window.setTimeout(ColonyCraft.clock.startTick, 1000 / ColonyCraft.clock.tps - timePassed);
     }
 
     startFrame() {
@@ -49,6 +50,10 @@ export class ClockController {
         if (ColonyCraft.clock.frameTime.length > ClockController.FRAME_CACHE_SIZE) ColonyCraft.clock.frameTime.shift();
         ColonyCraft.clock.frameStart = performance.now();
         requestAnimationFrame(ColonyCraft.clock.startFrame);
+    }
+
+    stopTick() {
+        clearTimeout(ColonyCraft.clock.nextTick);
     }
 
     getFPS (): number {

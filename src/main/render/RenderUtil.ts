@@ -12,24 +12,20 @@ export class RenderUtil {
         this.sprites = sprites;
     }
 
-    text(ctx: OffscreenCanvasRenderingContext2D, text: string, x: number, y: number, size: number = 14, color: string = "#ffffff"): void {
-        this.font.render(ctx, text, x, y, size, color);
+    text(text: string, x: number, y: number, size: number = 14, color: string = "#ffffff"): void {
+        this.font.draw(text, x, y, size, color);
     }
 
-    textSmall(ctx: OffscreenCanvasRenderingContext2D, text: string, x: number, y: number, size: number = 7, color: string = "#ffffff"): void {
-        this.fontSmall.render(ctx, text, x, y, size, color);
+    textSmall(text: string, x: number, y: number, size: number = 7, color: string = "#ffffff"): void {
+        this.fontSmall.draw(text, x, y, size, color);
     }
 
-    textCenter(ctx: OffscreenCanvasRenderingContext2D, text: string, x: number, y: number, size: number = 14, color: string = "#ffffff"): void {
-        this.font.renderCenter(ctx, text, x, y, size, color);
+    textCenter(text: string, x: number, y: number, size: number = 14, color: string = "#ffffff"): void {
+        this.font.drawCenter(text, x, y, size, color);
     }
 
-    textSmallCenter(ctx: OffscreenCanvasRenderingContext2D, text: string, x: number, y: number, size: number = 7, color: string = "#ffffff"): void {
-        this.fontSmall.renderCenter(ctx, text, x, y, size, color);
-    }
-
-    sprite(ctx: OffscreenCanvasRenderingContext2D, name: string, x: number, y: number, width: number, height: number): void {
-        this.sprites.renderSprite(name, ctx, x, y, width, height);
+    textSmallCenter(text: string, x: number, y: number, size: number = 7, color: string = "#ffffff"): void {
+        this.fontSmall.drawCenter(text, x, y, size, color);
     }
 
     textWidth(text: string, size: number = 14): number {
@@ -38,5 +34,14 @@ export class RenderUtil {
 
     textSmallWidth(text: string, size: number = 7): number {
         return this.fontSmall.getWidth(text, size);
+    }
+
+    renderText(ctx: OffscreenCanvasRenderingContext2D): void {
+        this.font.renderAll(ctx);
+        this.fontSmall.renderAll(ctx);
+    }
+
+    sprite(ctx: OffscreenCanvasRenderingContext2D, name: string, x: number, y: number, width: number, height: number): void {
+        this.sprites.renderSprite(name, ctx, x, y, width, height);
     }
 }

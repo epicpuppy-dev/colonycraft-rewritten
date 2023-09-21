@@ -2,9 +2,6 @@ import { ClockController } from "./controllers/ClockController";
 import { MouseController } from "./controllers/MouseController";
 import { ScreenController } from "./controllers/ScreenController";
 import { FontData } from "./data/FontData";
-import { Inventory } from "./features/inventory/Inventory";
-import { Item } from "./features/inventory/Item";
-import { ItemGroup } from "./features/inventory/ItemGroup";
 import { RenderUtil } from "./render/RenderUtil";
 import { SpriteRenderer } from "./render/SpriteRenderer";
 import { TextRenderer } from "./render/TextRenderer";
@@ -20,9 +17,11 @@ import { SimulationController } from "./controllers/SimulationController";
 import fontImage from "./resources/ui/font.png";
 import fontImageSmall from "./resources/ui/fontsmall.png";
 import buttons from "./resources/ui/buttons.png";
-import items from "./resources/inventory/items.png";
-import icons from "./resources/inventory/icons.png";
+import sprites from "./resources/sprites.png";
+import spritesSmall from "./resources/spritesSmall.png";
 import temp from "./resources/ui/temp.png";
+import { EntityController } from "./controllers/EntityController";
+import { Colony } from "./features/colony/Colony";
 
 export class ColonyCraft {
     public static width: number;
@@ -32,8 +31,9 @@ export class ColonyCraft {
     public static mouse: MouseController;
     public static currentScreens: string[];
     public static language: string = "en_us";
-    public static inventory: Inventory;
+    public static colony: Colony;
     public static simulation: SimulationController;
+    public static entities: EntityController;
 
     private static font: TextRenderer;
     private static fontSmall: TextRenderer;
@@ -56,6 +56,9 @@ export class ColonyCraft {
         this.canvas.style.left = '0';
         this.canvas.style.top = '0';
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+
+        //Initialize Entity Ticker
+        this.entities = new EntityController();
 
         //Initialize Renderers
         this.renderer = new ScreenController();
@@ -88,61 +91,32 @@ export class ColonyCraft {
             "close": [0, 24, 24, 24]
         });
 
-        this.sprites.addSheetWithSprites("items", items, {
+        this.sprites.addSheetWithSprites("sprites", sprites, {
             "storage": [0, 0, 32, 32],
+            "logs": [32, 0, 32, 32],
+            "people": [64, 0, 32, 32],
         });
 
-        this.sprites.addSheetWithSprites("icons", icons, {
-            "iconStorage": [0, 0, 16, 16],
+        this.sprites.addSheetWithSprites("spritesSmall", spritesSmall, {
+            "storageSmall": [0, 0, 16, 16],
+            "logsSmall": [16, 0, 16, 16],
+            "peopleSmall": [32, 0, 16, 16],
         });
 
         this.sprites.addSheetWithSprites("temp", temp, {
             "temp": [0, 0, 32, 32],
         });
 
-        //Initialize Inventory
-        this.inventory = new Inventory();
+        //Initialize Colony
+        this.colony = new Colony();
 
-        //Inventory Details
-        // Volume = m^3 per 1k units
-
-        this.inventory.addCategoryWithItems(new ItemGroup("food", "Food"), [
-            //TODO: FoodItem
-        ]);
-        this.inventory.addCategoryWithItems(new ItemGroup("fluids", "Fluids"), [
-            //TODO: FluidItem
-        ]);
-        this.inventory.addCategoryWithItems(new ItemGroup("primitive", "Primitive Materials"), [
-            new Item("sticks", 1, "Sticks"), //TODO: Balance
-            new Item("rocks", 2, "Rocks"), //TODO: Balance
-            new Item("leaves", 0.4, "Leaves") //TODO: Balance
-        ]);
-        this.inventory.addCategoryWithItems(new ItemGroup("lumber", "Lumber"), [
-            new Item("logs", 4, "Logs"), //TODO: Balance
-            new Item("planks", 1, "Planks"), //TODO: Balance
-            new Item("beams", 0.5, "Beams"), //TODO: Balance
-        ]);
-        this.inventory.addCategoryWithItems(new ItemGroup("test", "TestTestTestTest"), [
-            new Item("weight", 10, "WOOO TESTING"),
-            new Item("weight2", 10, "YAHAHA"),
-            new Item("weight3", 10, "WOOO TESTING (2)"),
-            new Item("weight4", 10, "YAHAHA (2)"),
-            new Item("weight5", 10, "WOOO TESTING (3)"),
-            new Item("weight6", 10, "YAHAHA (3)"),
-            new Item("weight7", 10, "WOOO TESTING (4)"),
-            new Item("weight8", 10, "YAHAHA (4)"),
-            new Item("weight9", 10, "WOOO TESTING (5)"),
-            new Item("weight10", 10, "YAHAHA (5)"),
-            new Item("weight11", 10, "WOOO TESTING (6)"),
-            new Item("weight12", 10, "YAHAHA (6)"),
-        ]);
-
+        //Initialize Simulation
         this.simulation = new SimulationController();
 
         //Create clock controller and start frame and tick
         this.clock = new ClockController(60, 1);
         this.clock.startFrame();
-        this.clock.startTick();
+        //this.clock.startTick();
     }
 
     public static tick() {
@@ -154,7 +128,7 @@ export class ColonyCraft {
                 this.clock.year++;
             }
         }
-        this.inventory.calculateStorageUsed();
+        this.entities.tick(this);
     }
 
     public static render() {
