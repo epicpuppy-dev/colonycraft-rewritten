@@ -11,5 +11,8 @@ export class Colony {
         this.population = new Population();
 
         InventoryData.addItems(this.inventory);
+
+        this.inventory.items.sticks.amount = 1000;
+        this.inventory.items.logs.amount = 1000;
     }
 }
