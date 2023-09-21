@@ -18,6 +18,8 @@ export class OverlayHUD extends Screen {
     }
 
     public render(game: typeof ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
+        const inventory = game.colony.inventory;
+
         ctx.beginPath();
         ctx.roundRect(100, -50, this.width - 200, 100, 10);
         ctx.fillStyle = "#222222";
@@ -27,10 +29,10 @@ export class OverlayHUD extends Screen {
         ctx.stroke();
         game.draw.textCenter(`${game.clock.season == 1 ? "Spring" : game.clock.season == 2 ? "Summer" : game.clock.season == 3 ? "Fall" : "Winter"} ${game.clock.day}, Year ${game.clock.year}`, Math.floor(this.width / 2), 10, 28, "white");
         game.draw.sprite(ctx, "storageSmall", 105, 4, 16, 16);
-        ctx.fillStyle = game.inventory.storageUsed < game.inventory.storageCapacity ? game.inventory.storageUsed < game.inventory.storageCapacity * 2 / 3 ? '#00ff00' : '#ffff00' : '#ff0000';
-        ctx.fillRect(126, 8, Math.min(98 * game.inventory.storageUsed / game.inventory.storageCapacity, 98), 8);
+        ctx.fillStyle = inventory.storageUsed < inventory.storageCapacity ? inventory.storageUsed < inventory.storageCapacity * 2 / 3 ? '#00ff00' : '#ffff00' : '#ff0000';
+        ctx.fillRect(126, 8, Math.min(98 * inventory.storageUsed / inventory.storageCapacity, 98), 8);
         ctx.strokeStyle = '#555555';
-        ctx.strokeRect(126, 8, 98 * Math.min(game.inventory.storageCapacity / game.inventory.storageUsed, 1), 8);
+        ctx.strokeRect(126, 8, 98 * Math.min(inventory.storageCapacity / inventory.storageUsed, 1), 8);
         ctx.strokeStyle = '#777777';
         ctx.strokeRect(126, 8, 98, 8);
         game.draw.renderText(ctx);

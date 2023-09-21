@@ -2,9 +2,9 @@ import { ClockController } from "./controllers/ClockController";
 import { MouseController } from "./controllers/MouseController";
 import { ScreenController } from "./controllers/ScreenController";
 import { FontData } from "./data/FontData";
-import { Inventory } from "./features/inventory/Inventory";
-import { Item } from "./features/inventory/Item";
-import { ItemGroup } from "./features/inventory/ItemGroup";
+import { Inventory } from "./features/colony/inventory/Inventory";
+import { Item } from "./features/colony/inventory/Item";
+import { ItemGroup } from "./features/colony/inventory/ItemGroup";
 import { RenderUtil } from "./render/RenderUtil";
 import { SpriteRenderer } from "./render/SpriteRenderer";
 import { TextRenderer } from "./render/TextRenderer";
@@ -23,6 +23,8 @@ import buttons from "./resources/ui/buttons.png";
 import sprites from "./resources/inventory/sprites.png";
 import spritesSmall from "./resources/inventory/spritesSmall.png";
 import temp from "./resources/ui/temp.png";
+import { EntityController } from "./controllers/EntityController";
+import { Colony } from "./features/colony/Colony";
 
 export class ColonyCraft {
     public static width: number;
@@ -32,8 +34,9 @@ export class ColonyCraft {
     public static mouse: MouseController;
     public static currentScreens: string[];
     public static language: string = "en_us";
-    public static inventory: Inventory;
+    public static colony: Colony;
     public static simulation: SimulationController;
+    public static entities: EntityController;
 
     private static font: TextRenderer;
     private static fontSmall: TextRenderer;
@@ -56,6 +59,9 @@ export class ColonyCraft {
         this.canvas.style.left = '0';
         this.canvas.style.top = '0';
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+
+        //Initialize Entity Ticker
+        this.entities = new EntityController();
 
         //Initialize Renderers
         this.renderer = new ScreenController();
@@ -102,59 +108,10 @@ export class ColonyCraft {
             "temp": [0, 0, 32, 32],
         });
 
-        //Initialize Inventory
-        this.inventory = new Inventory();
+        //Initialize Colony
+        this.colony = new Colony();
 
-        //Inventory Details
-        // Volume = m^3 per 1k units
-
-        this.inventory.addCategoryWithItems(new ItemGroup("food", "Food"), [
-            //TODO: FoodItem
-        ]);
-        this.inventory.addCategoryWithItems(new ItemGroup("fluids", "Fluids"), [
-            //TODO: FluidItem
-        ]);
-        this.inventory.addCategoryWithItems(new ItemGroup("primitive", "Primitive Materials"), [
-            new Item("sticks", 1, "Sticks"), //TODO: Balance
-            new Item("rocks", 2, "Rocks"), //TODO: Balance
-            new Item("leaves", 0.4, "Leaves") //TODO: Balance
-        ]);
-        this.inventory.addCategoryWithItems(new ItemGroup("lumber", "Lumber"), [
-            new Item("logs", 4, "Logs"), //TODO: Balance
-            new Item("planks", 1, "Planks"), //TODO: Balance
-            new Item("beams", 0.5, "Beams"), //TODO: Balance
-        ]);
-        this.inventory.addCategoryWithItems(new ItemGroup("mining", "Mining"), [
-            new Item("stone", 5, "Stone"), //TODO: Balance
-            new Item("coal", 5, "Coal"), //TODO: Balance
-            new Item("ironOre", 5, "Magnetite Ore"), //TODO: Balance
-            new Item("tinOre", 5, "Casserite Ore"), //TODO: Balance
-            new Item("copperOre", 5, "Chalcopyrite Ore"), //TODO: Balance
-            new Item("zincOre", 5, "Sphalerite Ore"), //TODO: Balance
-            new Item("goldOre", 8, "Gold Ore"), //TODO: Balance
-        ]);
-        this.inventory.addCategoryWithItems(new ItemGroup("building", "Building Materials"), [
-            new Item("Stone Bricks", 2, "Stone Bricks"), //TODO: Balance
-            
-        ]);
-        this.inventory.addCategoryWithItems(new ItemGroup("metallurgy", "Metallurgy"), [
-            new Item("iron", 2, "Iron"), //TODO: Balance
-            new Item("tin", 2, "Tin"), //TODO: Balance
-            new Item("copper", 2, "Copper"), //TODO: Balance
-            new Item("zinc", 2, "Zinc"), //TODO: Balance
-            new Item("bronze", 2, "Bronze"), //TODO: Balance
-            new Item("steel", 2, "Steel"), //TODO: Balance
-            new Item("silicon", 2, "Silicon"), //TODO: Balance
-            new Item("gold", 2, "Gold"), //TODO: Balance
-        ]);
-        this.inventory.addCategoryWithItems(new ItemGroup("industrial", "Industrial Materials"), [
-            new Item("metalBeam", 1, "Metal Beams"), //TODO: Balance
-            new Item("machineParts", 2, "Machine Parts"), //TODO: Balance
-        ]);
-        this.inventory.addCategoryWithItems(new ItemGroup("electronics", "Electronics"), [
-            //TODO: Electronics
-        ]);
-
+        //Initialize Simulation
         this.simulation = new SimulationController();
 
         //Create clock controller and start frame and tick
@@ -172,7 +129,7 @@ export class ColonyCraft {
                 this.clock.year++;
             }
         }
-        this.inventory.calculateStorageUsed();
+        this.entities.tick(this);
     }
 
     public static render() {
