@@ -1,5 +1,5 @@
 import { InventoryData } from "../../data/InventoryData";
-import { Population } from "./Population";
+import { Population } from "./population/Population";
 import { Inventory } from "./inventory/Inventory";
 
 export class Colony {
@@ -8,7 +8,7 @@ export class Colony {
 
     constructor () {
         this.inventory = new Inventory();
-        this.population = new Population();
+        this.population = new Population(0, 4, 12, 0);
 
         InventoryData.addItems(this.inventory);
 

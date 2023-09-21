@@ -2,9 +2,6 @@ import { ClockController } from "./controllers/ClockController";
 import { MouseController } from "./controllers/MouseController";
 import { ScreenController } from "./controllers/ScreenController";
 import { FontData } from "./data/FontData";
-import { Inventory } from "./features/colony/inventory/Inventory";
-import { Item } from "./features/colony/inventory/Item";
-import { ItemGroup } from "./features/colony/inventory/ItemGroup";
 import { RenderUtil } from "./render/RenderUtil";
 import { SpriteRenderer } from "./render/SpriteRenderer";
 import { TextRenderer } from "./render/TextRenderer";
@@ -20,8 +17,8 @@ import { SimulationController } from "./controllers/SimulationController";
 import fontImage from "./resources/ui/font.png";
 import fontImageSmall from "./resources/ui/fontsmall.png";
 import buttons from "./resources/ui/buttons.png";
-import sprites from "./resources/inventory/sprites.png";
-import spritesSmall from "./resources/inventory/spritesSmall.png";
+import sprites from "./resources/sprites.png";
+import spritesSmall from "./resources/spritesSmall.png";
 import temp from "./resources/ui/temp.png";
 import { EntityController } from "./controllers/EntityController";
 import { Colony } from "./features/colony/Colony";
@@ -97,11 +94,13 @@ export class ColonyCraft {
         this.sprites.addSheetWithSprites("sprites", sprites, {
             "storage": [0, 0, 32, 32],
             "logs": [32, 0, 32, 32],
+            "people": [64, 0, 32, 32],
         });
 
         this.sprites.addSheetWithSprites("spritesSmall", spritesSmall, {
             "storageSmall": [0, 0, 16, 16],
             "logsSmall": [16, 0, 16, 16],
+            "peopleSmall": [32, 0, 16, 16],
         });
 
         this.sprites.addSheetWithSprites("temp", temp, {

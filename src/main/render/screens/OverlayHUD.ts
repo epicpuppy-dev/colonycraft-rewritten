@@ -27,7 +27,10 @@ export class OverlayHUD extends Screen {
         ctx.strokeStyle = '#777777';
         ctx.lineWidth = 2;
         ctx.stroke();
+        //Render Date
         game.draw.textCenter(`${game.clock.season == 1 ? "Spring" : game.clock.season == 2 ? "Summer" : game.clock.season == 3 ? "Fall" : "Winter"} ${game.clock.day}, Year ${game.clock.year}`, Math.floor(this.width / 2), 10, 28, "white");
+
+        //Draw Storage HUD
         game.draw.sprite(ctx, "storageSmall", 105, 4, 16, 16);
         ctx.fillStyle = inventory.storageUsed < inventory.storageCapacity ? inventory.storageUsed < inventory.storageCapacity * 2 / 3 ? '#00ff00' : '#ffff00' : '#ff0000';
         ctx.fillRect(126, 8, Math.min(98 * inventory.storageUsed / inventory.storageCapacity, 98), 8);
@@ -35,6 +38,11 @@ export class OverlayHUD extends Screen {
         ctx.strokeRect(126, 8, 98 * Math.min(inventory.storageCapacity / inventory.storageUsed, 1), 8);
         ctx.strokeStyle = '#777777';
         ctx.strokeRect(126, 8, 98, 8);
+
+        //Draw Population HUD
+        game.draw.sprite(ctx, "peopleSmall", 230, 4, 16, 16);
+        game.draw.text(`${(game.colony.population.babies + game.colony.population.children + game.colony.population.adults + game.colony.population.seniors).toLocaleString()}`, 252, 6, 14, "white");
+
         game.draw.renderText(ctx);
     }
 
