@@ -1,5 +1,6 @@
 import { InventoryMonitor } from "./InventoryMonitor";
 import { Item } from "./Item";
+import { InventoryDecay } from "./InventoryDecay";
 import { ItemGroup } from "./ItemGroup";
 
 export class Inventory {
@@ -8,6 +9,7 @@ export class Inventory {
     public storageCapacity: number = 10;
     public storageUsed: number = 0;
     private monitor: InventoryMonitor = new InventoryMonitor();
+    private decay: InventoryDecay = new InventoryDecay();
 
     public addCategory(category: ItemGroup) {
         this.categories[category.key] = category;
