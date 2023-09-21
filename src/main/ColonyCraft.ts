@@ -121,12 +121,9 @@ export class ColonyCraft {
 
     public static tick() {
         if (!this.simulation.running) return;
-        if (++this.clock.day > 30) {
+        if (++this.clock.day > 12) {
             this.clock.day = 1;
-            if (++this.clock.season > 4) {
-                this.clock.season = 1;
-                this.clock.year++;
-            }
+            this.clock.year++;
         }
         this.entities.tick(this);
     }

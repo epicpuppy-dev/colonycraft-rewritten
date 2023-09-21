@@ -28,7 +28,7 @@ export class OverlayHUD extends Screen {
         ctx.lineWidth = 2;
         ctx.stroke();
         //Render Date
-        game.draw.textCenter(`${game.clock.season == 1 ? "Spring" : game.clock.season == 2 ? "Summer" : game.clock.season == 3 ? "Fall" : "Winter"} ${game.clock.day}, Year ${game.clock.year}`, Math.floor(this.width / 2), 10, 28, "white");
+        game.draw.textCenter(`Month ${game.clock.day}, Year ${game.clock.year}`, Math.floor(this.width / 2), 10, 28, "white");
 
         //Draw Storage HUD
         game.draw.sprite(ctx, "storageSmall", 105, 4, 16, 16);
