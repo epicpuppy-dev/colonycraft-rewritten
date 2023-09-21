@@ -7,10 +7,13 @@ export class Item {
     //current stock
     public amount: number = 0;
     public name: string;
+    //decay percentage per tick
+    public decay: number;
 
-    constructor(key: string, volume: number, name: string) {
+    constructor(key: string, volume: number, name: string, decay: number) {
         this.key = key;
         this.volume = volume;
         this.name = name;
+        this.decay = decay;
     }
 }
