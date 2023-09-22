@@ -1,14 +1,19 @@
 import { ColonyCraft } from "../../../ColonyCraft";
+import { JobTicker } from "./JobTicker";
 
 export class Job {
     public name: string;
     public workersAssigned: number = 0;
-    public tick: (game: ColonyCraft) => void;
+    private ticker: JobTicker;
+    public unlocked: (game: typeof ColonyCraft) => boolean;
 
-    constructor(name: string, tick: (game: ColonyCraft) => void) {
+    constructor(name: string, priority: number, unlocked: (game: typeof ColonyCraft) => boolean) {
         this.name = name;
-        this.tick = tick;
+        this.ticker = new JobTicker(this, priority);
+        this.unlocked = unlocked;
     }
+
+    public tick (game: typeof ColonyCraft) {};
 
     public assign (game: typeof ColonyCraft, amount: number) {
         this.workersAssigned += amount;

@@ -21,6 +21,8 @@ import { Colony } from "./features/colony/Colony";
 import { LootManager } from "./features/loot/LootManager";
 import { LootData } from "./data/LootData";
 import { SpriteData } from "./data/SpriteData";
+import { InventoryData } from "./data/InventoryData";
+import { JobData } from "./data/JobData";
 
 export class ColonyCraft {
     public static width: number;
@@ -89,7 +91,10 @@ export class ColonyCraft {
         //Initialize Colony
         this.colony = new Colony();
         this.loot = new LootManager();
+
+        InventoryData.addItems(this.colony.inventory);
         LootData.addLoot(this.loot, this.colony.inventory);
+        JobData.addJobs(this.colony.jobs);
 
         //Initialize Simulation
         this.simulation = new SimulationController();
