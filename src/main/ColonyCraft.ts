@@ -9,19 +9,22 @@ import { LayerGame } from "./render/layers/LayerGame";
 import { LayerOverlay } from "./render/layers/LayerOverlay";
 import { LayerUI } from "./render/layers/LayerUI";
 import { OverlayInventory } from "./render/screens/OverlayInventory";
-import { OverlayHUD } from "./render/screens/OverlayHUD";
-import { ScreenPerformance } from "./render/screens/ScreenPerformance";
+import { UIHUD } from "./render/screens/UIHUD";
+import { UIPerformance } from "./render/screens/UIPerformance";
 import { ScreenTitle } from "./render/screens/ScreenTitle";
 import { SimulationController } from "./controllers/SimulationController";
 
 import fontImage from "./resources/ui/font.png";
 import fontImageSmall from "./resources/ui/fontsmall.png";
-import buttons from "./resources/ui/buttons.png";
-import sprites from "./resources/sprites.png";
-import spritesSmall from "./resources/spritesSmall.png";
-import temp from "./resources/ui/temp.png";
 import { EntityController } from "./controllers/EntityController";
 import { Colony } from "./features/colony/Colony";
+import { LootManager } from "./features/loot/LootManager";
+import { LootData } from "./data/LootData";
+import { SpriteData } from "./data/SpriteData";
+import { InventoryData } from "./data/InventoryData";
+import { JobData } from "./data/JobData";
+import { LayerPanel } from "./render/layers/LayerPanel";
+import { PanelJobs } from "./render/screens/PanelJobs";
 
 export class ColonyCraft {
     public static width: number;
@@ -34,6 +37,7 @@ export class ColonyCraft {
     public static colony: Colony;
     public static simulation: SimulationController;
     public static entities: EntityController;
+    public static loot: LootManager;
 
     private static font: TextRenderer;
     private static fontSmall: TextRenderer;
@@ -71,44 +75,30 @@ export class ColonyCraft {
         this.currentScreens = [];
 
         //Initialize Screens
-        this.renderer.addLayerWithScreens(new LayerUI(), [
-            new ScreenTitle(this.width, this.height),
-            new ScreenPerformance(this.width, this.height),
-            new OverlayHUD(this.width, this.height),
-        ]);
         this.renderer.addLayerWithScreens(new LayerGame(), [
-            
+            new ScreenTitle(this.width, this.height),
+        ]);
+        this.renderer.addLayerWithScreens(new LayerPanel(), [
+            new PanelJobs(this.width, this.height),
+        ]);
+        this.renderer.addLayerWithScreens(new LayerUI(), [
+            new UIPerformance(this.width, this.height),
+            new UIHUD(this.width, this.height),
         ]);
         this.renderer.addLayerWithScreens(new LayerOverlay(), [
            new OverlayInventory(this.width, this.height), 
         ]);
         this.currentScreens.push("title");
 
-        //Initialize Sprites
-        this.sprites.addSheetWithSprites("buttons", buttons, {
-            "play": [0, 0, 24, 24],
-            "pause": [24, 0, 24, 24],
-            "close": [0, 24, 24, 24]
-        });
-
-        this.sprites.addSheetWithSprites("sprites", sprites, {
-            "storage": [0, 0, 32, 32],
-            "logs": [32, 0, 32, 32],
-            "people": [64, 0, 32, 32],
-        });
-
-        this.sprites.addSheetWithSprites("spritesSmall", spritesSmall, {
-            "storageSmall": [0, 0, 16, 16],
-            "logsSmall": [16, 0, 16, 16],
-            "peopleSmall": [32, 0, 16, 16],
-        });
-
-        this.sprites.addSheetWithSprites("temp", temp, {
-            "temp": [0, 0, 32, 32],
-        });
+        SpriteData.addSprites(this.sprites);
 
         //Initialize Colony
         this.colony = new Colony();
+        this.loot = new LootManager();
+
+        InventoryData.addItems(this.colony.inventory);
+        LootData.addLoot(this.loot, this.colony.inventory);
+        JobData.addJobs(this.colony.jobs);
 
         //Initialize Simulation
         this.simulation = new SimulationController();

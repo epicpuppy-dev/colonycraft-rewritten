@@ -15,7 +15,7 @@ export class ScreenTitle extends Screen {
             return game.currentScreens.includes("title");
         });
 
-        ColonyCraft.mouse.registerButton(this.startButton);
+        ColonyCraft.mouse.registerClickable(this.startButton);
     }
 
     public render(game: typeof ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {

@@ -1,10 +1,10 @@
 import { ColonyCraft } from "../ColonyCraft";
-import { Button } from "../render/ui/Button";
+import { Clickable } from "../render/ui/Clickable";
 
 export class MouseController {
     public x: number = 0;
     public y: number = 0;
-    private buttons: Button[] = [];
+    private clickables: Clickable[] = [];
 
     constructor() {
         document.addEventListener('mousemove', (event) => {
@@ -13,19 +13,28 @@ export class MouseController {
         });
 
         document.addEventListener('mousedown', (event) => { 
-            this.buttons.forEach((button) => {
-                button.click(ColonyCraft);
+            this.clickables.forEach((clickable) => {
+                clickable.click(ColonyCraft);
             });
         });
     }
 
-    public registerButton(button: Button): void {
-        this.buttons.push(button);
+    public registerClickable(clickable: Clickable): void {
+        this.clickables.push(clickable);
+    }
+
+    public removeClickable(clickable: Clickable): void {
+        for (let i = 0; i < this.clickables.length; i++) {
+            if (this.clickables[i] === clickable) {
+                this.clickables.splice(i, 1);
+                break;
+            }
+        }
     }
 
     public update(): void {
         //perform an update on each button
-        this.buttons.forEach((button) => {
+        this.clickables.forEach((button) => {
             button.update(ColonyCraft, this.x, this.y);
         });
     }

@@ -1,7 +1,7 @@
 import { ScreenLayer } from "../ScreenLayer";
 
-export class LayerOverlay extends ScreenLayer {
+export class LayerPanel extends ScreenLayer {
     constructor() {
-        super(10);
+        super(0);
     }
 }

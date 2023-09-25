@@ -25,7 +25,7 @@ export class InventoryData {
             new Item("stone", 5, "Stone", 0.0025), //TODO: Balance
             new Item("coal", 5, "Coal", 0.0025), //TODO: Balance
             new Item("ironOre", 5, "Magnetite Ore", 0.0025), //TODO: Balance
-            new Item("tinOre", 5, "Casserite Ore", 0.0025), //TODO: Balance
+            new Item("tinOre", 5, "Cassiterite Ore", 0.0025), //TODO: Balance
             new Item("copperOre", 5, "Chalcopyrite Ore", 0.0025), //TODO: Balance
             new Item("zincOre", 5, "Sphalerite Ore", 0.0025), //TODO: Balance
             new Item("goldOre", 8, "Gold Ore", 0.0025), //TODO: Balance

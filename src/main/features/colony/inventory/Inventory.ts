@@ -8,8 +8,14 @@ export class Inventory {
     public items: { [key: string]: Item } = {};
     public storageCapacity: number = 10;
     public storageUsed: number = 0;
-    private monitor: InventoryMonitor = new InventoryMonitor();
+    private monitor1: InventoryMonitor;
+    private monitor2: InventoryMonitor;
     private decay: InventoryDecay = new InventoryDecay();
+
+    constructor () {
+        this.monitor1 = new InventoryMonitor(97);
+        this.monitor2 = new InventoryMonitor(99);
+    }
 
     public addCategory(category: ItemGroup) {
         this.categories[category.key] = category;

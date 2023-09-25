@@ -2,7 +2,7 @@ import { ColonyCraft } from "../../ColonyCraft";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
 
-export class OverlayHUD extends Screen {
+export class UIHUD extends Screen {
     private inventoryButton: Button;
 
     constructor(width: number, height: number) {
@@ -14,7 +14,7 @@ export class OverlayHUD extends Screen {
             return game.currentScreens.includes("game") && !game.currentScreens.includes("inventory");
         });
 
-        ColonyCraft.mouse.registerButton(this.inventoryButton);
+        ColonyCraft.mouse.registerClickable(this.inventoryButton);
     }
 
     public render(game: typeof ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
@@ -22,7 +22,7 @@ export class OverlayHUD extends Screen {
 
         ctx.beginPath();
         ctx.roundRect(100, -50, this.width - 200, 100, 10);
-        ctx.fillStyle = "#222222";
+        ctx.fillStyle = "#333333";
         ctx.fill();
         ctx.strokeStyle = '#777777';
         ctx.lineWidth = 2;
@@ -40,8 +40,11 @@ export class OverlayHUD extends Screen {
         ctx.strokeRect(126, 8, 98, 8);
 
         //Draw Population HUD
-        game.draw.sprite(ctx, "peopleSmall", 230, 4, 16, 16);
-        game.draw.text(`${(game.colony.population.babies + game.colony.population.children + game.colony.population.adults + game.colony.population.seniors).toLocaleString()}`, 252, 6, 14, "white");
+        game.draw.sprite(ctx, "peopleSmall", 355, 4, 16, 16);
+        game.draw.text(`${game.draw.toShortNumber(game.colony.population.babies + game.colony.population.children + game.colony.population.adults + game.colony.population.seniors)}`, 377, 6, 14, "white");
+
+        game.draw.sprite(ctx, "workersSmall", 355, 28, 16, 16)
+        game.draw.text(`${game.draw.toShortNumber(game.colony.jobs.workersAssigned)}/${game.draw.toShortNumber(game.colony.population.adults)}`, 377, 30, 14, "#6495ED");
 
         game.draw.renderText(ctx);
     }
