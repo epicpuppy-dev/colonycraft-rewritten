@@ -78,5 +78,10 @@ export class PopulationUpdate extends TickingEntity {
                 }
             }
         }
+        const workers = population.adults;
+        while (game.colony.jobs.workersAssigned > workers) {
+            const job = game.colony.jobs.jobs[Object.keys(game.colony.jobs.jobs)[Math.floor(Math.random() * Object.keys(game.colony.jobs.jobs).length)]];
+            if (job.workersAssigned > 0) job.unassign(game, 1);
+        }
     }
 }
