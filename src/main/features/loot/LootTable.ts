@@ -19,14 +19,22 @@ export class LootTable {
     public roll (times: number) {
         const items: [Item | null, number][] = [];
 
-        for (let i = 0; i < this.rolls * times; i++) {
-            const roll = Math.random() * this.totalWeight;
-            let total = 0;
+        const rolls = this.rolls * times;
+
+        if (rolls > 1000) {
             for (const item of this.items) {
-                total += item.weight;
-                if (roll <= total) {
-                    items.push([item.item, item.amount]);
-                    break;
+                items.push([item.item, Math.floor(item.amount * (item.weight / this.totalWeight) * rolls)])
+            }
+        } else {
+            for (let i = 0; i < rolls; i++) {
+                const roll = Math.random() * this.totalWeight;
+                let total = 0;
+                for (const item of this.items) {
+                    total += item.weight;
+                    if (roll <= total) {
+                        items.push([item.item, item.amount]);
+                        break;
+                    }
                 }
             }
         }

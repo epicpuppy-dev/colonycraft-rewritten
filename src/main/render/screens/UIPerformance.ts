@@ -1,7 +1,7 @@
 import { ColonyCraft } from "../../ColonyCraft";
 import { Screen } from "../Screen";
 
-export class ScreenPerformance extends Screen {
+export class UIPerformance extends Screen {
     constructor(width: number, height: number) {
         super(width, height, 0, 0);
     }

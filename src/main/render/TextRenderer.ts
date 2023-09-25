@@ -55,7 +55,7 @@ export class TextRenderer {
 
     public getWidth (text: string, size: number): number {
         let width = 0;
-        let scale = size / 14;
+        let scale = size / this.size;
         for (const char of text) {
             const entry = this.fontData[char];
             if (entry) {

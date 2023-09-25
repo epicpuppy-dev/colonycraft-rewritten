@@ -9,8 +9,8 @@ import { LayerGame } from "./render/layers/LayerGame";
 import { LayerOverlay } from "./render/layers/LayerOverlay";
 import { LayerUI } from "./render/layers/LayerUI";
 import { OverlayInventory } from "./render/screens/OverlayInventory";
-import { OverlayHUD } from "./render/screens/OverlayHUD";
-import { ScreenPerformance } from "./render/screens/ScreenPerformance";
+import { UIHUD } from "./render/screens/UIHUD";
+import { UIPerformance } from "./render/screens/UIPerformance";
 import { ScreenTitle } from "./render/screens/ScreenTitle";
 import { SimulationController } from "./controllers/SimulationController";
 
@@ -23,6 +23,8 @@ import { LootData } from "./data/LootData";
 import { SpriteData } from "./data/SpriteData";
 import { InventoryData } from "./data/InventoryData";
 import { JobData } from "./data/JobData";
+import { LayerPanel } from "./render/layers/LayerPanel";
+import { PanelJobs } from "./render/screens/PanelJobs";
 
 export class ColonyCraft {
     public static width: number;
@@ -73,13 +75,15 @@ export class ColonyCraft {
         this.currentScreens = [];
 
         //Initialize Screens
-        this.renderer.addLayerWithScreens(new LayerUI(), [
-            new ScreenTitle(this.width, this.height),
-            new ScreenPerformance(this.width, this.height),
-            new OverlayHUD(this.width, this.height),
-        ]);
         this.renderer.addLayerWithScreens(new LayerGame(), [
-            
+            new ScreenTitle(this.width, this.height),
+        ]);
+        this.renderer.addLayerWithScreens(new LayerPanel(), [
+            new PanelJobs(this.width, this.height),
+        ]);
+        this.renderer.addLayerWithScreens(new LayerUI(), [
+            new UIPerformance(this.width, this.height),
+            new UIHUD(this.width, this.height),
         ]);
         this.renderer.addLayerWithScreens(new LayerOverlay(), [
            new OverlayInventory(this.width, this.height), 

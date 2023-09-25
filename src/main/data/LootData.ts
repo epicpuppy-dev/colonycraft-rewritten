@@ -9,6 +9,6 @@ export class LootData {
             {weight: 4, item: inv.sticks, amount: 1},
             {weight: 2, item: inv.rocks, amount: 1},
             {weight: 4, item: inv.leaves, amount: 1},
-        ]))
+        ]));
     }
 }

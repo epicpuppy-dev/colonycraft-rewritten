@@ -9,7 +9,7 @@ export class Colony {
 
     constructor () {
         this.inventory = new Inventory();
-        this.population = new Population(0, 2, 10, 0);
+        this.population = new Population(10000, 20000, 100000, 10000);
         this.jobs = new Jobs();
 
         // this.inventory.items.sticks.amount = 1000;

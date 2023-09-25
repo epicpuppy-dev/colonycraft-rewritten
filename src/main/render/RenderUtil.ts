@@ -44,4 +44,11 @@ export class RenderUtil {
     sprite(ctx: OffscreenCanvasRenderingContext2D, name: string, x: number, y: number, width: number, height: number): void {
         this.sprites.renderSprite(name, ctx, x, y, width, height);
     }
+
+    toShortNumber(num: number): string {
+        if (num < 1000) return num.toString();
+        if (num < 1000000) return (num / 1000).toPrecision(3) + "k";
+        if (num < 1000000000) return (num / 1000000).toPrecision(3) + "m";
+        else return (num / 1000000000).toPrecision(3) + "b";
+    }
 }

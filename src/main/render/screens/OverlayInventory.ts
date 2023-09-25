@@ -14,7 +14,7 @@ export class OverlayInventory extends Screen {
             return game.currentScreens.includes("inventory");
         });
         
-        ColonyCraft.mouse.registerButton(this.closeButton);
+        ColonyCraft.mouse.registerClickable(this.closeButton);
     }
 
     public render(game: typeof ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
@@ -51,7 +51,7 @@ export class OverlayInventory extends Screen {
         the scroll bar will scroll in increments of 1 row
         */
 
-        const maxRows = Math.floor((3 * this.height / 4 - 96) / 20);
+        const maxRows = Math.floor((3 * this.height / 4 - 104) / 20);
         let currentRow = 0;
         let currentColumn = 0;
         //find item with the most amount of items
@@ -80,7 +80,7 @@ export class OverlayInventory extends Screen {
             if (!hasItems) continue;
             //if the current row is greater than the scroll value and less than the max rows plus scroll value, render the category header
             if (currentRow >= this.rowScroll && currentRow < this.rowScroll + maxRows) {
-                game.draw.textCenter(inventory.categories[Object.keys(inventory.categories)[i]].name, Math.floor(this.width / 2), Math.floor(this.height / 8 + 48 + 20 * (currentRow - this.rowScroll)), 14, "white");
+                game.draw.textCenter(inventory.categories[Object.keys(inventory.categories)[i]].name, Math.floor(this.width / 2), Math.floor(this.height / 8 + 56 + 20 * (currentRow - this.rowScroll)), 14, "white");
                 //add 1 rows for the category header
                 currentRow++;
             }
@@ -94,11 +94,11 @@ export class OverlayInventory extends Screen {
                     }
 
                     //render the item
-                    game.draw.sprite(ctx, inventory.categories[Object.keys(inventory.categories)[i]].items[j].key + "Small", Math.floor(this.width / 8 + 8 + (3 * this.width / 8) * currentColumn), Math.floor(this.height / 8 + 48 + 20 * (currentRow - this.rowScroll)), 16, 16);
+                    game.draw.sprite(ctx, inventory.categories[Object.keys(inventory.categories)[i]].items[j].key + "Small", Math.floor(this.width / 8 + 8 + (3 * this.width / 8) * currentColumn), Math.floor(this.height / 8 + 56 + 20 * (currentRow - this.rowScroll)), 16, 16);
                     
                     const amountWidth = game.draw.textWidth(`${inventory.categories[Object.keys(inventory.categories)[i]].items[j].amount.toLocaleString()}`, 14);
                     const widthDiff = maxwidth - amountWidth;
-                    game.draw.text(`${inventory.categories[Object.keys(inventory.categories)[i]].items[j].amount.toLocaleString()}x ${inventory.categories[Object.keys(inventory.categories)[i]].items[j].name}`, Math.floor(this.width / 8 + 30 + (3 * this.width / 8) * currentColumn) + widthDiff, Math.floor(this.height / 8 + 48 + 20 * (currentRow - this.rowScroll) + 1), 14, "white");
+                    game.draw.text(`${inventory.categories[Object.keys(inventory.categories)[i]].items[j].amount.toLocaleString()}x ${inventory.categories[Object.keys(inventory.categories)[i]].items[j].name}`, Math.floor(this.width / 8 + 30 + (3 * this.width / 8) * currentColumn) + widthDiff, Math.floor(this.height / 8 + 56 + 20 * (currentRow - this.rowScroll) + 1), 14, "white");
                     //add 1 row for the item
                     currentColumn++;
                     if (currentColumn > 1) {

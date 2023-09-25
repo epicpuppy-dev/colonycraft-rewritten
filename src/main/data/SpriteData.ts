@@ -21,6 +21,7 @@ export class SpriteData {
             "leaves": [128, 0, 32, 32],
             "planks": [160, 0, 32, 32],
             "stone": [192, 0, 32, 32],
+            "workers": [224, 0, 32, 32],
         });
 
         renderer.addSheetWithSprites("spritesSmall", spritesSmall, {
@@ -31,6 +32,7 @@ export class SpriteData {
             "leavesSmall": [64, 0, 16, 16],
             "planksSmall": [80, 0, 16, 16],
             "stoneSmall": [96, 0, 16, 16],
+            "workersSmall": [112, 0, 16, 16],
         });
 
         renderer.addSheetWithSprites("temp", temp, {

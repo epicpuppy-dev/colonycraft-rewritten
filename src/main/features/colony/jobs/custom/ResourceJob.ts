@@ -6,8 +6,8 @@ export class ResourceJob extends Job {
     private table: LootTable;
     private rolls: number;
 
-    constructor(name: string, priority: number, rolls: number, table: LootTable, unlocked: (game: typeof ColonyCraft) => boolean) {
-        super(name, priority, unlocked);
+    constructor(id: string, name: string, priority: number, rolls: number, table: LootTable, unlocked: (game: typeof ColonyCraft) => boolean, maxWorkers: (game: typeof ColonyCraft) => number) {
+        super(id, name, priority, unlocked, maxWorkers);
         this.rolls = rolls;
         this.table = table;
     }

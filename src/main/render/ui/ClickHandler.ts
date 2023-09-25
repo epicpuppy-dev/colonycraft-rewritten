@@ -1,8 +1,8 @@
 import { ColonyCraft } from "../../ColonyCraft";
 import { Clickable } from "./Clickable";
 
-export class Button extends Clickable {
-    public activate: (game: typeof ColonyCraft) => void;
+export class ClickHandler extends Clickable {
+    public activate: (game: typeof ColonyCraft, x: number, y: number) => void;
     public active: (game: typeof ColonyCraft) => boolean;
     public hover: boolean = false;
     private x: number;
@@ -10,7 +10,7 @@ export class Button extends Clickable {
     private width: number;
     private height: number;
 
-    constructor(x: number, y: number, width: number, height: number, activate: (game: typeof ColonyCraft) => void, active: (game: typeof ColonyCraft) => boolean) {
+    constructor(x: number, y: number, width: number, height: number, activate: (game: typeof ColonyCraft, x: number, y: number) => void, active: (game: typeof ColonyCraft) => boolean) {
         super();
         this.activate = activate;
         this.active = active;
@@ -33,7 +33,7 @@ export class Button extends Clickable {
 
     public click(game: typeof ColonyCraft): void {
         if (this.active(game) && game.mouse.x >= this.x && game.mouse.x <= this.x + this.width && game.mouse.y >= this.y && game.mouse.y <= this.y + this.height) {
-            this.activate(game);
+            this.activate(game, game.mouse.x, game.mouse.y);
         }
     }
 

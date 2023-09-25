@@ -5,6 +5,6 @@ export class Jobs {
     public workersAssigned: number = 0;
 
     public addJob (job: Job) {
-        this.jobs[job.name] = job;
+        this.jobs[job.id] = job;
     }
 }
