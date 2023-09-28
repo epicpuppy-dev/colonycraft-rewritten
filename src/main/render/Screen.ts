@@ -1,5 +1,4 @@
 import { ColonyCraft } from "../ColonyCraft";
-import { ScreenController } from "../controllers/ScreenController";
 
 export abstract class Screen {
     protected width: number;
@@ -14,6 +13,6 @@ export abstract class Screen {
         this.y = y;
     }
 
-    public abstract render(game: typeof ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void;
-    public abstract active(game: typeof ColonyCraft): boolean;
+    public abstract render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void;
+    public abstract active(game: ColonyCraft): boolean;
 }

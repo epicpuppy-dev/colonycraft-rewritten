@@ -29,26 +29,26 @@ import { TechnologyData } from "./data/TechnologyData";
 import { OverlayResearch } from "./render/screens/OverlayResearch";
 
 export class ColonyCraft {
-    public static width: number;
-    public static height: number;
-    public static clock: ClockController;
-    public static draw: RenderUtil;
-    public static mouse: MouseController;
-    public static currentScreens: string[];
-    public static language: string = "en_us";
-    public static colony: Colony;
-    public static simulation: SimulationController;
-    public static entities: EntityController;
-    public static loot: LootManager;
+    public width: number;
+    public height: number;
+    public clock: ClockController;
+    public draw: RenderUtil;
+    public mouse: MouseController;
+    public currentScreens: string[];
+    public language: string = "en_us";
+    public colony: Colony;
+    public simulation: SimulationController;
+    public entities: EntityController;
+    public loot: LootManager;
 
-    private static font: TextRenderer;
-    private static fontSmall: TextRenderer;
-    private static canvas: HTMLCanvasElement;
-    private static ctx: CanvasRenderingContext2D;
-    private static renderer: ScreenController;
-    private static sprites: SpriteRenderer;
+    private font: TextRenderer;
+    private fontSmall: TextRenderer;
+    private canvas: HTMLCanvasElement;
+    private ctx: CanvasRenderingContext2D;
+    private renderer: ScreenController;
+    private sprites: SpriteRenderer;
 
-    public static main () {
+    constructor () {
         //Set width and height
         this.width = window.innerWidth;
         this.height = window.innerHeight;
@@ -67,9 +67,9 @@ export class ColonyCraft {
         this.entities = new EntityController();
 
         //Initialize Renderers
-        this.renderer = new ScreenController();
-        this.font = new TextRenderer(FontData.normal, fontImage, 14, 18, 2);
-        this.fontSmall = new TextRenderer(FontData.small, fontImageSmall, 7, 9, 1);
+        this.renderer = new ScreenController(this);
+        this.font = new TextRenderer(this, FontData.normal, fontImage, 14, 18, 2);
+        this.fontSmall = new TextRenderer(this, FontData.small, fontImageSmall, 7, 9, 1);
         this.sprites = new SpriteRenderer();
         this.draw = new RenderUtil(this.font, this.fontSmall, this.sprites);
         this.mouse = new MouseController();
@@ -77,33 +77,33 @@ export class ColonyCraft {
         this.currentScreens = [];
 
         //Initialize Screens
-        this.renderer.addLayerWithScreens(new LayerGame(), [
-            new ScreenTitle(this.width, this.height),
+        this.renderer.addLayerWithScreens(new LayerGame(this), [
+            new ScreenTitle(this, this.width, this.height),
         ]);
-        this.renderer.addLayerWithScreens(new LayerPanel(), [
-            new PanelJobs(this.width, this.height),
-            new PanelResearch(this.width, this.height),
+        this.renderer.addLayerWithScreens(new LayerPanel(this), [
+            new PanelJobs(this, this.width, this.height),
+            new PanelResearch(this, this.width, this.height),
         ]);
-        this.renderer.addLayerWithScreens(new LayerUI(), [
+        this.renderer.addLayerWithScreens(new LayerUI(this), [
             new UIPerformance(this.width, this.height),
-            new UIHUD(this.width, this.height),
+            new UIHUD(this, this.width, this.height),
         ]);
-        this.renderer.addLayerWithScreens(new LayerOverlay(), [
-           new OverlayInventory(this.width, this.height), 
-           new OverlayResearch(this.width, this.height),
+        this.renderer.addLayerWithScreens(new LayerOverlay(this), [
+           new OverlayInventory(this, this.width, this.height), 
+           new OverlayResearch(this, this.width, this.height),
         ]);
         this.currentScreens.push("title");
 
         SpriteData.addSprites(this.sprites);
 
         //Initialize Colony
-        this.colony = new Colony();
+        this.colony = new Colony(this);
         this.loot = new LootManager();
 
         TechnologyData.addTechnologies(this.colony.research);
         InventoryData.addItems(this.colony.inventory);
         LootData.addLoot(this.loot, this.colony.inventory);
-        JobData.addJobs(this.colony.jobs);
+        JobData.addJobs(this, this.colony.jobs);
 
         //this.colony.research.active = this.colony.research.technologies.test;
 
@@ -112,11 +112,11 @@ export class ColonyCraft {
 
         //Create clock controller and start frame and tick
         this.clock = new ClockController(60, 1);
-        this.clock.startFrame();
+        this.clock.startFrame(this);
         //this.clock.startTick();
     }
 
-    public static tick() {
+    public tick() {
         if (!this.simulation.running) return;
         if (++this.clock.day > 30) {
             this.clock.day = 1;
@@ -128,21 +128,21 @@ export class ColonyCraft {
         this.entities.tick(this);
     }
 
-    public static render() {
+    public render() {
         //clear current screen
         this.renderer.clear();
 
         //perform button update
-        this.mouse.update();
+        this.mouse.update(this);
 
         //render screens
-        this.renderer.render();
+        this.renderer.render(this);
 
         //draw to canvas
         this.ctx.drawImage(this.renderer.canvas, 0, 0);
     }
 
-    public static resize() {
+    public resize() {
         this.width = window.innerWidth;
         this.height = window.innerHeight;
         this.canvas.width = this.width;
@@ -150,7 +150,7 @@ export class ColonyCraft {
         this.renderer.resize();
     }
 
-    public static sheetLoaded(name: string): boolean {
+    public sheetLoaded(name: string): boolean {
         return this.sprites.getLoaded(name);
     }
 }

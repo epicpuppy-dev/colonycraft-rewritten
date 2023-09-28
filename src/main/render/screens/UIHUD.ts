@@ -1,3 +1,4 @@
+import { game } from "../../..";
 import { ColonyCraft } from "../../ColonyCraft";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
@@ -5,19 +6,19 @@ import { Button } from "../ui/Button";
 export class UIHUD extends Screen {
     private inventoryButton: Button;
 
-    constructor(width: number, height: number) {
+    constructor(game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
         
-        this.inventoryButton = new Button(100, -50, this.width - 200, 100, (game: typeof ColonyCraft) => {
+        this.inventoryButton = new Button(100, -50, this.width - 200, 100, (game: ColonyCraft) => {
             game.currentScreens.push("inventory");
-        } , (game: typeof ColonyCraft) => {
+        } , (game: ColonyCraft) => {
             return game.currentScreens.includes("game") && !game.currentScreens.includes("inventory");
         });
 
-        ColonyCraft.mouse.registerClickable(this.inventoryButton);
+        game.mouse.registerClickable(this.inventoryButton);
     }
 
-    public render(game: typeof ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
+    public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
         const inventory = game.colony.inventory;
 
         ctx.beginPath();
@@ -49,7 +50,7 @@ export class UIHUD extends Screen {
         game.draw.renderText(ctx);
     }
 
-    public active(game: typeof ColonyCraft): boolean {
+    public active(game: ColonyCraft): boolean {
         return game.currentScreens.includes("game");
     }
 

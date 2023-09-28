@@ -6,13 +6,13 @@ export class UIPerformance extends Screen {
         super(width, height, 0, 0);
     }
 
-    public render(game: typeof ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
-        game.draw.textSmall(`FPS: ${game.clock.getFPS().toFixed(0)}`, 6, 6, 7, "white");
-        game.draw.textSmall(`TPS: ${game.clock.getTPS().toFixed(2)}`, 6, 16, 7, "white");
+    public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
+        game.draw.textSmall(`FPS: ${game.clock.getFPS(game).toFixed(0)}`, 6, 6, 7, "white");
+        game.draw.textSmall(`TPS: ${game.clock.getTPS(game).toFixed(2)}`, 6, 16, 7, "white");
         game.draw.renderText(ctx);
     }
 
-    public active(game: typeof ColonyCraft): boolean {
+    public active(game: ColonyCraft): boolean {
         return true;
     }
 

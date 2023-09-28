@@ -1,4 +1,4 @@
-import { ColonyCraft } from "../ColonyCraft";
+import { game } from "../../index";
 
 export class SimulationController {
     public running: boolean;
@@ -10,14 +10,14 @@ export class SimulationController {
     public toggleRunning (running: boolean) {
         this.running = running;
         if (this.running) {
-            setTimeout(ColonyCraft.clock.startTick, 1000 / ColonyCraft.clock.tps);
+            setTimeout(() => game.clock.startTick(game), 1000 / game.clock.tps);
         } else {
-            ColonyCraft.clock.stopTick();
+            game.clock.stopTick();
         }
     }
 
     public changeSpeed (speed: number) {
         const newTPS = speed * 2;
-        ColonyCraft.clock.changeTPS(newTPS);
+        game.clock.changeTPS(newTPS);
     }
 }

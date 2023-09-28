@@ -1,3 +1,4 @@
+import { game } from "../../..";
 import { ColonyCraft } from "../../ColonyCraft";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
@@ -5,18 +6,18 @@ import { Button } from "../ui/Button";
 export class PanelResearch extends Screen {
     private researchButton: Button;
 
-    constructor(width: number, height: number) {
+    constructor(game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
-        this.researchButton = new Button(0, 50, Math.floor(width / 3), 130, (game: typeof ColonyCraft) => {
+        this.researchButton = new Button(0, 50, Math.floor(width / 3), 130, (game: ColonyCraft) => {
             game.currentScreens.push("research");
-        }, (game: typeof ColonyCraft) => {
+        }, (game: ColonyCraft) => {
             return game.currentScreens.includes("game") && !game.currentScreens.includes("research");
         });
 
-        ColonyCraft.mouse.registerClickable(this.researchButton);
+        game.mouse.registerClickable(this.researchButton);
     }
 
-    public render(game: typeof ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
+    public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
         ctx.beginPath();
         ctx.roundRect(-50, -50, Math.floor(this.width / 3 + 50), 180, 10);
         ctx.fillStyle = "#222222";
@@ -87,7 +88,7 @@ export class PanelResearch extends Screen {
         game.draw.renderText(ctx);
     }
 
-    public active(game: typeof ColonyCraft): boolean {
+    public active(game: ColonyCraft): boolean {
         return game.currentScreens.includes("game");
     }
 

@@ -1,3 +1,4 @@
+import { game } from "../..";
 import { ColonyCraft } from "../ColonyCraft";
 import { FontEntry } from "../data/FontEntry";
 
@@ -10,8 +11,8 @@ export class TextRenderer {
     private height: number;
     private padding: number;
 
-    public constructor (data: {[key: string]: FontEntry}, img: string, size: number, height: number, padding: number) {
-        this.canvas = new OffscreenCanvas(ColonyCraft.width, ColonyCraft.height);
+    public constructor (game: ColonyCraft, data: {[key: string]: FontEntry}, img: string, size: number, height: number, padding: number) {
+        this.canvas = new OffscreenCanvas(game.width, game.height);
         this.ctx = this.canvas.getContext('2d') as OffscreenCanvasRenderingContext2D;
         this.ctx.imageSmoothingEnabled = false;
         this.fontData = data;
@@ -23,8 +24,8 @@ export class TextRenderer {
     }
 
     public resize () {
-        this.canvas.width = ColonyCraft.width;
-        this.canvas.height = ColonyCraft.height;
+        this.canvas.width = game.width;
+        this.canvas.height = game.height;
     }
 
     public draw (text: string, x: number, y: number, size: number, color: string) {

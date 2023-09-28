@@ -1,3 +1,4 @@
+import { game } from "../../..";
 import { ColonyCraft } from "../../ColonyCraft";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
@@ -6,18 +7,18 @@ export class OverlayInventory extends Screen {
     private closeButton: Button;
     private rowScroll: number = 0;
 
-    constructor(width: number, height: number) {
+    constructor(game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
-        this.closeButton = new Button(Math.floor(7 * this.width / 8 - 31), Math.floor(this.height / 8 + 6), 24, 24, (game: typeof ColonyCraft) => {
+        this.closeButton = new Button(Math.floor(7 * this.width / 8 - 31), Math.floor(this.height / 8 + 6), 24, 24, (game: ColonyCraft) => {
             game.currentScreens.splice(game.currentScreens.indexOf("inventory"), 1);
-        }, (game: typeof ColonyCraft) => {
+        }, (game: ColonyCraft) => {
             return game.currentScreens.includes("inventory");
         });
         
-        ColonyCraft.mouse.registerClickable(this.closeButton);
+        game.mouse.registerClickable(this.closeButton);
     }
 
-    public render(game: typeof ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
+    public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
         const inventory = game.colony.inventory;
 
         ctx.fillStyle = '#00000077';
@@ -111,7 +112,7 @@ export class OverlayInventory extends Screen {
         game.draw.renderText(ctx);
     }
 
-    public active(game: typeof ColonyCraft): boolean {
+    public active(game: ColonyCraft): boolean {
         return game.currentScreens.includes("inventory");
     }
 

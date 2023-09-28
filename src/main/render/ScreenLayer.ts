@@ -1,5 +1,4 @@
 import { ColonyCraft } from '../ColonyCraft';
-import { ScreenController } from '../controllers/ScreenController';
 import { Screen } from './Screen';
 
 export class ScreenLayer {
@@ -8,9 +7,9 @@ export class ScreenLayer {
     public readonly canvas: OffscreenCanvas;
     public z: number;
 
-    constructor (z: number) {
+    constructor (game: ColonyCraft, z: number) {
         this.screens = [];
-        this.canvas = new OffscreenCanvas(ColonyCraft.width, ColonyCraft.height);
+        this.canvas = new OffscreenCanvas(game.width, game.height);
         this.ctx = this.canvas.getContext('2d') as OffscreenCanvasRenderingContext2D;
         this.z = z;
     }
@@ -19,7 +18,7 @@ export class ScreenLayer {
         this.screens.push(screen);
     }
 
-    public render (game: typeof ColonyCraft) {
+    public render (game: ColonyCraft) {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         for (const screen of this.screens) {
             if (screen.active(game)) {

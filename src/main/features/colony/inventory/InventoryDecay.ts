@@ -2,11 +2,11 @@ import { ColonyCraft } from "../../../ColonyCraft";
 import { TickingEntity } from "../../TickingEntity";
 
 export class InventoryDecay extends TickingEntity {
-    constructor () {
-        super(98);
+    constructor (game: ColonyCraft) {
+        super(game, 98);
     }
 
-    public tick(game: typeof ColonyCraft): void {
+    public tick(game: ColonyCraft): void {
         const inventory = game.colony.inventory;
 
         for (let key in inventory.items) {

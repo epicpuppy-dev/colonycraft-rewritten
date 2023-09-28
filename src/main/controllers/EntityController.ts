@@ -8,7 +8,7 @@ export class EntityController {
         this.entities = [];
     }
 
-    public tick (game: typeof ColonyCraft) {
+    public tick (game: ColonyCraft) {
         this.entities.forEach(entity => {
             entity.tick(game);
         });

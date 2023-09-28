@@ -2,6 +2,7 @@ import { InventoryMonitor } from "./InventoryMonitor";
 import { Item } from "./Item";
 import { InventoryDecay } from "./InventoryDecay";
 import { ItemGroup } from "./ItemGroup";
+import { ColonyCraft } from "../../../ColonyCraft";
 
 export class Inventory {
     public categories: { [key: string]: ItemGroup } = {};
@@ -10,11 +11,12 @@ export class Inventory {
     public storageUsed: number = 0;
     private monitor1: InventoryMonitor;
     private monitor2: InventoryMonitor;
-    private decay: InventoryDecay = new InventoryDecay();
+    private decay: InventoryDecay;
 
-    constructor () {
-        this.monitor1 = new InventoryMonitor(97);
-        this.monitor2 = new InventoryMonitor(99);
+    constructor (game: ColonyCraft) {
+        this.monitor1 = new InventoryMonitor(game, 97);
+        this.monitor2 = new InventoryMonitor(game, 99);
+        this.decay = new InventoryDecay(game);
     }
 
     public addCategory(category: ItemGroup) {
