@@ -1,5 +1,7 @@
 import { game } from "../../..";
 import { ColonyCraft } from "../../ColonyCraft";
+import { KeyAction } from "../../player/KeyAction";
+import { KeyBind } from "../../player/KeyBind";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
 
@@ -11,7 +13,7 @@ export class PanelResearch extends Screen {
         this.researchButton = new Button(0, 50, Math.floor(width / 3), 130, (game: ColonyCraft) => {
             game.currentScreens.push("research");
         }, (game: ColonyCraft) => {
-            return game.currentScreens.includes("game") && !game.currentScreens.includes("research");
+            return game.currentScreens.includes("game") && !game.currentScreens.includes("research") && !game.currentScreens.includes("inventory");
         });
 
         game.mouse.registerClickable(this.researchButton);
@@ -82,7 +84,8 @@ export class PanelResearch extends Screen {
                 ctx.strokeRect(10, 116, barWidth, 4);
             }
         } else {
-            game.draw.textCenter("No Active Research", Math.floor(this.width / 6), 82, 14, "#FFFFFF");
+            game.draw.textCenter(`Press '${game.key.actions.openResearch.bindings[0].key}' to select`, Math.floor(this.width / 6), 72, 14, "#FFFFFF");
+            game.draw.textCenter("a new research", Math.floor(this.width / 6), 94, 14, "#FFFFFF");
         }
 
         game.draw.renderText(ctx);

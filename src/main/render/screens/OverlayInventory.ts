@@ -1,5 +1,7 @@
 import { game } from "../../..";
 import { ColonyCraft } from "../../ColonyCraft";
+import { KeyAction } from "../../player/KeyAction";
+import { KeyBind } from "../../player/KeyBind";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
 
@@ -16,6 +18,20 @@ export class OverlayInventory extends Screen {
         });
         
         game.mouse.registerClickable(this.closeButton);
+
+        game.key.addAction(new KeyAction("closeInventory", "Close Inventory", (game: ColonyCraft) => {
+            if (game.currentScreens.includes("inventory")) game.currentScreens.splice(game.currentScreens.indexOf("inventory"), 1);
+        }));
+        game.draw.addCloseAction(game.key.actions.closeInventory);
+
+        game.key.addAction(new KeyAction("openInventory", "Open Inventory", (game: ColonyCraft) => {
+            if (game.currentScreens.includes("game") && !game.currentScreens.includes("inventory") && !game.currentScreens.includes("research")) game.currentScreens.push("inventory");
+            else if (game.currentScreens.includes("inventory")) {
+                game.currentScreens.splice(game.currentScreens.indexOf("inventory"), 1);
+            }
+        }));
+        
+        game.key.addBinding(new KeyBind("Open Inventory", "I", "KeyI", [game.key.actions.openInventory]));
     }
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {

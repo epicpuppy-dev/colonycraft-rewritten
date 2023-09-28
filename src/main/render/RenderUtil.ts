@@ -1,3 +1,6 @@
+import { ColonyCraft } from "../ColonyCraft";
+import { KeyAction } from "../player/KeyAction";
+import { KeyBind } from "../player/KeyBind";
 import { SpriteRenderer } from "./SpriteRenderer";
 import { TextRenderer } from "./TextRenderer";
 
@@ -5,11 +8,14 @@ export class RenderUtil {
     private font: TextRenderer;
     private fontSmall: TextRenderer;
     private sprites: SpriteRenderer;
+    public closeButton: KeyBind;
 
-    constructor(font: TextRenderer, fontSmall: TextRenderer, sprites: SpriteRenderer) {
+    constructor(game: ColonyCraft, font: TextRenderer, fontSmall: TextRenderer, sprites: SpriteRenderer) {
         this.font = font;
         this.fontSmall = fontSmall;
         this.sprites = sprites;
+        this.closeButton = new KeyBind("Close Menu", "Esc", "Escape", []);
+        game.key.addBinding(this.closeButton);
     }
 
     text(text: string, x: number, y: number, size: number = 14, color: string = "#ffffff"): void {
@@ -50,5 +56,10 @@ export class RenderUtil {
         if (num < 1000000) return (num / 1000).toPrecision(3) + "k";
         if (num < 1000000000) return (num / 1000000).toPrecision(3) + "m";
         else return (num / 1000000000).toPrecision(3) + "b";
+    }
+
+    addCloseAction(action: KeyAction) {
+        this.closeButton.actions.push(action);
+        action.bindings.push(this.closeButton);
     }
 }

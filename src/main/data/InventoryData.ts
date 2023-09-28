@@ -1,6 +1,6 @@
-import { Inventory } from "../features/colony/inventory/Inventory";
-import { Item } from "../features/colony/inventory/Item";
-import { ItemGroup } from "../features/colony/inventory/ItemGroup";
+import { Inventory } from "../content/colony/inventory/Inventory";
+import { Item } from "../content/colony/inventory/Item";
+import { ItemGroup } from "../content/colony/inventory/ItemGroup";
 
 export class InventoryData {
     public static addItems (inventory: Inventory) {

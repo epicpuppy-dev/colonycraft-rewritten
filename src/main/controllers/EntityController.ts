@@ -1,5 +1,5 @@
 import { ColonyCraft } from "../ColonyCraft";
-import { TickingEntity } from "../features/TickingEntity";
+import { TickingEntity } from "../content/TickingEntity";
 
 export class EntityController {
     private entities: TickingEntity[];

@@ -16,8 +16,8 @@ import { SimulationController } from "./controllers/SimulationController";
 import fontImage from "./resources/ui/font.png";
 import fontImageSmall from "./resources/ui/fontsmall.png";
 import { EntityController } from "./controllers/EntityController";
-import { Colony } from "./features/colony/Colony";
-import { LootManager } from "./features/loot/LootManager";
+import { Colony } from "./content/colony/Colony";
+import { LootManager } from "./content/loot/LootManager";
 import { LootData } from "./data/LootData";
 import { SpriteData } from "./data/SpriteData";
 import { InventoryData } from "./data/InventoryData";
@@ -27,6 +27,7 @@ import { PanelJobs } from "./render/screens/PanelJobs";
 import { PanelResearch } from "./render/screens/PanelResearch";
 import { TechnologyData } from "./data/TechnologyData";
 import { OverlayResearch } from "./render/screens/OverlayResearch";
+import { KeyController } from "./controllers/KeyController";
 
 export class ColonyCraft {
     public width: number;
@@ -40,6 +41,7 @@ export class ColonyCraft {
     public simulation: SimulationController;
     public entities: EntityController;
     public loot: LootManager;
+    public key: KeyController;
 
     private font: TextRenderer;
     private fontSmall: TextRenderer;
@@ -65,13 +67,16 @@ export class ColonyCraft {
 
         //Initialize Entity Ticker
         this.entities = new EntityController();
+        this.key = new KeyController();
 
         //Initialize Renderers
         this.renderer = new ScreenController(this);
         this.font = new TextRenderer(this, FontData.normal, fontImage, 14, 18, 2);
         this.fontSmall = new TextRenderer(this, FontData.small, fontImageSmall, 7, 9, 1);
         this.sprites = new SpriteRenderer();
-        this.draw = new RenderUtil(this.font, this.fontSmall, this.sprites);
+        this.draw = new RenderUtil(this, this.font, this.fontSmall, this.sprites);
+
+        //Initialize Controls
         this.mouse = new MouseController();
 
         this.currentScreens = [];
@@ -134,6 +139,7 @@ export class ColonyCraft {
 
         //perform button update
         this.mouse.update(this);
+        this.key.tick(this);
 
         //render screens
         this.renderer.render(this);

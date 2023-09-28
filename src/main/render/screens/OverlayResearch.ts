@@ -1,6 +1,8 @@
 import { game } from "../../..";
 import { ColonyCraft } from "../../ColonyCraft";
-import { Technology } from "../../features/colony/research/Technology";
+import { Technology } from "../../content/colony/research/Technology";
+import { KeyAction } from "../../player/KeyAction";
+import { KeyBind } from "../../player/KeyBind";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
 import { ClickHandler } from "../ui/ClickHandler";
@@ -33,6 +35,20 @@ export class OverlayResearch extends Screen {
         
         game.mouse.registerClickable(this.closeButton);
         game.mouse.registerClickable(this.selectionClickable);
+        
+        game.key.addAction(new KeyAction("closeResearch", "Close Research", (game: ColonyCraft) => {
+            if (game.currentScreens.includes("research")) game.currentScreens.splice(game.currentScreens.indexOf("research"), 1);
+        }));
+        game.draw.addCloseAction(game.key.actions.closeResearch);
+
+        game.key.addAction(new KeyAction("openResearch", "Open Research", (game: ColonyCraft) => {
+            if (game.currentScreens.includes("game") && !game.currentScreens.includes("research") && !game.currentScreens.includes("inventory")) game.currentScreens.push("research");
+            else if (game.currentScreens.includes("research")) {
+                game.currentScreens.splice(game.currentScreens.indexOf("research"), 1);
+            }
+        }));
+
+        game.key.addBinding(new KeyBind("Open Research", "T", "KeyT", [game.key.actions.openResearch]));
     }
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {

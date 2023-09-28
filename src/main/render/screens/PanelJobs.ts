@@ -1,6 +1,6 @@
 import { game } from "../../..";
 import { ColonyCraft } from "../../ColonyCraft";
-import { Job } from "../../features/colony/jobs/Job";
+import { Job } from "../../content/colony/jobs/Job";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
 import { ClickHandler } from "../ui/ClickHandler";

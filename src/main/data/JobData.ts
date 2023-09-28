@@ -1,7 +1,7 @@
 import { ColonyCraft } from "../ColonyCraft";
-import { Job } from "../features/colony/jobs/Job";
-import { Jobs } from "../features/colony/jobs/Jobs";
-import { ResourceJob } from "../features/colony/jobs/custom/ResourceJob";
+import { Job } from "../content/colony/jobs/Job";
+import { Jobs } from "../content/colony/jobs/Jobs";
+import { ResourceJob } from "../content/colony/jobs/custom/ResourceJob";
 
 export class JobData {
     public static addJobs (game: ColonyCraft, jobs: Jobs) {
