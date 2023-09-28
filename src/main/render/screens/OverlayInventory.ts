@@ -35,7 +35,7 @@ export class OverlayInventory extends Screen {
         //Storage bar
         game.draw.sprite(ctx, "storage", Math.floor(this.width / 8 + 8), Math.floor(7 * this.height / 8 - 40), 32, 32);
         ctx.fillStyle = inventory.storageUsed < inventory.storageCapacity ? inventory.storageUsed < inventory.storageCapacity * 2 / 3 ? '#00ff00' : '#ffff00' : '#ff0000';
-        ctx.fillRect(Math.floor(this.width / 8 + 48), Math.floor(7 * this.height / 8 - 18), Math.min(Math.floor((3 * this.width / 4 - 56) * (inventory.storageUsed / inventory.storageCapacity)), (3 * this.width / 4 - 56)), 10);
+        ctx.fillRect(Math.floor(this.width / 8 + 48), Math.floor(7 * this.height / 8 - 18), Math.min((3 * this.width / 4 - 56) * (inventory.storageUsed / inventory.storageCapacity), (3 * this.width / 4 - 56)), 10);
         ctx.strokeStyle = '#555555';
         ctx.strokeRect(Math.floor(this.width / 8 + 48), Math.floor(7 * this.height / 8 - 18), Math.floor((3 * this.width / 4 - 56) * Math.min((inventory.storageCapacity / (inventory.storageUsed == 0 ? 1 : inventory.storageUsed)), 1)), 10);
         ctx.strokeStyle = '#777777';

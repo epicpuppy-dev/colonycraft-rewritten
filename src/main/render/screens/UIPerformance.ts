@@ -9,10 +9,6 @@ export class UIPerformance extends Screen {
     public render(game: typeof ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
         game.draw.textSmall(`FPS: ${game.clock.getFPS().toFixed(0)}`, 6, 6, 7, "white");
         game.draw.textSmall(`TPS: ${game.clock.getTPS().toFixed(2)}`, 6, 16, 7, "white");
-        game.draw.textSmall(`Babies: ${game.colony.population.babies}`, 6, 26, 7, "white");
-        game.draw.textSmall(`Children: ${game.colony.population.children}`, 6, 36, 7, "white");
-        game.draw.textSmall(`Adults: ${game.colony.population.adults}`, 6, 46, 7, "white");
-        game.draw.textSmall(`Seniors: ${game.colony.population.seniors}`, 6, 56, 7, "white");
         game.draw.renderText(ctx);
     }
 

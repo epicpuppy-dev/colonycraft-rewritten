@@ -40,11 +40,11 @@ export class UIHUD extends Screen {
         ctx.strokeRect(126, 8, 98, 8);
 
         //Draw Population HUD
-        game.draw.sprite(ctx, "peopleSmall", 355, 4, 16, 16);
-        game.draw.text(`${game.draw.toShortNumber(game.colony.population.babies + game.colony.population.children + game.colony.population.adults + game.colony.population.seniors)}`, 377, 6, 14, "white");
+        game.draw.sprite(ctx, "peopleSmall", 320, 4, 16, 16);
+        game.draw.text(`${game.draw.toShortNumber(game.colony.population.babies + game.colony.population.children + game.colony.population.adults + game.colony.population.seniors)}`, 342, 6, 14, "white");
 
-        game.draw.sprite(ctx, "workersSmall", 355, 28, 16, 16)
-        game.draw.text(`${game.draw.toShortNumber(game.colony.jobs.workersAssigned)}/${game.draw.toShortNumber(game.colony.population.adults)}`, 377, 30, 14, "#6495ED");
+        game.draw.sprite(ctx, "workersSmall", 320, 28, 16, 16)
+        game.draw.text(`${game.draw.toShortNumber(game.colony.jobs.workersAssigned)}/${game.draw.toShortNumber(game.colony.population.adults)}`, 342, 30, 14, "#6495ED");
 
         game.draw.renderText(ctx);
     }
