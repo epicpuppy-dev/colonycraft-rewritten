@@ -13,6 +13,7 @@ export class PanelJobs extends Screen {
     private plusClickable: ClickHandler;
     private minusClickable: ClickHandler;
     private jobsAvailable: Job[] = [];
+    private buttonOffset: number = 100;
 
     constructor(width: number, height: number) {
         super(width, height, 0, 0);
@@ -25,18 +26,22 @@ export class PanelJobs extends Screen {
 
         const maxRows = Math.floor((this.height - 138) / 40);
 
-        this.plusClickable = new ClickHandler(Math.floor(5 * this.width / 6) + 88, 140, 21, 21 + 40 * maxRows, (game, x, y) => {
+        this.plusClickable = new ClickHandler(0, 140, this.width, 21 + 40 * maxRows, (game, x, y) => {
+            if (x < Math.floor(5 * this.width / 6) + this.buttonOffset - 12 || x > Math.floor(5 * this.width / 6) + this.buttonOffset + 12) return;
             const yRelative = y - 140;
             const yLeft = yRelative % 40;
             if (yLeft > 21) return;
             const row = Math.floor(yRelative / 40);
+            if (row > this.jobsAvailable.length - 1) return;
             this.plus(game, row);
         }, (game) => game.currentScreens.includes("game") && game.currentScreens.length == 1);
-        this.minusClickable = new ClickHandler(Math.floor(5 * this.width / 6) - 112, 140, 21, 21 + 40 * maxRows, (game, x, y) => {
+        this.minusClickable = new ClickHandler(0, 140, this.width, 21 + 40 * maxRows, (game, x, y) => {
+            if (x < Math.floor(5 * this.width / 6) - this.buttonOffset - 12 || x > Math.floor(5 * this.width / 6) - this.buttonOffset + 12) return;
             const yRelative = y - 140;
             const yLeft = yRelative % 40;
             if (yLeft > 21) return;
             const row = Math.floor(yRelative / 40);
+            if (row > this.jobsAvailable.length - 1) return;
             this.minus(game, row);
         }, (game) => game.currentScreens.includes("game") && game.currentScreens.length == 1);
 
@@ -54,7 +59,7 @@ export class PanelJobs extends Screen {
         ctx.lineWidth = 2;
         ctx.strokeRect(Math.floor(2 * this.width / 3), -50, Math.floor(2 * this.width / 3) + 50, this.height + 1000);
 
-        game.draw.textCenter("Jobs", Math.floor(5 * this.width / 6), 62, 28, "#FFFFFF");
+        game.draw.textCenter("Jobs", Math.floor(5 * this.width / 6), 62, 21, "#FFFFFF");
 
         const maxRows = Math.floor((this.height - 138) / 40);
         let row = 0;
@@ -69,27 +74,31 @@ export class PanelJobs extends Screen {
         game.draw.textCenter("-", Math.floor(5 * this.width / 6) - 50, 100, 21, "#FFFFFF");
 
         const jobs = game.colony.jobs.jobs;
+        let maxWidth = 0;
 
         for (const job in jobs) {
             if (row >= maxRows + this.rowScroll) break;
             if (row < this.rowScroll) continue;
             if (jobs[job].unlocked(game)) {
                 this.jobsAvailable.push(jobs[job]);
+                maxWidth = Math.max(maxWidth, game.draw.textWidth(jobs[job].name, 14));
                 game.draw.textCenter(jobs[job].name, Math.floor(5 * this.width / 6), 130 + 40 * row, 14, "#FFFFFF");
                 if (jobs[job].maxWorkers(game) !== Infinity) {
                     game.draw.textCenter(game.draw.toShortNumber(jobs[job].workersAssigned) + " / " + game.draw.toShortNumber(jobs[job].maxWorkers(game)), Math.floor(5 * this.width / 6), 150 + 40 * row, 14, "#FFFFFF");
                 } else {
                     game.draw.textCenter(game.draw.toShortNumber(jobs[job].workersAssigned), Math.floor(5 * this.width / 6), 150 + 40 * row, 14, "#FFFFFF");
                 }
-                game.draw.textCenter("+", Math.floor(5 * this.width / 6) + 100, 140 + 40 * row, 21, "#FFFFFF");
-                game.draw.textCenter("-", Math.floor(5 * this.width / 6) - 100, 140 + 40 * row, 21, "#FFFFFF");
+                game.draw.textCenter("+", Math.floor(5 * this.width / 6) + this.buttonOffset, 140 + 40 * row, 21, "#FFFFFF");
+                game.draw.textCenter("-", Math.floor(5 * this.width / 6) - this.buttonOffset, 140 + 40 * row, 21, "#FFFFFF");
                 ctx.beginPath();
-                ctx.roundRect(Math.floor(5 * this.width / 6) - 112, 140 + 40 * row, 21, 21, 3);
-                ctx.roundRect(Math.floor(5 * this.width / 6) + 88, 140 + 40 * row, 21, 21, 3);
+                ctx.roundRect(Math.floor(5 * this.width / 6) - this.buttonOffset - 12, 140 + 40 * row, 21, 21, 3);
+                ctx.roundRect(Math.floor(5 * this.width / 6) + this.buttonOffset - 12, 140 + 40 * row, 21, 21, 3);
                 ctx.stroke();
                 row++;
             }
         }
+
+        this.buttonOffset = Math.floor(maxWidth / 2 + 24);
 
         game.draw.renderText(ctx);
     }

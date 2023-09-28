@@ -13,7 +13,6 @@ import { UIHUD } from "./render/screens/UIHUD";
 import { UIPerformance } from "./render/screens/UIPerformance";
 import { ScreenTitle } from "./render/screens/ScreenTitle";
 import { SimulationController } from "./controllers/SimulationController";
-
 import fontImage from "./resources/ui/font.png";
 import fontImageSmall from "./resources/ui/fontsmall.png";
 import { EntityController } from "./controllers/EntityController";
@@ -25,6 +24,9 @@ import { InventoryData } from "./data/InventoryData";
 import { JobData } from "./data/JobData";
 import { LayerPanel } from "./render/layers/LayerPanel";
 import { PanelJobs } from "./render/screens/PanelJobs";
+import { PanelResearch } from "./render/screens/PanelResearch";
+import { TechnologyData } from "./data/TechnologyData";
+import { OverlayResearch } from "./render/screens/OverlayResearch";
 
 export class ColonyCraft {
     public static width: number;
@@ -80,6 +82,7 @@ export class ColonyCraft {
         ]);
         this.renderer.addLayerWithScreens(new LayerPanel(), [
             new PanelJobs(this.width, this.height),
+            new PanelResearch(this.width, this.height),
         ]);
         this.renderer.addLayerWithScreens(new LayerUI(), [
             new UIPerformance(this.width, this.height),
@@ -87,6 +90,7 @@ export class ColonyCraft {
         ]);
         this.renderer.addLayerWithScreens(new LayerOverlay(), [
            new OverlayInventory(this.width, this.height), 
+           new OverlayResearch(this.width, this.height),
         ]);
         this.currentScreens.push("title");
 
@@ -96,9 +100,12 @@ export class ColonyCraft {
         this.colony = new Colony();
         this.loot = new LootManager();
 
+        TechnologyData.addTechnologies(this.colony.research);
         InventoryData.addItems(this.colony.inventory);
         LootData.addLoot(this.loot, this.colony.inventory);
         JobData.addJobs(this.colony.jobs);
+
+        //this.colony.research.active = this.colony.research.technologies.test;
 
         //Initialize Simulation
         this.simulation = new SimulationController();
