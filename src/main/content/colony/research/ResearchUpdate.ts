@@ -2,7 +2,7 @@ import { ColonyCraft } from "../../../ColonyCraft";
 import { TickingEntity } from "../../TickingEntity";
 
 export class ResearchUpdate extends TickingEntity {
-    public tick(game: typeof ColonyCraft): void {
+    public tick(game: ColonyCraft): void {
         const research = game.colony.research.active;
         const jobs = game.colony.jobs.jobs;
 

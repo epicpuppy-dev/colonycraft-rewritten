@@ -1,3 +1,4 @@
+import { ColonyCraft } from "../../../ColonyCraft";
 import { ResearchUpdate } from "./ResearchUpdate";
 import { Technology } from "./Technology";
 
@@ -6,8 +7,8 @@ export class ResearchManager {
     public active: Technology | null = null;
     private update: ResearchUpdate;
 
-    constructor () {
-        this.update = new ResearchUpdate();
+    constructor (game: ColonyCraft) {
+        this.update = new ResearchUpdate(game);
     }
 
     public registerTechnology (technology: Technology) {

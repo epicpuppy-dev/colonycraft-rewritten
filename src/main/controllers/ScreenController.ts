@@ -1,3 +1,4 @@
+import { game } from "../../index";
 import { ColonyCraft } from "../ColonyCraft";
 import { Screen } from "../render/Screen";
 import { ScreenLayer } from "../render/ScreenLayer";
@@ -8,10 +9,10 @@ export class ScreenController {
     private layers: ScreenLayer[];
     public canvas: OffscreenCanvas;
 
-    constructor () {
+    constructor (game: ColonyCraft) {
         this.screens = [];
         this.layers = [];
-        this.canvas = new OffscreenCanvas(ColonyCraft.width, ColonyCraft.height);
+        this.canvas = new OffscreenCanvas(game.width, game.height);
         this.ctx = this.canvas.getContext('2d') as OffscreenCanvasRenderingContext2D;
     }
 
@@ -32,18 +33,18 @@ export class ScreenController {
     }
 
     public resize () {
-        this.canvas.width = ColonyCraft.width;
-        this.canvas.height = ColonyCraft.height;
+        this.canvas.width = game.width;
+        this.canvas.height = game.height;
         //resize each layer
         for (const layer of this.layers) {
             layer.resize(this.canvas.width, this.canvas.height);
         }
     }
 
-    public render () {
+    public render (game: ColonyCraft) {
         this.layers.sort((a, b) => a.z - b.z);
         for (const layer of this.layers) {
-            layer.render(ColonyCraft);
+            layer.render(game);
             this.ctx.drawImage(layer.canvas, 0, 0);
         }
     }

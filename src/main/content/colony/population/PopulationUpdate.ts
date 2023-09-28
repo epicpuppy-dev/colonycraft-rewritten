@@ -2,11 +2,11 @@ import { ColonyCraft } from "../../../ColonyCraft";
 import { TickingEntity } from "../../TickingEntity";
 
 export class PopulationUpdate extends TickingEntity {
-    constructor () {
-        super(60);
+    constructor (game: ColonyCraft) {
+        super(game, 60);
     }
 
-    public tick (game: typeof ColonyCraft) {
+    public tick (game: ColonyCraft) {
         const population = game.colony.population;
         //0.2% chance of death per day
         if (population.seniors > 10000) {

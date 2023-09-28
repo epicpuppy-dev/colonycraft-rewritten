@@ -1,5 +1,5 @@
 import { ColonyCraft } from "../ColonyCraft";
-import { TickingEntity } from "../features/TickingEntity";
+import { TickingEntity } from "../content/TickingEntity";
 
 export class EntityController {
     private entities: TickingEntity[];
@@ -8,7 +8,7 @@ export class EntityController {
         this.entities = [];
     }
 
-    public tick (game: typeof ColonyCraft) {
+    public tick (game: ColonyCraft) {
         this.entities.forEach(entity => {
             entity.tick(game);
         });

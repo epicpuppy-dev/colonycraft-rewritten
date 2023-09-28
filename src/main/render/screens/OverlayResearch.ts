@@ -1,5 +1,8 @@
+import { game } from "../../..";
 import { ColonyCraft } from "../../ColonyCraft";
-import { Technology } from "../../features/colony/research/Technology";
+import { Technology } from "../../content/colony/research/Technology";
+import { KeyAction } from "../../player/KeyAction";
+import { KeyBind } from "../../player/KeyBind";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
 import { ClickHandler } from "../ui/ClickHandler";
@@ -10,15 +13,15 @@ export class OverlayResearch extends Screen {
     private technologiesAvailable: Technology[] = [];
     private selectionClickable: ClickHandler;
 
-    constructor(width: number, height: number) {
+    constructor(game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
-        this.closeButton = new Button(Math.floor(7 * this.width / 8 - 31), Math.floor(this.height / 8 + 6), 24, 24, (game: typeof ColonyCraft) => {
+        this.closeButton = new Button(Math.floor(7 * this.width / 8 - 31), Math.floor(this.height / 8 + 6), 24, 24, (game: ColonyCraft) => {
             game.currentScreens.splice(game.currentScreens.indexOf("research"), 1);
-        }, (game: typeof ColonyCraft) => {
+        }, (game: ColonyCraft) => {
             return game.currentScreens.includes("research");
         });
 
-        this.selectionClickable = new ClickHandler(Math.floor(this.width / 8), Math.floor(this.height / 8), Math.floor(3 * this.width / 4), Math.floor(3 * this.height / 4), (game: typeof ColonyCraft, x: number, y: number) => {
+        this.selectionClickable = new ClickHandler(Math.floor(this.width / 8), Math.floor(this.height / 8), Math.floor(3 * this.width / 4), Math.floor(3 * this.height / 4), (game: ColonyCraft, x: number, y: number) => {
             if ((y - this.height / 8 - 56) % 124 > 104) return;
             const row = Math.floor((y - this.height / 8 - 56) / 124 );
             if ((x - this.width / 8 - 10) % (3 * this.width / 4) > 3 * this.width / 4 - 20) return;
@@ -26,15 +29,29 @@ export class OverlayResearch extends Screen {
             const index = row * 2 + column + (game.colony.research.active != null ? -2 : 0);
             if (index >= this.technologiesAvailable.length || index < 0) return;
             game.colony.research.active = this.technologiesAvailable[index];
-        }, (game: typeof ColonyCraft) => {
+        }, (game: ColonyCraft) => {
             return game.currentScreens.includes("research");
         });
         
-        ColonyCraft.mouse.registerClickable(this.closeButton);
-        ColonyCraft.mouse.registerClickable(this.selectionClickable);
+        game.mouse.registerClickable(this.closeButton);
+        game.mouse.registerClickable(this.selectionClickable);
+        
+        game.key.addAction(new KeyAction("closeResearch", "Close Research", (game: ColonyCraft) => {
+            if (game.currentScreens.includes("research")) game.currentScreens.splice(game.currentScreens.indexOf("research"), 1);
+        }));
+        game.draw.addCloseAction(game.key.actions.closeResearch);
+
+        game.key.addAction(new KeyAction("openResearch", "Open Research", (game: ColonyCraft) => {
+            if (game.currentScreens.includes("game") && !game.currentScreens.includes("research") && !game.currentScreens.includes("inventory")) game.currentScreens.push("research");
+            else if (game.currentScreens.includes("research")) {
+                game.currentScreens.splice(game.currentScreens.indexOf("research"), 1);
+            }
+        }));
+
+        game.key.addBinding(new KeyBind("Open Research", "T", "KeyT", [game.key.actions.openResearch]));
     }
 
-    public render(game: typeof ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
+    public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
         const research = game.colony.research;
 
         ctx.fillStyle = '#00000077';
@@ -142,7 +159,7 @@ export class OverlayResearch extends Screen {
 
                 //draw description
                 for (let j = 0; j < technology.desc.length; j++) {
-                    game.draw.textSmallCenter("- " + technology.desc[j], Math.floor(5 * this.width / 16 + currentColumn * 3 * this.width / 8), Math.floor(this.height / 8 + 84 + 124 * (currentRow - this.rowScroll) + j * 12), 8, "#FFFFFF");
+                    game.draw.textSmallCenter("- " + technology.desc[j], Math.floor(5 * this.width / 16 + currentColumn * 3 * this.width / 8), Math.floor(this.height / 8 + 84 + 124 * (currentRow - this.rowScroll) + j * 12), 7, "#FFFFFF");
                 }
 
                 //draw cost
@@ -160,7 +177,7 @@ export class OverlayResearch extends Screen {
         game.draw.renderText(ctx);
     }
 
-    public active(game: typeof ColonyCraft): boolean {
+    public active(game: ColonyCraft): boolean {
         return game.currentScreens.includes("research");
     }
 

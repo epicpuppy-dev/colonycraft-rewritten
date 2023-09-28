@@ -1,5 +1,6 @@
+import { game } from "../../..";
 import { ColonyCraft } from "../../ColonyCraft";
-import { Job } from "../../features/colony/jobs/Job";
+import { Job } from "../../content/colony/jobs/Job";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
 import { ClickHandler } from "../ui/ClickHandler";
@@ -15,7 +16,7 @@ export class PanelJobs extends Screen {
     private jobsAvailable: Job[] = [];
     private buttonOffset: number = 100;
 
-    constructor(width: number, height: number) {
+    constructor(game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
         this.plusButton = new Button(Math.floor(5 * this.width / 6) + 38, 100, 21, 21, () => {
             this.increaseIndex = Math.min(this.increaseSteps.length - 1, this.increaseIndex + 1);
@@ -45,14 +46,14 @@ export class PanelJobs extends Screen {
             this.minus(game, row);
         }, (game) => game.currentScreens.includes("game") && game.currentScreens.length == 1);
 
-        ColonyCraft.mouse.registerClickable(this.plusButton);
-        ColonyCraft.mouse.registerClickable(this.minusButton);
+        game.mouse.registerClickable(this.plusButton);
+        game.mouse.registerClickable(this.minusButton);
 
-        ColonyCraft.mouse.registerClickable(this.plusClickable);
-        ColonyCraft.mouse.registerClickable(this.minusClickable);
+        game.mouse.registerClickable(this.plusClickable);
+        game.mouse.registerClickable(this.minusClickable);
     }
 
-    public render(game: typeof ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
+    public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
         ctx.fillStyle = "#222222";
         ctx.fillRect(Math.floor(2 * this.width / 3), -50, Math.floor(2 * this.width / 3) + 50, this.height + 1000);
         ctx.strokeStyle = '#777777';
@@ -103,17 +104,17 @@ export class PanelJobs extends Screen {
         game.draw.renderText(ctx);
     }
 
-    private plus(game: typeof ColonyCraft, index: number) {
+    private plus(game: ColonyCraft, index: number) {
         const job = this.jobsAvailable[index];
         job.assign(game, Math.min(Math.max(game.colony.population.adults - game.colony.jobs.workersAssigned, 0), job.maxWorkers(game) - job.workersAssigned, this.increaseSteps[this.increaseIndex][0]));
     }
 
-    private minus(game: typeof ColonyCraft, index: number) {
+    private minus(game: ColonyCraft, index: number) {
         const job = this.jobsAvailable[index];
         job.unassign(game, Math.min(job.workersAssigned, this.increaseSteps[this.increaseIndex][0]));
     }
 
-    public active(game: typeof ColonyCraft): boolean {
+    public active(game: ColonyCraft): boolean {
         return game.currentScreens.includes("game");
     }
 

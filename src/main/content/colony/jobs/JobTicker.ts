@@ -5,12 +5,12 @@ import { Job } from "./Job";
 export class JobTicker extends TickingEntity {
     private job: Job;
 
-    constructor (job: Job, priority: number = 50) {
-        super(priority);
+    constructor (game: ColonyCraft, job: Job, priority: number = 50) {
+        super(game, priority);
         this.job = job;
     }
 
-    public tick(game: typeof ColonyCraft): void {
+    public tick(game: ColonyCraft): void {
         this.job.tick(game);
     }
 }

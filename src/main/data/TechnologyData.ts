@@ -1,6 +1,6 @@
-import { ResearchManager } from "../features/colony/research/ResearchManager";
-import { TechPoints } from "../features/colony/research/TechPoints";
-import { Technology } from "../features/colony/research/Technology";
+import { ResearchManager } from "../content/colony/research/ResearchManager";
+import { TechPoints } from "../content/colony/research/TechPoints";
+import { Technology } from "../content/colony/research/Technology";
 
 export class TechnologyData {
     public static addTechnologies (manager: ResearchManager) {

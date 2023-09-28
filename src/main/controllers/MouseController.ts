@@ -1,3 +1,4 @@
+import { game } from "../..";
 import { ColonyCraft } from "../ColonyCraft";
 import { Clickable } from "../render/ui/Clickable";
 
@@ -14,7 +15,7 @@ export class MouseController {
 
         document.addEventListener('mousedown', (event) => { 
             this.clickables.forEach((clickable) => {
-                clickable.click(ColonyCraft);
+                clickable.click(game);
             });
         });
     }
@@ -32,10 +33,10 @@ export class MouseController {
         }
     }
 
-    public update(): void {
+    public update(game: ColonyCraft): void {
         //perform an update on each button
         this.clickables.forEach((button) => {
-            button.update(ColonyCraft, this.x, this.y);
+            button.update(game, this.x, this.y);
         });
     }
 }
