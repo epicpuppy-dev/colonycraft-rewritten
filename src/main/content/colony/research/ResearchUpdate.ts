@@ -7,12 +7,12 @@ export class ResearchUpdate extends TickingEntity {
         const jobs = game.colony.jobs.jobs;
 
         if (research == null) return;
-        research.current.invention = Math.min(research.current.invention + jobs.invention.workersAssigned, research.needed.invention);
-        research.current.math = Math.min(research.current.math + jobs.math.workersAssigned, research.needed.math);
-        research.current.physics = Math.min(research.current.physics + jobs.physics.workersAssigned, research.needed.physics);
-        research.current.chemistry = Math.min(research.current.chemistry + jobs.chemistry.workersAssigned, research.needed.chemistry);
-        research.current.biology = Math.min(research.current.biology + jobs.biology.workersAssigned, research.needed.biology);
-        research.current.quantum = Math.min(research.current.quantum + jobs.quantum.workersAssigned, research.needed.quantum);
+        research.current.invention = Math.min(research.current.invention + jobs.invention1.workersAssigned, research.needed.invention);
+        research.current.math = Math.min(research.current.math + jobs.math1.workersAssigned, research.needed.math);
+        research.current.physics = Math.min(research.current.physics + jobs.physics1.workersAssigned, research.needed.physics);
+        research.current.chemistry = Math.min(research.current.chemistry + jobs.chemistry1.workersAssigned, research.needed.chemistry);
+        research.current.biology = Math.min(research.current.biology + jobs.biology1.workersAssigned, research.needed.biology);
+        research.current.quantum = Math.min(research.current.quantum + jobs.quantum1.workersAssigned, research.needed.quantum);
 
         research.progress = (research.current.invention + research.current.math + research.current.physics + research.current.chemistry + research.current.biology + research.current.quantum) / (research.needed.invention + research.needed.math + research.needed.physics + research.needed.chemistry + research.needed.biology + research.needed.quantum);
 

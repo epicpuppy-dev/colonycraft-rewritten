@@ -1,7 +1,4 @@
-import { game } from "../../..";
 import { ColonyCraft } from "../../ColonyCraft";
-import { KeyAction } from "../../player/KeyAction";
-import { KeyBind } from "../../player/KeyBind";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
 
@@ -10,7 +7,7 @@ export class PanelResearch extends Screen {
 
     constructor(game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
-        this.researchButton = new Button(0, 50, Math.floor(width / 3), 130, (game: ColonyCraft) => {
+        this.researchButton = new Button(0, 50, Math.floor(width / 3), 80, (game: ColonyCraft) => {
             game.currentScreens.push("research");
         }, (game: ColonyCraft) => {
             return game.currentScreens.includes("game") && !game.currentScreens.includes("research") && !game.currentScreens.includes("inventory");

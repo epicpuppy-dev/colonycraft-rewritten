@@ -28,6 +28,8 @@ import { PanelResearch } from "./render/screens/PanelResearch";
 import { TechnologyData } from "./data/TechnologyData";
 import { OverlayResearch } from "./render/screens/OverlayResearch";
 import { KeyController } from "./controllers/KeyController";
+import { PanelTraits } from "./render/screens/PanelTraits";
+import { TraitData } from "./data/TraitData";
 
 export class ColonyCraft {
     public width: number;
@@ -88,6 +90,7 @@ export class ColonyCraft {
         this.renderer.addLayerWithScreens(new LayerPanel(this), [
             new PanelJobs(this, this.width, this.height),
             new PanelResearch(this, this.width, this.height),
+            new PanelTraits(this, this.width, this.height),
         ]);
         this.renderer.addLayerWithScreens(new LayerUI(this), [
             new UIPerformance(this.width, this.height),
@@ -109,6 +112,7 @@ export class ColonyCraft {
         InventoryData.addItems(this.colony.inventory);
         LootData.addLoot(this.loot, this.colony.inventory);
         JobData.addJobs(this, this.colony.jobs);
+        TraitData.addTraits(this, this.colony.traits);
 
         //this.colony.research.active = this.colony.research.technologies.test;
 
