@@ -1,9 +1,19 @@
 import { ColonyCraft } from "../../ColonyCraft";
 import { Screen } from "../Screen";
+import { Button } from "../ui/Button";
 
 export class PanelTraits extends Screen {
+    private traitsButton: Button;
+
     constructor (game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
+        this.traitsButton = new Button(0, 130, Math.floor(width / 3 + 50), 164, (game: ColonyCraft) => {
+            game.currentScreens.push("traits", "overlay");
+        }, (game: ColonyCraft) => {
+            return game.currentScreens.includes("game") && !game.currentScreens.includes("overlay");
+        });
+
+        game.mouse.registerClickable(this.traitsButton);
     }
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
@@ -59,6 +69,10 @@ export class PanelTraits extends Screen {
 
     public active(game: ColonyCraft): boolean {
         return game.currentScreens.includes("game");
+    }
+
+    public resize(width: number, height: number) {
+        this.traitsButton.reposition(0, 130, Math.floor(width / 3 + 50), 164);
     }
 
 }

@@ -8,9 +8,9 @@ export class PanelResearch extends Screen {
     constructor(game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
         this.researchButton = new Button(0, 50, Math.floor(width / 3), 80, (game: ColonyCraft) => {
-            game.currentScreens.push("research");
+            game.currentScreens.push("research", "overlay");
         }, (game: ColonyCraft) => {
-            return game.currentScreens.includes("game") && !game.currentScreens.includes("research") && !game.currentScreens.includes("inventory");
+            return game.currentScreens.includes("game") && !game.currentScreens.includes("overlay");
         });
 
         game.mouse.registerClickable(this.researchButton);
@@ -93,7 +93,7 @@ export class PanelResearch extends Screen {
     }
 
     public resize(width: number, height: number): void {
-
+        this.researchButton.reposition(0, 50, Math.floor(width / 3), 80);
     }
 
 }

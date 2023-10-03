@@ -25,11 +25,11 @@ import { JobData } from "./data/JobData";
 import { LayerPanel } from "./render/layers/LayerPanel";
 import { PanelJobs } from "./render/screens/PanelJobs";
 import { PanelResearch } from "./render/screens/PanelResearch";
-import { TechnologyData } from "./data/TechnologyData";
 import { OverlayResearch } from "./render/screens/OverlayResearch";
 import { KeyController } from "./controllers/KeyController";
 import { PanelTraits } from "./render/screens/PanelTraits";
-import { TraitData } from "./data/TraitData";
+import { UnlockableData } from "./data/UnlockableData";
+import { OverlayTraits } from "./render/screens/OverlayTraits";
 
 export class ColonyCraft {
     public width: number;
@@ -99,6 +99,7 @@ export class ColonyCraft {
         this.renderer.addLayerWithScreens(new LayerOverlay(this), [
            new OverlayInventory(this, this.width, this.height), 
            new OverlayResearch(this, this.width, this.height),
+           new OverlayTraits(this, this.width, this.height),
         ]);
         this.currentScreens.push("title");
 
@@ -108,11 +109,10 @@ export class ColonyCraft {
         this.colony = new Colony(this);
         this.loot = new LootManager();
 
-        TechnologyData.addTechnologies(this.colony.research);
+        UnlockableData.addUnlockables(this);
         InventoryData.addItems(this.colony.inventory);
         LootData.addLoot(this.loot, this.colony.inventory);
         JobData.addJobs(this, this.colony.jobs);
-        TraitData.addTraits(this, this.colony.traits);
 
         //this.colony.research.active = this.colony.research.technologies.test;
 

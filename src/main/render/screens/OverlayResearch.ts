@@ -17,6 +17,7 @@ export class OverlayResearch extends Screen {
         super(width, height, 0, 0);
         this.closeButton = new Button(Math.floor(7 * this.width / 8 - 31), Math.floor(this.height / 8 + 6), 24, 24, (game: ColonyCraft) => {
             game.currentScreens.splice(game.currentScreens.indexOf("research"), 1);
+            game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);
         }, (game: ColonyCraft) => {
             return game.currentScreens.includes("research");
         });
@@ -37,14 +38,18 @@ export class OverlayResearch extends Screen {
         game.mouse.registerClickable(this.selectionClickable);
         
         game.key.addAction(new KeyAction("closeResearch", "Close Research", (game: ColonyCraft) => {
-            if (game.currentScreens.includes("research")) game.currentScreens.splice(game.currentScreens.indexOf("research"), 1);
+            if (game.currentScreens.includes("research")) {
+                game.currentScreens.splice(game.currentScreens.indexOf("research"), 1);
+                game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);
+            }
         }));
         game.draw.addCloseAction(game.key.actions.closeResearch);
 
         game.key.addAction(new KeyAction("openResearch", "Open Research", (game: ColonyCraft) => {
-            if (game.currentScreens.includes("game") && !game.currentScreens.includes("research") && !game.currentScreens.includes("inventory")) game.currentScreens.push("research");
+            if (game.currentScreens.includes("game") && !game.currentScreens.includes("overlay")) game.currentScreens.push("research", "overlay");
             else if (game.currentScreens.includes("research")) {
                 game.currentScreens.splice(game.currentScreens.indexOf("research"), 1);
+                game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);
             }
         }));
 
@@ -67,7 +72,7 @@ export class OverlayResearch extends Screen {
         game.draw.textCenter("Research", Math.floor(this.width / 2), Math.floor(this.height / 8 + 12), 28, "white");
 
         //Row height = 124
-        const maxRows = Math.floor((3 * this.height / 4 - 104) / 124);
+        const maxRows = Math.floor((3 * this.height / 4 - 56) / 124);
 
         let currentRow = 0;
         let currentColumn = 0;

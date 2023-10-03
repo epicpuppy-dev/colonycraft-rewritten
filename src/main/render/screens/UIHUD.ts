@@ -9,9 +9,9 @@ export class UIHUD extends Screen {
         super(width, height, 0, 0);
         
         this.inventoryButton = new Button(100, -50, this.width - 200, 100, (game: ColonyCraft) => {
-            game.currentScreens.push("inventory");
+            game.currentScreens.push("inventory", "overlay");
         } , (game: ColonyCraft) => {
-            return game.currentScreens.includes("game") && !game.currentScreens.includes("inventory") && !game.currentScreens.includes("research");
+            return game.currentScreens.includes("game") && !game.currentScreens.includes("overlay");
         });
 
         game.mouse.registerClickable(this.inventoryButton);

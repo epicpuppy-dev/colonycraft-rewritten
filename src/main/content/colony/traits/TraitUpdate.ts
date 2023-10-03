@@ -60,8 +60,7 @@ export class TraitUpdate extends TickingEntity {
                 }
                 if (valid) available.push(trait);
             }
-            if (available.length == 0) return;
-            traits.s = manager.traits[available[Math.floor(Math.random() * available.length)]];
+            if (available.length != 0) traits.s = manager.traits[available[Math.floor(Math.random() * available.length)]];
         }
         if (traits.c == null) {
             const available = [];
@@ -76,8 +75,7 @@ export class TraitUpdate extends TickingEntity {
                 }
                 if (valid) available.push(trait);
             }
-            if (available.length == 0) return;
-            traits.c = manager.traits[available[Math.floor(Math.random() * available.length)]];
+            if (available.length != 0) traits.c = manager.traits[available[Math.floor(Math.random() * available.length)]];
         }
         if (traits.p == null) {
             const available = [];
@@ -92,8 +90,7 @@ export class TraitUpdate extends TickingEntity {
                 }
                 if (valid) available.push(trait);
             }
-            if (available.length == 0) return;
-            traits.p = manager.traits[available[Math.floor(Math.random() * available.length)]];
+            if (available.length != 0) traits.p = manager.traits[available[Math.floor(Math.random() * available.length)]];
         }
         if (traits.r == null) {
             const available = [];
@@ -108,8 +105,7 @@ export class TraitUpdate extends TickingEntity {
                 }
                 if (valid) available.push(trait);
             }
-            if (available.length == 0) return;
-            traits.r = manager.traits[available[Math.floor(Math.random() * available.length)]];
+            if (available.length != 0) traits.r = manager.traits[available[Math.floor(Math.random() * available.length)]];
         }
     }
 }

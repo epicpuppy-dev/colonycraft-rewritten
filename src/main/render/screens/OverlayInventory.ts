@@ -13,6 +13,7 @@ export class OverlayInventory extends Screen {
         super(width, height, 0, 0);
         this.closeButton = new Button(Math.floor(7 * this.width / 8 - 31), Math.floor(this.height / 8 + 6), 24, 24, (game: ColonyCraft) => {
             game.currentScreens.splice(game.currentScreens.indexOf("inventory"), 1);
+            game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);
         }, (game: ColonyCraft) => {
             return game.currentScreens.includes("inventory");
         });
@@ -20,14 +21,18 @@ export class OverlayInventory extends Screen {
         game.mouse.registerClickable(this.closeButton);
 
         game.key.addAction(new KeyAction("closeInventory", "Close Inventory", (game: ColonyCraft) => {
-            if (game.currentScreens.includes("inventory")) game.currentScreens.splice(game.currentScreens.indexOf("inventory"), 1);
+            if (game.currentScreens.includes("inventory")) {
+                game.currentScreens.splice(game.currentScreens.indexOf("inventory"), 1);
+                game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);
+            }
         }));
         game.draw.addCloseAction(game.key.actions.closeInventory);
 
         game.key.addAction(new KeyAction("openInventory", "Open Inventory", (game: ColonyCraft) => {
-            if (game.currentScreens.includes("game") && !game.currentScreens.includes("inventory") && !game.currentScreens.includes("research")) game.currentScreens.push("inventory");
+            if (game.currentScreens.includes("game") && !game.currentScreens.includes("overlay")) game.currentScreens.push("inventory", "overlay");
             else if (game.currentScreens.includes("inventory")) {
                 game.currentScreens.splice(game.currentScreens.indexOf("inventory"), 1);
+                game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);
             }
         }));
         
