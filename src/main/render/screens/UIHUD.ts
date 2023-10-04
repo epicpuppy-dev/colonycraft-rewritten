@@ -39,12 +39,29 @@ export class UIHUD extends Screen {
         ctx.strokeStyle = '#777777';
         ctx.strokeRect(126, 8, 98, 8);
 
+        //Draw Welfare HUD
+        game.draw.sprite(ctx, "healthSmall", 230, 4, 16, 16);
+        let healthR = Math.round(Math.min(0.5 - (game.colony.welfare.health - 0.5), 0.5) * 510).toString(16);
+        if (healthR.length == 1) healthR = `0${healthR}`;
+        let healthG = Math.min(Math.round(game.colony.welfare.health * 510), 255).toString(16);
+        if (healthG.length == 1) healthG = `0${healthG}`;
+        let healthColor = `#${healthR}${healthG}00`;
+        game.draw.text(`${(game.colony.welfare.health * 100).toFixed(1)}%`, 250, 6, 14, healthColor);
+
+        game.draw.sprite(ctx, "moraleSmall", 230, 28, 16, 16);
+        let moraleR = Math.round(Math.min(0.5 - (game.colony.welfare.morale - 0.5), 0.5) * 510).toString(16);
+        if (moraleR.length == 1) moraleR = `0${moraleR}`;
+        let moraleG = Math.min(Math.round(game.colony.welfare.morale * 510), 255).toString(16);
+        if (moraleG.length == 1) moraleG = `0${moraleG}`;
+        let moraleColor = `#${moraleR}${moraleG}00`;
+        game.draw.text(`${(game.colony.welfare.morale * 100).toFixed(1)}%`, 250, 30, 14, moraleColor);
+
         //Draw Population HUD
         game.draw.sprite(ctx, "peopleSmall", 320, 4, 16, 16);
-        game.draw.text(`${game.draw.toShortNumber(game.colony.population.babies + game.colony.population.children + game.colony.population.adults + game.colony.population.seniors)}`, 342, 6, 14, "white");
+        game.draw.text(`${game.draw.toShortNumber(game.colony.population.babies + game.colony.population.children + game.colony.population.adults + game.colony.population.seniors)}`, 340, 6, 14, "white");
 
         game.draw.sprite(ctx, "workersSmall", 320, 28, 16, 16)
-        game.draw.text(`${game.draw.toShortNumber(game.colony.jobs.workersAssigned)}/${game.draw.toShortNumber(game.colony.population.adults)}`, 342, 30, 14, "#6495ED");
+        game.draw.text(`${game.draw.toShortNumber(game.colony.jobs.workersAssigned)}/${game.draw.toShortNumber(game.colony.population.adults)}`, 340, 30, 14, "#6495ED");
 
         game.draw.renderText(ctx);
     }

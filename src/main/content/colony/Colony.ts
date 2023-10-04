@@ -4,6 +4,7 @@ import { Jobs } from "./jobs/Jobs";
 import { ResearchManager } from "./research/ResearchManager";
 import { ColonyCraft } from "../../ColonyCraft";
 import { TraitManager } from "./traits/TraitManager";
+import { Welfare } from "./welfare/Welfare";
 
 export class Colony {
     public inventory: Inventory;
@@ -11,6 +12,7 @@ export class Colony {
     public jobs: Jobs;
     public research: ResearchManager;
     public traits: TraitManager;
+    public welfare: Welfare;
 
     constructor (game: ColonyCraft) {
         this.inventory = new Inventory(game);
@@ -18,6 +20,7 @@ export class Colony {
         this.jobs = new Jobs();
         this.research = new ResearchManager(game);
         this.traits = new TraitManager(game);
+        this.welfare = new Welfare(game);
 
         // this.inventory.items.sticks.amount = 1000;
         // this.inventory.items.logs.amount = 1000;

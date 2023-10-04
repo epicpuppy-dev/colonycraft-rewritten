@@ -1,15 +1,19 @@
 import { Inventory } from "../content/colony/inventory/Inventory";
 import { Item } from "../content/colony/inventory/Item";
 import { ItemGroup } from "../content/colony/inventory/ItemGroup";
+import { FluidItem } from "../content/colony/inventory/items/FluidItem";
+import { FoodItem } from "../content/colony/inventory/items/FoodItem";
 
 export class InventoryData {
     public static addItems (inventory: Inventory) {
         //Volume is space per 1,000 units
         inventory.addCategoryWithItems(new ItemGroup("food", "Food"), [
-            //TODO: FoodItem
+            new FoodItem("berries", 0.2, "Berries", 0.05, 0.4, 0.1, 0.15, 5),
+            new FoodItem("herbs", 0.1, "Wild Herbs", 0.05, 0.2, 0.2, -0.2, 3),
         ]);
         inventory.addCategoryWithItems(new ItemGroup("fluids", "Fluids"), [
-            //TODO: FluidItem
+            new FluidItem("freshWater", 0.5, "Fresh Water", 0.05, 0.5, 0.5, 0.25, 10),
+            new FluidItem("muddyWater", 0.5, "Muddy Water", 0.1, 0.5, -4, -1, 2),
         ]);
         inventory.addCategoryWithItems(new ItemGroup("primitive", "Primitive Materials"), [
             new Item("sticks", 1, "Sticks", 0.01), //TODO: Balance
