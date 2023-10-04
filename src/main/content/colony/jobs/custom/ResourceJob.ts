@@ -13,7 +13,7 @@ export class ResourceJob extends Job {
     }
 
     public tick (game: ColonyCraft) {
-        const loot = this.table.roll(this.rolls * this.workersAssigned);
+        const loot = this.table.roll(Math.round(this.rolls * this.workersAssigned * game.colony.welfare.workModifier));
         for (const item of loot) {
             if (item[0] !== null) {
                 item[0].amount += item[1];

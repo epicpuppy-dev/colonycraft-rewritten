@@ -6,7 +6,7 @@ import { ResourceJob } from "../content/colony/jobs/custom/ResourceJob";
 export class JobData {
     public static addJobs (game: ColonyCraft, jobs: Jobs) {
         const tables = game.loot.loot;
-        jobs.addJob(new ResourceJob(game, "forager", "Forager", 0, 6, tables.forager, () => true, () => Infinity));
+        jobs.addJob(new ResourceJob(game, "forager", "Forager", 0, 8, tables.forager, () => true, () => Infinity));
         jobs.addJob(new Job(game, "invention1", "Thinker", 20, () => true, () => Infinity));
         jobs.addJob(new Job(game, "math1", "Mathematician", 20, () => true, () => Infinity));
         jobs.addJob(new Job(game, "physics1", "Physicist", 20, () => true, () => Infinity));
