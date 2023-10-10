@@ -75,7 +75,7 @@ export class PanelJobs extends Screen {
         game.draw.textCenter("-", Math.floor(5 * this.width / 6) - 50, 100, 21, "#FFFFFF");
 
         const jobs = game.colony.jobs.jobs;
-        let maxWidth = 0;
+        let maxWidth = game.draw.textWidth("1.23k / 1.23k", 14);
 
         for (const job in jobs) {
             if (row >= maxRows + this.rowScroll) break;

@@ -60,10 +60,6 @@ export class OverlayTraits extends Screen {
         for (let i = 0; i < Object.keys(traits.traits).length; i++) {
             const trait = traits.traits[Object.keys(traits.traits)[i]];
             if (!trait.unlocked) continue;
-            if (currentColumn > 2) {
-                currentColumn = 0;
-                currentRow++;
-            }
             if (currentRow >= this.rowScroll && currentRow < maxRows + this.rowScroll) {
                 ctx.strokeRect(Math.floor(this.width / 8 + currentColumn * this.width / 4 + 10), Math.floor(this.height / 8 + 56 + currentRow * 96), Math.floor(this.width / 4 - 20), 68);
                 game.draw.textCenter(trait.name, Math.floor(this.width / 4 + currentColumn * this.width / 4), Math.floor(this.height / 8 + 60 + currentRow * 96), 14, "white");
@@ -74,7 +70,11 @@ export class OverlayTraits extends Screen {
                 for (let j = 0; j < trait.desc.length; j++) {
                     game.draw.textSmallCenter(trait.desc[j], Math.floor(this.width / 4 + currentColumn * this.width / 4), Math.floor(this.height / 8 + 60 + currentRow * 96 + 30 + j * 10), 7, "white");
                 }
-                currentColumn++;
+            }
+            currentColumn++;
+            if (currentColumn > 2) {
+                currentColumn = 0;
+                currentRow++;
             }
         }
 

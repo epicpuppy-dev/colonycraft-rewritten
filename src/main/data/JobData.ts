@@ -16,5 +16,6 @@ export class JobData {
         jobs.addJob(new Job(game, "cultural1", "Artist", 20, () => true, () => Infinity));
         jobs.addJob(new Job(game, "political1", "Politician", 20, () => true, () => Infinity));
         jobs.addJob(new Job(game, "religious1", "Cleric", 20, () => true, () => Infinity));
+        jobs.addJob(new Job(game, "builder1", "Builder", 20, () => true, () => Infinity));
     }
 }

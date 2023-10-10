@@ -30,6 +30,9 @@ import { KeyController } from "./controllers/KeyController";
 import { PanelTraits } from "./render/screens/PanelTraits";
 import { UnlockableData } from "./data/UnlockableData";
 import { OverlayTraits } from "./render/screens/OverlayTraits";
+import { PanelBuildings } from "./render/screens/PanelBuildings";
+import { BuildingData } from "./data/BuildingData";
+import { OverlayBuildings } from "./render/screens/OverlayBuildings";
 
 export class ColonyCraft {
     public width: number;
@@ -91,6 +94,7 @@ export class ColonyCraft {
             new PanelJobs(this, this.width, this.height),
             new PanelResearch(this, this.width, this.height),
             new PanelTraits(this, this.width, this.height),
+            new PanelBuildings(this, this.width, this.height),
         ]);
         this.renderer.addLayerWithScreens(new LayerUI(this), [
             new UIPerformance(this.width, this.height),
@@ -100,6 +104,7 @@ export class ColonyCraft {
            new OverlayInventory(this, this.width, this.height), 
            new OverlayResearch(this, this.width, this.height),
            new OverlayTraits(this, this.width, this.height),
+           new OverlayBuildings(this, this.width, this.height),
         ]);
         this.currentScreens.push("title");
 
@@ -113,6 +118,7 @@ export class ColonyCraft {
         InventoryData.addItems(this.colony.inventory);
         LootData.addLoot(this.loot, this.colony.inventory);
         JobData.addJobs(this, this.colony.jobs);
+        BuildingData.addBuildings(this, this.colony.buildings);
 
         //this.colony.research.active = this.colony.research.technologies.test;
 
@@ -123,6 +129,8 @@ export class ColonyCraft {
         this.clock = new ClockController(60, 1);
         this.clock.startFrame(this);
         //this.clock.startTick();
+
+        this.colony.buildings.queueBuilding(this.colony.buildings.buildings.test, 2);
     }
 
     public tick() {

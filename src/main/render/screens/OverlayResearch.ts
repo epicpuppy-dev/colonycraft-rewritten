@@ -1,4 +1,3 @@
-import { game } from "../../..";
 import { ColonyCraft } from "../../ColonyCraft";
 import { Technology } from "../../content/colony/research/Technology";
 import { KeyAction } from "../../player/KeyAction";
