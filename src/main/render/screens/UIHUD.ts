@@ -33,35 +33,39 @@ export class UIHUD extends Screen {
         //Draw Storage HUD
         game.draw.sprite(ctx, "storageSmall", 105, 4, 16, 16);
         ctx.fillStyle = inventory.storageUsed < inventory.storageCapacity ? inventory.storageUsed < inventory.storageCapacity * 2 / 3 ? '#00ff00' : '#ffff00' : '#ff0000';
-        ctx.fillRect(126, 8, Math.min(98 * inventory.storageUsed / inventory.storageCapacity, 98), 8);
+        ctx.fillRect(126, 8, Math.min(108 * inventory.storageUsed / inventory.storageCapacity, 108), 8);
         ctx.strokeStyle = '#555555';
-        ctx.strokeRect(126, 8, 98 * Math.min(inventory.storageCapacity / inventory.storageUsed, 1), 8);
+        ctx.strokeRect(126, 8, 108 * Math.min(inventory.storageCapacity / inventory.storageUsed, 1), 8);
         ctx.strokeStyle = '#777777';
-        ctx.strokeRect(126, 8, 98, 8);
+        ctx.strokeRect(126, 8, 108, 8);
+
+        //Draw Land HUD
+        game.draw.sprite(ctx, "landSmall", 105, 28, 16, 16);
+        game.draw.text(`${game.draw.toShortNumber(game.colony.buildings.landPending)}/${game.draw.toShortNumber(game.colony.buildings.landMax)}`, 125, 30, 14, "#ffffff");
 
         //Draw Welfare HUD
-        game.draw.sprite(ctx, "healthSmall", 230, 4, 16, 16);
+        game.draw.sprite(ctx, "healthSmall", 240, 4, 16, 16);
         let healthR = Math.round(Math.min(0.5 - (game.colony.welfare.health - 0.5), 0.5) * 510).toString(16);
         if (healthR.length == 1) healthR = `0${healthR}`;
         let healthG = Math.min(Math.round(game.colony.welfare.health * 510), 255).toString(16);
         if (healthG.length == 1) healthG = `0${healthG}`;
         let healthColor = `#${healthR}${healthG}00`;
-        game.draw.text(`${(game.colony.welfare.health * 100).toFixed(1)}%`, 250, 6, 14, healthColor);
+        game.draw.text(`${(game.colony.welfare.health * 100).toFixed(1)}%`, 260, 6, 14, healthColor);
 
-        game.draw.sprite(ctx, "moraleSmall", 230, 28, 16, 16);
+        game.draw.sprite(ctx, "moraleSmall", 240, 28, 16, 16);
         let moraleR = Math.round(Math.min(0.5 - (game.colony.welfare.morale - 0.5), 0.5) * 510).toString(16);
         if (moraleR.length == 1) moraleR = `0${moraleR}`;
         let moraleG = Math.min(Math.round(game.colony.welfare.morale * 510), 255).toString(16);
         if (moraleG.length == 1) moraleG = `0${moraleG}`;
         let moraleColor = `#${moraleR}${moraleG}00`;
-        game.draw.text(`${(game.colony.welfare.morale * 100).toFixed(1)}%`, 250, 30, 14, moraleColor);
+        game.draw.text(`${(game.colony.welfare.morale * 100).toFixed(1)}%`, 260, 30, 14, moraleColor);
 
         //Draw Population HUD
-        game.draw.sprite(ctx, "peopleSmall", 320, 4, 16, 16);
-        game.draw.text(`${game.draw.toShortNumber(game.colony.population.babies + game.colony.population.children + game.colony.population.adults + game.colony.population.seniors)}`, 340, 6, 14, "white");
+        game.draw.sprite(ctx, "peopleSmall", 330, 4, 16, 16);
+        game.draw.text(`${game.draw.toShortNumber(game.colony.population.babies + game.colony.population.children + game.colony.population.adults + game.colony.population.seniors)}`, 350, 6, 14, "white");
 
-        game.draw.sprite(ctx, "workersSmall", 320, 28, 16, 16)
-        game.draw.text(`${game.draw.toShortNumber(game.colony.jobs.workersAssigned)}/${game.draw.toShortNumber(game.colony.population.adults)}`, 340, 30, 14, "#6495ED");
+        game.draw.sprite(ctx, "workersSmall", 330, 28, 16, 16)
+        game.draw.text(`${game.draw.toShortNumber(game.colony.jobs.workersAssigned)}/${game.draw.toShortNumber(game.colony.population.adults)}`, 350, 30, 14, "#6495ED");
 
         game.draw.renderText(ctx);
     }

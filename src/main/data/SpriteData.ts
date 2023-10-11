@@ -24,6 +24,7 @@ export class SpriteData {
             "workers": [224, 0, 32, 32],
             "health": [0, 32, 32, 32],
             "morale": [32, 32, 32, 32],
+            "land": [64, 32, 32, 32],
         });
 
         renderer.addSheetWithSprites("spritesSmall", spritesSmall, {
@@ -37,6 +38,7 @@ export class SpriteData {
             "workersSmall": [112, 0, 16, 16],
             "healthSmall": [0, 16, 16, 16],
             "moraleSmall": [16, 16, 16, 16],
+            "landSmall": [32, 16, 16, 16],
         });
 
         renderer.addSheetWithSprites("temp", temp, {

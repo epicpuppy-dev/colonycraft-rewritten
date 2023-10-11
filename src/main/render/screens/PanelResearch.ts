@@ -9,7 +9,7 @@ export class PanelResearch extends Screen {
         super(width, height, 0, 0);
         this.researchButton = new Button(0, 50, Math.floor(width / 3), 80, (game: ColonyCraft) => {
             game.currentScreens.push("research", "overlay");
-        }, (game: ColonyCraft) => {
+        }, (game: ColonyCraft) z=> {
             return game.currentScreens.includes("game") && !game.currentScreens.includes("overlay");
         });
 

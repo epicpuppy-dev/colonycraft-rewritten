@@ -41,8 +41,8 @@ export class OverlayBuildings extends Screen {
             return game.currentScreens.includes("buildings");
         });
         
+        game.mouse.registerClickable(this.selectionClickable, -10);
         game.mouse.registerClickable(this.closeButton);
-        game.mouse.registerClickable(this.selectionClickable);
         
         game.key.addAction(new KeyAction("closeBuildings", "Close Buildings", (game: ColonyCraft) => {
             if (game.currentScreens.includes("buildings")) {
@@ -82,10 +82,10 @@ export class OverlayBuildings extends Screen {
             game.colony.buildings.queueBuilding(game, this.selected, -this.increaseSteps[this.increaseIndex][0]);
         }, (game) => game.currentScreens.includes("buildings"));
 
-        game.mouse.registerClickable(this.plusButton);
-        game.mouse.registerClickable(this.minusButton);
-        game.mouse.registerClickable(this.buildButton);
-        game.mouse.registerClickable(this.demolishButton);
+        game.mouse.registerClickable(this.plusButton, -20);
+        game.mouse.registerClickable(this.minusButton, -20);
+        game.mouse.registerClickable(this.buildButton, -20);
+        game.mouse.registerClickable(this.demolishButton, -20);
     }
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {

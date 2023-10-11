@@ -34,7 +34,7 @@ export class OverlayResearch extends Screen {
         });
         
         game.mouse.registerClickable(this.closeButton);
-        game.mouse.registerClickable(this.selectionClickable);
+        game.mouse.registerClickable(this.selectionClickable, -10);
         
         game.key.addAction(new KeyAction("closeResearch", "Close Research", (game: ColonyCraft) => {
             if (game.currentScreens.includes("research")) {
