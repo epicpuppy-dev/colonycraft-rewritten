@@ -24,16 +24,33 @@ export class BuildingManager {
         });
     }
 
-    public queueBuilding (building: Building, amount: number) {
-        if (amount > 0) {
-            this.queueSize += amount;
-            this.workLeft += amount * building.work;
-            this.landPending += amount * building.area;
-        } else if (amount < 0) {
-            this.queueSize += Math.abs(amount);
-            this.workLeft += Math.abs(amount);
-            this.landPending -= Math.abs(amount) * building.area;
+    public queueBuilding (game: ColonyCraft, building: Building, amount: number) {
+        let clampAmount = Math.max(Math.min(amount, building.maximum(game) - building.target), -building.target);
+        if (clampAmount > 0 && building.target < building.amount) {
+            let builds = Math.min(building.amount - building.target, clampAmount);
+            this.landPending += builds * building.area;
+            this.workLeft -= builds;
+            this.queueSize -= builds;
+            building.target += builds;
+            clampAmount -= builds;
+        } else if (clampAmount < 0 && building.target > building.amount) {
+            let builds = Math.min(building.target - building.amount, Math.abs(clampAmount));
+            this.landPending -= builds * building.area;
+            this.workLeft -= builds * building.work - building.progress;
+            this.queueSize -= builds;
+            building.target -= builds;
+            building.progress = 0;
+            clampAmount += builds;
         }
-        building.target += amount;
+        if (clampAmount > 0) {
+            this.queueSize += clampAmount;
+            this.workLeft += clampAmount * building.work;
+            this.landPending += clampAmount * building.area;
+        } else if (clampAmount < 0) {
+            this.queueSize += Math.abs(clampAmount);
+            this.workLeft += Math.abs(clampAmount);
+            this.landPending -= Math.abs(clampAmount) * building.area;
+        }
+        building.target += clampAmount;
     }
 }

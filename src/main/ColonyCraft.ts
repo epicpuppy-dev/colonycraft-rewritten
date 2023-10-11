@@ -129,8 +129,6 @@ export class ColonyCraft {
         this.clock = new ClockController(60, 1);
         this.clock.startFrame(this);
         //this.clock.startTick();
-
-        this.colony.buildings.queueBuilding(this.colony.buildings.buildings.test, 2);
     }
 
     public tick() {

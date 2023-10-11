@@ -4,7 +4,7 @@ import { TickingEntity } from "../../TickingEntity";
 export class BuildingUpdate extends TickingEntity {
     public tick(game: ColonyCraft): void {
         const buildings = game.colony.buildings;
-        let work = game.colony.jobs.jobs.builder1.workersAssigned;
+        let work = Math.round(game.colony.jobs.jobs.builder1.workersAssigned * game.colony.welfare.workModifier);
         for (const key of buildings.buildingPriority) {
             const building = buildings.buildings[key];
             if (building.amount == building.target) continue;

@@ -4,7 +4,9 @@ import { BuildingManager } from "../content/colony/buildings/BuildingManager";
 
 export class BuildingData {
     public static addBuildings (game: ColonyCraft, manager: BuildingManager) {
-        manager.addBuilding(new Building("test", "Test", 1, 5, 0));
+        const items = game.colony.inventory.items;
+
+        manager.addBuilding(new Building("test", "Test", 1, 5, 0, ["test", "test2"], [{item: items.sticks, amount: 5}, {item: items.sticks, amount: 5}, {item: items.sticks, amount: 5}, {item: items.sticks, amount: 5}, {item: items.sticks, amount: 5}, {item: items.sticks, amount: 5}, {item: items.sticks, amount: 5}, {item: items.sticks, amount: 5}, {item: items.sticks, amount: 5}]));
         manager.addBuilding(new Building("test2", "Test2", 2, 10, 1));
         manager.addBuilding(new Building("test3", "Test3", 3, 15, 2));
         manager.addBuilding(new Building("test4", "Test4", 4, 20, 3));
