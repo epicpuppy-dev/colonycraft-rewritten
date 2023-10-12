@@ -8,11 +8,13 @@ export class Job {
     private ticker: JobTicker;
     public unlocked: (game: ColonyCraft) => boolean;
     public maxWorkers: (game: ColonyCraft) => number;
+    public priority;
 
     constructor(game: ColonyCraft, id: string, name: string, priority: number, unlocked: (game: ColonyCraft) => boolean, maxWorkers: (game: ColonyCraft) => number) {
         this.id = id;
         this.name = name;
         this.ticker = new JobTicker(game, this, priority);
+        this.priority = priority;
         this.unlocked = unlocked;
         this.maxWorkers = maxWorkers;
     }

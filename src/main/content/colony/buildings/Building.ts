@@ -1,5 +1,6 @@
 import { ColonyCraft } from "../../../ColonyCraft";
 import { Item } from "../inventory/Item";
+import { BuildingTicker } from "./BuildingTicker";
 
 export class Building {
     public name: string;
@@ -14,8 +15,9 @@ export class Building {
     public cost: {item: Item, amount: number}[];
     public available: (game: ColonyCraft) => boolean;
     public maximum: (game: ColonyCraft) => number;
+    private ticker: BuildingTicker;
 
-    constructor (id: string, name: string, area: number, work: number, priority: number, desc: string[] = [], cost: {item: Item, amount: number}[] = [], available: (game: ColonyCraft) => boolean = () => true, maximum: (game: ColonyCraft) => number = (game) => Math.floor((game.colony.buildings.landMax - game.colony.buildings.landPending) / this.area + this.target)) {
+    constructor (game: ColonyCraft, id: string, name: string, area: number, work: number, priority: number, desc: string[] = [], cost: {item: Item, amount: number}[] = [], available: (game: ColonyCraft) => boolean = () => true, maximum: (game: ColonyCraft) => number = (game) => Math.floor((game.colony.buildings.landMax - game.colony.buildings.landPending) / this.area + this.target)) {
         this.id = id;
         this.area = area;
         this.name = name;
@@ -25,5 +27,8 @@ export class Building {
         this.cost = cost;
         this.available = available;
         this.maximum = maximum;
+        this.ticker = new BuildingTicker(game, this, priority)
     }
+
+    public tick (game: ColonyCraft) {}
 }

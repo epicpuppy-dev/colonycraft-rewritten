@@ -4,18 +4,19 @@ import { TickingEntity } from "../../TickingEntity";
 export class BuildingUpdate extends TickingEntity {
     public tick(game: ColonyCraft): void {
         //land update
-        if (game.colony.jobs.jobs.explorer1.workersAssigned > 100) {
-            game.colony.buildings.landMax += Math.floor(game.colony.jobs.jobs.explorer1.workersAssigned / 50);
+        if (game.colony.jobs.jobs.explorer1.workersAssigned > 1000) {
+            game.colony.buildings.landMax += Math.max(Math.floor(game.colony.jobs.jobs.explorer1.workersAssigned / 50 * game.colony.welfare.workModifier), 1);
         } else {
             for (let i = 0; i < game.colony.jobs.jobs.explorer1.workersAssigned; i++) {
-                if (Math.random() < 0.02) {
+                if (Math.random() < 0.02 * game.colony.welfare.workModifier) {
                     game.colony.buildings.landMax++;
                 }
             }
         }
 
         const buildings = game.colony.buildings;
-        let work = Math.round(game.colony.jobs.jobs.builder1.workersAssigned * game.colony.welfare.workModifier);
+        let work = Math.max(Math.floor(game.colony.jobs.jobs.builder1.workersAssigned * game.colony.welfare.workModifier), 1);
+        if (work == 0) return;
         for (const key of buildings.buildingPriority) {
             const building = buildings.buildings[key];
             if (building.amount == building.target) continue;

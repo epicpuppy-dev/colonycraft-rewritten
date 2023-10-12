@@ -33,6 +33,7 @@ import { OverlayTraits } from "./render/screens/OverlayTraits";
 import { PanelBuildings } from "./render/screens/PanelBuildings";
 import { BuildingData } from "./data/BuildingData";
 import { OverlayBuildings } from "./render/screens/OverlayBuildings";
+import { RecipeData } from "./data/RecipeData";
 
 export class ColonyCraft {
     public width: number;
@@ -114,9 +115,11 @@ export class ColonyCraft {
         this.colony = new Colony(this);
         this.loot = new LootManager();
 
+        //Add data
         UnlockableData.addUnlockables(this);
         InventoryData.addItems(this.colony.inventory);
         LootData.addLoot(this.loot, this.colony.inventory);
+        RecipeData.addRecipes(this, this.colony.recipes);
         JobData.addJobs(this, this.colony.jobs);
         BuildingData.addBuildings(this, this.colony.buildings);
 

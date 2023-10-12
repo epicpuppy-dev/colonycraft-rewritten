@@ -55,7 +55,9 @@ export class RenderUtil {
         if (num < 1000) return num.toString();
         if (num < 1000000) return (num / 1000).toPrecision(3) + "k";
         if (num < 1000000000) return (num / 1000000).toPrecision(3) + "m";
-        else return (num / 1000000000).toPrecision(3) + "b";
+        if (num < 1000000000000) return (num / 1000000000).toPrecision(3) + "b";
+        if (num < 1000000000000000) return (num / 1000000000000).toPrecision(3) + "t";
+        else return (num / 1000000000000000).toPrecision(3) + "q";
     }
 
     addCloseAction(action: KeyAction) {
