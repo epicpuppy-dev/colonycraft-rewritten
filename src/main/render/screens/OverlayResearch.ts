@@ -1,4 +1,3 @@
-import { game } from "../../..";
 import { ColonyCraft } from "../../ColonyCraft";
 import { Technology } from "../../content/colony/research/Technology";
 import { KeyAction } from "../../player/KeyAction";
@@ -25,7 +24,7 @@ export class OverlayResearch extends Screen {
         this.selectionClickable = new ClickHandler(Math.floor(this.width / 8), Math.floor(this.height / 8), Math.floor(3 * this.width / 4), Math.floor(3 * this.height / 4), (game: ColonyCraft, x: number, y: number) => {
             if ((y - this.height / 8 - 56) % 124 > 104) return;
             const row = Math.floor((y - this.height / 8 - 56) / 124 );
-            if ((x - this.width / 8 - 10) % (3 * this.width / 4) > 3 * this.width / 4 - 20) return;
+            if ((x - this.width / 8) % (3 * this.width / 8) < 10 || (x - this.width / 8) % (3 * this.width / 8) > (3 * this.width / 8 - 20)) return;
             const column = x < this.width / 2 ? 0 : 1;
             const index = row * 2 + column + (game.colony.research.active != null ? -2 : 0);
             if (index >= this.technologiesAvailable.length || index < 0) return;
@@ -35,7 +34,7 @@ export class OverlayResearch extends Screen {
         });
         
         game.mouse.registerClickable(this.closeButton);
-        game.mouse.registerClickable(this.selectionClickable);
+        game.mouse.registerClickable(this.selectionClickable, -10);
         
         game.key.addAction(new KeyAction("closeResearch", "Close Research", (game: ColonyCraft) => {
             if (game.currentScreens.includes("research")) {

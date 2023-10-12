@@ -34,7 +34,7 @@ export class PanelTraits extends Screen {
             ctx.fillRect(10, 156, Math.floor((this.width / 3 - 20) * traits.active.s.progress), 10);
             ctx.strokeRect(10, 156, Math.floor(this.width / 3 - 20), 10);
         } else {
-            game.draw.textCenter("No Developing Social Trait", Math.floor(this.width / 6), 143, 14, "white");
+            game.draw.textCenter("No Social Trait Developing", Math.floor(this.width / 6), 143, 14, "white");
         }
 
         if (traits.active.c) {
@@ -43,7 +43,7 @@ export class PanelTraits extends Screen {
             ctx.fillRect(10, 196, Math.floor((this.width / 3 - 20) * traits.active.c.progress), 10);
             ctx.strokeRect(10, 196, Math.floor(this.width / 3 - 20), 10);
         } else {
-            game.draw.textCenter("No Developing Cultural Trait", Math.floor(this.width / 6), 183, 14, "white");
+            game.draw.textCenter("No Cultural Trait Developing", Math.floor(this.width / 6), 183, 14, "white");
         }
 
         if (traits.active.p) {
@@ -52,7 +52,7 @@ export class PanelTraits extends Screen {
             ctx.fillRect(10, 236, Math.floor((this.width / 3 - 20) * traits.active.p.progress), 10);
             ctx.strokeRect(10, 236, Math.floor(this.width / 3 - 20), 10);
         } else {
-            game.draw.textCenter("No Developing Political Trait", Math.floor(this.width / 6), 223, 14, "white");
+            game.draw.textCenter("No Political Trait Developing", Math.floor(this.width / 6), 223, 14, "white");
         }
 
         if (traits.active.r) {
@@ -61,7 +61,7 @@ export class PanelTraits extends Screen {
             ctx.fillRect(10, 276, Math.floor((this.width / 3 - 20) * traits.active.r.progress), 10);
             ctx.strokeRect(10, 276, Math.floor(this.width / 3 - 20), 10);
         } else {
-            game.draw.textCenter("No Developing Religious Trait", Math.floor(this.width / 6), 263, 14, "white");
+            game.draw.textCenter("No Religious Trait Developing", Math.floor(this.width / 6), 263, 14, "white");
         }
 
         game.draw.renderText(ctx);

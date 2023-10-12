@@ -74,20 +74,20 @@ export class PanelJobs extends Screen {
         game.draw.textCenter("+", Math.floor(5 * this.width / 6) + 50, 100, 21, "#FFFFFF");
         game.draw.textCenter("-", Math.floor(5 * this.width / 6) - 50, 100, 21, "#FFFFFF");
 
-        const jobs = game.colony.jobs.jobs;
-        let maxWidth = 0;
+        const jobs = game.colony.jobs;
+        let maxWidth = game.draw.textWidth("1.23k / 1.23k", 14);
 
-        for (const job in jobs) {
+        for (const job of jobs.jobPriority) {
             if (row >= maxRows + this.rowScroll) break;
             if (row < this.rowScroll) continue;
-            if (jobs[job].unlocked(game)) {
-                this.jobsAvailable.push(jobs[job]);
-                maxWidth = Math.max(maxWidth, game.draw.textWidth(jobs[job].name, 14));
-                game.draw.textCenter(jobs[job].name, Math.floor(5 * this.width / 6), 130 + 40 * row, 14, "#FFFFFF");
-                if (jobs[job].maxWorkers(game) !== Infinity) {
-                    game.draw.textCenter(game.draw.toShortNumber(jobs[job].workersAssigned) + " / " + game.draw.toShortNumber(jobs[job].maxWorkers(game)), Math.floor(5 * this.width / 6), 150 + 40 * row, 14, "#FFFFFF");
+            if (jobs.jobs[job].unlocked(game)) {
+                this.jobsAvailable.push(jobs.jobs[job]);
+                maxWidth = Math.max(maxWidth, game.draw.textWidth(jobs.jobs[job].name, 14));
+                game.draw.textCenter(jobs.jobs[job].name, Math.floor(5 * this.width / 6), 130 + 40 * row, 14, "#FFFFFF");
+                if (jobs.jobs[job].maxWorkers(game) !== Infinity) {
+                    game.draw.textCenter(game.draw.toShortNumber(jobs.jobs[job].workersAssigned) + " / " + game.draw.toShortNumber(jobs.jobs[job].maxWorkers(game)), Math.floor(5 * this.width / 6), 150 + 40 * row, 14, "#FFFFFF");
                 } else {
-                    game.draw.textCenter(game.draw.toShortNumber(jobs[job].workersAssigned), Math.floor(5 * this.width / 6), 150 + 40 * row, 14, "#FFFFFF");
+                    game.draw.textCenter(game.draw.toShortNumber(jobs.jobs[job].workersAssigned), Math.floor(5 * this.width / 6), 150 + 40 * row, 14, "#FFFFFF");
                 }
                 game.draw.textCenter("+", Math.floor(5 * this.width / 6) + this.buttonOffset, 140 + 40 * row, 21, "#FFFFFF");
                 game.draw.textCenter("-", Math.floor(5 * this.width / 6) - this.buttonOffset, 140 + 40 * row, 21, "#FFFFFF");

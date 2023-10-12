@@ -30,6 +30,10 @@ import { KeyController } from "./controllers/KeyController";
 import { PanelTraits } from "./render/screens/PanelTraits";
 import { UnlockableData } from "./data/UnlockableData";
 import { OverlayTraits } from "./render/screens/OverlayTraits";
+import { PanelBuildings } from "./render/screens/PanelBuildings";
+import { BuildingData } from "./data/BuildingData";
+import { OverlayBuildings } from "./render/screens/OverlayBuildings";
+import { RecipeData } from "./data/RecipeData";
 
 export class ColonyCraft {
     public width: number;
@@ -91,6 +95,7 @@ export class ColonyCraft {
             new PanelJobs(this, this.width, this.height),
             new PanelResearch(this, this.width, this.height),
             new PanelTraits(this, this.width, this.height),
+            new PanelBuildings(this, this.width, this.height),
         ]);
         this.renderer.addLayerWithScreens(new LayerUI(this), [
             new UIPerformance(this.width, this.height),
@@ -100,6 +105,7 @@ export class ColonyCraft {
            new OverlayInventory(this, this.width, this.height), 
            new OverlayResearch(this, this.width, this.height),
            new OverlayTraits(this, this.width, this.height),
+           new OverlayBuildings(this, this.width, this.height),
         ]);
         this.currentScreens.push("title");
 
@@ -109,10 +115,13 @@ export class ColonyCraft {
         this.colony = new Colony(this);
         this.loot = new LootManager();
 
+        //Add data
         UnlockableData.addUnlockables(this);
         InventoryData.addItems(this.colony.inventory);
         LootData.addLoot(this.loot, this.colony.inventory);
+        RecipeData.addRecipes(this, this.colony.recipes);
         JobData.addJobs(this, this.colony.jobs);
+        BuildingData.addBuildings(this, this.colony.buildings);
 
         //this.colony.research.active = this.colony.research.technologies.test;
 
