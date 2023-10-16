@@ -7,7 +7,7 @@ import { ColonyCraft } from "../../../ColonyCraft";
 export class Inventory {
     public categories: { [key: string]: ItemGroup } = {};
     public items: { [key: string]: Item } = {};
-    public storageCapacity: number = 10;
+    public storageCapacity: number = 1000;
     public storageUsed: number = 0;
     private monitor1: InventoryMonitor;
     private monitor2: InventoryMonitor;

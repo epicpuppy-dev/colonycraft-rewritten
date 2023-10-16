@@ -55,5 +55,22 @@ export class InventoryData {
         inventory.addCategoryWithItems(new ItemGroup("electronics", "Electronics"), [
             //TODO: Electronics
         ]);
+        inventory.addCategoryWithItems(new ItemGroup("test", "Test"), [
+            new Item("test1", 0.1, "Test 1", 0),
+            new Item("test2", 0.1, "Test 2", 0),
+            new Item("test3", 0.1, "Test 3", 0),
+            new Item("test4", 0.1, "Test 4", 0),
+            new Item("test5", 0.1, "Test 5", 0),
+            new Item("test6", 0.1, "Test 6", 0),
+            new Item("test7", 0.1, "Test 7", 0),
+            new Item("test8", 0.1, "Test 8", 0),
+            new Item("test9", 0.1, "Test 9", 0),
+            new Item("test10", 0.1, "Test 10", 0),
+            new Item("test11", 0.1, "Test 11", 0),
+            new Item("test12", 0.1, "Test 12", 0),
+            new Item("test13", 0.1, "Test 13", 0),
+            new Item("test14", 0.1, "Test 14", 0),
+            new Item("test15", 0.1, "Test 15", 0),
+        ])
     }
 }
