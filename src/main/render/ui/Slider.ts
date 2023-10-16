@@ -61,10 +61,11 @@ export class Slider {
         ctx.fillStyle = this.barColor;
         ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = this.slidable.held ? this.heldColor : this.slidable.hover ? this.hoverColor : this.sliderColor;
+        let widthPortion = isFinite((this.value - this.min) / (this.max - this.min)) ? (this.value - this.min) / (this.max - this.min) : 1;
         if (this.type == "h") {
-            ctx.fillRect(Math.round(this.x + (this.width - this.barSize) * (this.value - this.min) / (this.max - this.min)), this.y, Math.round(this.barSize), this.height);
+            ctx.fillRect(Math.round(this.x + (this.width - this.barSize) * widthPortion), this.y, Math.round(this.barSize), this.height);
         } else {
-            ctx.fillRect(this.x, Math.round(this.y + (this.height - this.barSize) * (this.value - this.min) / (this.max - this.min)), this.width, Math.round(this.barSize));
+            ctx.fillRect(this.x, Math.round(this.y + (this.height - this.barSize) * widthPortion), this.width, Math.round(this.barSize));
         }
     }
 
@@ -78,19 +79,20 @@ export class Slider {
     public setBounds(value: number, displaySize: number, max: number = this.max, min: number = this.min) {
         this.min = min;
         this.max = max;
-        this.value = Math.min(Math.max(value, this.min), this.max);
+        this.value = Math.max(Math.min(value, this.max), this.min);
         let slidableWidth;
         let slidableHeight;
+        let widthPortion = isFinite((this.value - this.min) / (this.max - this.min)) ? (this.value - this.min) / (this.max - this.min) : 1;
         if (this.type == "h") {
             this.barSize = Math.min(displaySize / ((max + displaySize) - min), 1) * this.width;
             slidableWidth = Math.round(this.barSize);
             slidableHeight = this.height;
-            this.slidable.reposition(Math.round(this.x + (this.width - this.barSize) * (this.value - this.min) / (this.max - this.min)), this.y, slidableWidth, slidableHeight);
+            this.slidable.reposition(Math.round(this.x + (this.width - this.barSize) * widthPortion), this.y, slidableWidth, slidableHeight);
         } else {
             this.barSize = Math.min(displaySize / ((max + displaySize) - min), 1) * this.height;
             slidableWidth = this.width;
             slidableHeight = Math.round(this.barSize);
-            this.slidable.reposition(this.x, Math.round(this.y + (this.height - this.barSize) * (this.value - this.min) / (this.max - this.min)), slidableWidth, slidableHeight);
+            this.slidable.reposition(this.x, Math.round(this.y + (this.height - this.barSize) * widthPortion), slidableWidth, slidableHeight);
         }
     }
 

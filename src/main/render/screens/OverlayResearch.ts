@@ -5,12 +5,14 @@ import { KeyBind } from "../../player/KeyBind";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
 import { ClickHandler } from "../ui/ClickHandler";
+import { ScrollBar } from "../ui/ScrollBar";
 
 export class OverlayResearch extends Screen {
     private closeButton: Button;
     private rowScroll: number = 0;
     private technologiesAvailable: Technology[] = [];
     private selectionClickable: ClickHandler;
+    private scrollBar: ScrollBar;
 
     constructor(game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
@@ -21,11 +23,12 @@ export class OverlayResearch extends Screen {
             return game.currentScreens.includes("research");
         });
 
-        this.selectionClickable = new ClickHandler(Math.floor(this.width / 8), Math.floor(this.height / 8), Math.floor(3 * this.width / 4), Math.floor(3 * this.height / 4), (game: ColonyCraft, x: number, y: number) => {
+        let areaWidth = 3 * this.width / 4 - 24;
+        this.selectionClickable = new ClickHandler(Math.floor(this.width / 8), Math.floor(this.height / 8), Math.floor(areaWidth), Math.floor(3 * this.height / 4), (game: ColonyCraft, x: number, y: number) => {
             if ((y - this.height / 8 - 56) % 124 > 104) return;
             const row = Math.floor((y - this.height / 8 - 56) / 124 );
-            if ((x - this.width / 8) % (3 * this.width / 8) < 10 || (x - this.width / 8) % (3 * this.width / 8) > (3 * this.width / 8 - 20)) return;
-            const column = x < this.width / 2 ? 0 : 1;
+            if ((x - this.width / 8) % (areaWidth / 4) < 10 || (x - this.width / 8) % (areaWidth / 2) > (areaWidth / 2 - 10)) return;
+            const column = x - this.width / 8 < areaWidth / 2 ? 0 : 1;
             const index = row * 2 + column + (game.colony.research.active != null ? -2 : 0);
             if (index >= this.technologiesAvailable.length || index < 0) return;
             game.colony.research.active = this.technologiesAvailable[index];
@@ -53,6 +56,8 @@ export class OverlayResearch extends Screen {
         }));
 
         game.key.addBinding(new KeyBind("Open Research", "T", "KeyT", [game.key.actions.openResearch]));
+        
+        this.scrollBar = new ScrollBar(game, Math.floor(7 * this.width / 8 - 24), Math.floor(this.height / 8 + 56), 16, Math.floor(3 * this.height / 4 - 66), "v", 0, 5, 5, 124, (game) => game.currentScreens.includes("research"));
     }
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
@@ -71,11 +76,12 @@ export class OverlayResearch extends Screen {
         game.draw.textCenter("Research", Math.floor(this.width / 2), Math.floor(this.height / 8 + 12), 28, "white");
 
         //Row height = 124
-        const maxRows = Math.floor((3 * this.height / 4 - 56) / 124);
+        const maxRows = Math.floor((3 * this.height / 4 - 46) / 124);
 
         let currentRow = 0;
         let currentColumn = 0;
         this.technologiesAvailable = [];
+        this.rowScroll = Math.max(this.scrollBar.value, 0);
 
         //Active research
         if (research.active != null) {
@@ -140,6 +146,9 @@ export class OverlayResearch extends Screen {
             }
         }
 
+        let areaWidth = 3 * this.width / 4 - 24;
+        let leftOffset = this.width / 8;
+
         for (let i = 0; i < Object.keys(research.technologies).length; i++) {
             const technology = research.technologies[Object.keys(research.technologies)[i]];
             if (technology.unlocked || research.active === technology) continue;
@@ -148,35 +157,43 @@ export class OverlayResearch extends Screen {
                 if (!technology.prereqs[j].unlocked) available = false;
             }
             if (!available) continue;
-            this.technologiesAvailable.push(technology);
+            if (currentRow >= this.rowScroll + (research.active != null ? 1 : 0) && currentRow < this.rowScroll + maxRows) {
+                this.technologiesAvailable.push(technology);
+                if (technology.progress > 0) {
+                    ctx.fillStyle = '#00ff00';
+                    ctx.fillRect(Math.floor(leftOffset + currentColumn * areaWidth / 2 + 10), Math.floor(this.height / 8 + 56 + 124 * (currentRow - this.rowScroll)), Math.floor((areaWidth / 2 - 20) * technology.progress), 4)
+                }
+                ctx.strokeRect(Math.floor(leftOffset + currentColumn * areaWidth / 2 + 10), Math.floor(this.height / 8 + 56 + 124 * (currentRow - this.rowScroll)), Math.floor(areaWidth / 2 - 20), 104);
+                game.draw.textCenter(technology.name, Math.floor(leftOffset + areaWidth / 4 + currentColumn * areaWidth / 2), Math.floor(this.height / 8 + 64 + 124 * (currentRow - this.rowScroll)), 14, "white");
+
+                //draw description
+                for (let j = 0; j < technology.desc.length; j++) {
+                    game.draw.textSmallCenter(technology.desc[j], Math.floor(leftOffset + areaWidth / 4 + currentColumn * areaWidth / 2), Math.floor(this.height / 8 + 84 + 124 * (currentRow - this.rowScroll) + j * 12), 7, "#FFFFFF");
+                }
+
+                //draw cost
+                let cardWidth = areaWidth / 2 - 20;
+                if (technology.needed.invention > 0) game.draw.textCenter(game.draw.toShortNumber(technology.needed.invention - technology.current.invention), Math.floor(leftOffset + 10 + cardWidth / 12 + currentColumn * areaWidth / 2), Math.floor(this.height / 8 + 140 + 124 * (currentRow - this.rowScroll)), 14, "#1E90FF");
+                if (technology.needed.math > 0) game.draw.textCenter(game.draw.toShortNumber(technology.needed.math - technology.current.math), Math.floor(leftOffset + 10 + 3 * cardWidth / 12 + currentColumn * areaWidth / 2), Math.floor(this.height / 8 + 140 + 124 * (currentRow - this.rowScroll)), 14, "#FFD700");
+                if (technology.needed.physics > 0) game.draw.textCenter(game.draw.toShortNumber(technology.needed.physics - technology.current.physics), Math.floor(leftOffset + 10 + 5 * cardWidth / 12 + currentColumn * areaWidth / 2), Math.floor(this.height / 8 + 140 + 124 * (currentRow - this.rowScroll)), 14, "#48D1CC");
+                if (technology.needed.chemistry > 0) game.draw.textCenter(game.draw.toShortNumber(technology.needed.chemistry - technology.current.chemistry), Math.floor(leftOffset + 10 + 7 * cardWidth / 12 + currentColumn * areaWidth / 2), Math.floor(this.height / 8 + 140 + 124 * (currentRow - this.rowScroll)), 14, "#FF4500");
+                if (technology.needed.biology > 0) game.draw.textCenter(game.draw.toShortNumber(technology.needed.biology - technology.current.biology), Math.floor(leftOffset + 10 + 9 * cardWidth / 12 + currentColumn * areaWidth / 2), Math.floor(this.height / 8 + 140 + 124 * (currentRow - this.rowScroll)), 14, "#32CD32");
+                if (technology.needed.quantum > 0) game.draw.textCenter(game.draw.toShortNumber(technology.needed.quantum - technology.current.quantum), Math.floor(leftOffset + 10 + 11 * cardWidth / 12 + currentColumn * areaWidth / 2), Math.floor(this.height / 8 + 140 + 124 * (currentRow - this.rowScroll)), 14, "#FF42EE");    
+            }
+            currentColumn++;
             if (currentColumn > 1) {
                 currentColumn = 0;
                 currentRow++;
             }
-            if (currentRow >= this.rowScroll && currentRow < this.rowScroll + maxRows) {
-                if (technology.progress > 0) {
-                    ctx.fillStyle = '#00ff00';
-                    ctx.fillRect(Math.floor(this.width / 8 + currentColumn * 3 * this.width / 8 + 10), Math.floor(this.height / 8 + 56 + 124 * (currentRow - this.rowScroll)), Math.floor((3 * this.width / 8 - 20) * technology.progress), 4)
-                }
-                ctx.strokeRect(Math.floor(this.width / 8 + currentColumn * 3 * this.width / 8 + 10), Math.floor(this.height / 8 + 56 + 124 * (currentRow - this.rowScroll)), Math.floor(3 * this.width / 8 - 20), 104);
-                game.draw.textCenter(technology.name, Math.floor(5 * this.width / 16 + currentColumn * 3 * this.width / 8), Math.floor(this.height / 8 + 64 + 124 * (currentRow - this.rowScroll)), 14, "white");
-
-                //draw description
-                for (let j = 0; j < technology.desc.length; j++) {
-                    game.draw.textSmallCenter("- " + technology.desc[j], Math.floor(5 * this.width / 16 + currentColumn * 3 * this.width / 8), Math.floor(this.height / 8 + 84 + 124 * (currentRow - this.rowScroll) + j * 12), 7, "#FFFFFF");
-                }
-
-                //draw cost
-                if (technology.needed.invention > 0) game.draw.textCenter(game.draw.toShortNumber(technology.needed.invention - technology.current.invention), Math.floor(5 * this.width / 32 + currentColumn * 3 * this.width / 8), Math.floor(this.height / 8 + 140 + 124 * (currentRow - this.rowScroll)), 14, "#1E90FF");
-                if (technology.needed.math > 0) game.draw.textCenter(game.draw.toShortNumber(technology.needed.math - technology.current.math), Math.floor(7 * this.width / 32 + currentColumn * 3 * this.width / 8), Math.floor(this.height / 8 + 140 + 124 * (currentRow - this.rowScroll)), 14, "#FFD700");
-                if (technology.needed.physics > 0) game.draw.textCenter(game.draw.toShortNumber(technology.needed.physics - technology.current.physics), Math.floor(9 * this.width / 32 + currentColumn * 3 * this.width / 8), Math.floor(this.height / 8 + 140 + 124 * (currentRow - this.rowScroll)), 14, "#48D1CC");
-                if (technology.needed.chemistry > 0) game.draw.textCenter(game.draw.toShortNumber(technology.needed.chemistry - technology.current.chemistry), Math.floor(11 * this.width / 32 + currentColumn * 3 * this.width / 8), Math.floor(this.height / 8 + 140 + 124 * (currentRow - this.rowScroll)), 14, "#FF4500");
-                if (technology.needed.biology > 0) game.draw.textCenter(game.draw.toShortNumber(technology.needed.biology - technology.current.biology), Math.floor(13 * this.width / 32 + currentColumn * 3 * this.width / 8), Math.floor(this.height / 8 + 140 + 124 * (currentRow - this.rowScroll)), 14, "#32CD32");
-                if (technology.needed.quantum > 0) game.draw.textCenter(game.draw.toShortNumber(technology.needed.quantum - technology.current.quantum), Math.floor(15 * this.width / 32 + currentColumn * 3 * this.width / 8), Math.floor(this.height / 8 + 140 + 124 * (currentRow - this.rowScroll)), 14, "#FF42EE");
-                
-                currentColumn++;
-            }
         }
+        if (currentColumn > 0) {
+            currentRow++;
+        }
+
+        this.scrollBar.reposition(Math.floor(7 * this.width / 8 - 24), Math.floor(this.height / 8 + 56) + (research.active != null ? 124 : 0), 16, Math.floor(3 * this.height / 4 - 66) - (research.active != null ? 124 : 0));
+
+        this.scrollBar.setBounds(this.rowScroll, maxRows - (research.active != null ? 1 : 0), Math.floor(currentRow - maxRows));
+        this.scrollBar.render(ctx);
 
         game.draw.renderText(ctx);
     }

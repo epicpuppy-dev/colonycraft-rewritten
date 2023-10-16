@@ -5,6 +5,7 @@ import { KeyBind } from "../../player/KeyBind";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
 import { ClickHandler } from "../ui/ClickHandler";
+import { ScrollBar } from "../ui/ScrollBar";
 
 export class OverlayBuildings extends Screen {
     private increaseIndex: number = 0;
@@ -18,6 +19,7 @@ export class OverlayBuildings extends Screen {
     private minusButton: Button;
     private buildButton: Button;
     private demolishButton: Button;
+    private scrollBar: ScrollBar;
 
     constructor(game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
@@ -29,11 +31,12 @@ export class OverlayBuildings extends Screen {
             return game.currentScreens.includes("buildings");
         });
 
-        this.selectionClickable = new ClickHandler(Math.floor(this.width / 8), Math.floor(this.height / 8), Math.floor(3 * this.width / 4), Math.floor(3 * this.height / 4), (game: ColonyCraft, x: number, y: number) => {
+        let areaWidth = 3 * this.width / 4 - 24;
+        this.selectionClickable = new ClickHandler(Math.floor(this.width / 8), Math.floor(this.height / 8), Math.floor(areaWidth), Math.floor(3 * this.height / 4), (game: ColonyCraft, x: number, y: number) => {
             if ((y - this.height / 8 - 112) % 72 > 52) return;
             const row = Math.floor((y - this.height / 8 - 112) / 72);
-            if ((x - this.width / 8 -10) % (this.width / 4) > (this.width / 4 - 20)) return;
-            const column = x < 3 * this.width / 8 ? 0 : x < 5 * this.width / 8 ? 1 : 2;
+            if ((x - this.width / 8 - 10) % (areaWidth / 3) > (areaWidth / 3 - 20)) return;
+            const column = x - this.width / 8 < areaWidth / 3 ? 0 : x - this.width / 8 < 2 * areaWidth / 3 ? 1 : 2;
             const index = row * 3 + column + (this.selected != null ? -9 : 0);
             if (index >= this.buildingsAvailable.length || index < 0) return;
             this.selected = this.buildingsAvailable[index];
@@ -88,6 +91,8 @@ export class OverlayBuildings extends Screen {
         game.mouse.registerClickable(this.minusButton, -20);
         game.mouse.registerClickable(this.buildButton, -20);
         game.mouse.registerClickable(this.demolishButton, -20);
+
+        this.scrollBar = new ScrollBar(game, Math.floor(7 * this.width / 8 - 24), Math.floor(this.height / 8 + 108), 16, Math.floor(3 * this.height / 4 - 118), "v", 0, 5, 5, 72, (game) => game.currentScreens.includes("buildings"));
     }
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
@@ -162,21 +167,24 @@ export class OverlayBuildings extends Screen {
             ctx.stroke();
         }
         
-        const maxRows = Math.floor((3 * this.height / 4 - 112) / 72);
+        const maxRows = Math.floor((3 * this.height / 4 - 98) / 72);
 
         let currentRow = this.selected != null ? 3 : 0;
         let currentColumn = 0;
+        let areaWidth = 3 * this.width / 4 - 24;
+        let offsetLeft = this.width / 8;
         this.buildingsAvailable = [];
+        this.rowScroll = Math.max(this.scrollBar.value, 0);
 
         for (let i = 0; i < buildings.buildingPriority.length; i++) {
             const building = buildings.buildings[buildings.buildingPriority[i]];
             if (!building.available(game)) continue;
             if (building === this.selected) continue;
-            if (currentRow >= this.rowScroll && currentRow < maxRows + this.rowScroll) {
+            if (currentRow >= this.rowScroll + (this.selected != null ? 3 : 0) && currentRow < maxRows + this.rowScroll) {
                 this.buildingsAvailable.push(building);
-                ctx.strokeRect(Math.floor(this.width / 8 + currentColumn * this.width / 4 + 10), Math.floor(this.height / 8 + 108 + currentRow * 72), Math.floor(this.width / 4 - 20), 52);
-                game.draw.textCenter(building.name, Math.floor(this.width / 8 + currentColumn * this.width / 4 + this.width / 8), Math.floor(this.height / 8 + 116 + currentRow * 72), 14, "white");
-                game.draw.textCenter(`${building.amount}/${building.target}/${building.maximum(game)}`, Math.floor(this.width / 8 + currentColumn * this.width / 4 + this.width / 8), Math.floor(this.height / 8 + 136 + currentRow * 72), 14, "white");
+                ctx.strokeRect(Math.floor(offsetLeft + currentColumn * areaWidth / 3 + 10), Math.floor(this.height / 8 + 108 + (currentRow - this.rowScroll) * 72), Math.floor(areaWidth / 3 - 20), 52);
+                game.draw.textCenter(building.name, Math.floor(offsetLeft + currentColumn * areaWidth / 3 + areaWidth / 6), Math.floor(this.height / 8 + 116 + (currentRow - this.rowScroll) * 72), 14, "white");
+                game.draw.textCenter(`${building.amount}/${building.target}/${building.maximum(game)}`, Math.floor(offsetLeft + currentColumn * areaWidth / 3 + areaWidth / 6), Math.floor(this.height / 8 + 136 + (currentRow - this.rowScroll) * 72), 14, "white");
             }
             currentColumn++;
             if (currentColumn > 2) {
@@ -184,6 +192,14 @@ export class OverlayBuildings extends Screen {
                 currentRow++;
             }
         }
+        if (currentColumn > 0) {
+            currentRow++;
+        }
+
+        this.scrollBar.reposition(Math.floor(7 * this.width / 8 - 24), Math.floor(this.height / 8 + 108 + (this.selected != null ? 216 : 0)), 16, Math.floor(3 * this.height / 4 - 118 - (this.selected != null ? 216 : 0)))
+
+        this.scrollBar.setBounds(this.rowScroll, maxRows - (this.selected != null ? 3 : 0), Math.floor(currentRow - maxRows));
+        this.scrollBar.render(ctx);
 
         game.draw.renderText(ctx);
     }
