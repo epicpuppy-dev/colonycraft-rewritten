@@ -10,6 +10,7 @@ export class SimulationController {
     public toggleRunning (running: boolean) {
         this.running = running;
         if (this.running) {
+            game.clock.resetTickTime();
             setTimeout(() => game.clock.startTick(game), 1000 / game.clock.tps);
         } else {
             game.clock.stopTick();

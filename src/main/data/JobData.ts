@@ -22,5 +22,20 @@ export class JobData {
         jobs.addJob(new Job(game, "religious1", "Cleric", 20, () => false, () => Infinity));
         jobs.addJob(new Job(game, "builder1", "Builder", 20, () => true, () => Infinity));
         jobs.addJob(new CraftingJob(game, "craftsman", "Craftsman", 10, 1, recipes.test, () => true, () => Infinity));
+        jobs.addJob(new Job(game, "test1", "Test 1", 20, () => true, () => Infinity));
+        jobs.addJob(new Job(game, "test2", "Test 2", 20, () => true, () => Infinity));
+        jobs.addJob(new Job(game, "test3", "Test 3", 20, () => true, () => Infinity));
+        jobs.addJob(new Job(game, "test4", "Test 4", 20, () => true, () => Infinity));
+        jobs.addJob(new Job(game, "test5", "Test 5", 20, () => true, () => Infinity));
+        jobs.addJob(new Job(game, "test6", "Test 6", 20, () => true, () => Infinity));
+        jobs.addJob(new Job(game, "test7", "Test 7", 20, () => true, () => Infinity));
+        jobs.addJob(new Job(game, "test8", "Test 8", 20, () => true, () => Infinity));
+        jobs.addJob(new Job(game, "test9", "Test 9", 20, () => true, () => Infinity));
+        jobs.addJob(new Job(game, "test10", "Test 10", 20, () => true, () => Infinity));
+        jobs.addJob(new Job(game, "test11", "Test 11", 20, () => true, () => Infinity));
+        jobs.addJob(new Job(game, "test12", "Test 12", 20, () => true, () => Infinity));
+        jobs.addJob(new Job(game, "test13", "Test 13", 20, () => true, () => Infinity));
+        jobs.addJob(new Job(game, "test14", "Test 14", 20, () => true, () => Infinity));
+        jobs.addJob(new Job(game, "test15", "Test 15", 20, () => true, () => Infinity));
     }
 }

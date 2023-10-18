@@ -11,7 +11,7 @@ export class InventoryMonitor extends TickingEntity {
 
         inventory.storageUsed = 0;
         for (let key in inventory.items) {
-            // inventory.items[key].amount ++;
+            //inventory.items[key].amount += 100;
             inventory.storageUsed += inventory.items[key].volume * inventory.items[key].amount * 0.001;
         }
     }

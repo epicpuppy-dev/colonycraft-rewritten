@@ -8,12 +8,12 @@ export class InventoryData {
     public static addItems (inventory: Inventory) {
         //Volume is space per 1,000 units
         inventory.addCategoryWithItems(new ItemGroup("food", "Food"), [
-            new FoodItem("berries", 0.2, "Berries", 0.05, 0.4, 0.1, 0.15, 5),
-            new FoodItem("herbs", 0.1, "Wild Herbs", 0.05, 0.2, 0.2, -0.2, 3),
+            new FoodItem("berries", 0.2, "Berries", 0.05, 0.4, 0.1, 0.5, 5),
+            new FoodItem("herbs", 0.1, "Wild Herbs", 0.05, 0.25, 0.2, -0.5, 3),
         ]);
         inventory.addCategoryWithItems(new ItemGroup("fluids", "Fluids"), [
-            new FluidItem("freshWater", 0.5, "Fresh Water", 0.05, 0.5, 0.5, 0.25, 10),
-            new FluidItem("muddyWater", 0.5, "Muddy Water", 0.1, 0.5, -4, -1, 2),
+            new FluidItem("freshWater", 0.5, "Fresh Water", 0.05, 0.5, 0, 0.2, 10),
+            new FluidItem("muddyWater", 0.5, "Muddy Water", 0.1, 0.5, -10, -5, 2),
         ]);
         inventory.addCategoryWithItems(new ItemGroup("primitive", "Primitive Materials"), [
             new Item("sticks", 1, "Sticks", 0.01), //TODO: Balance
@@ -55,5 +55,22 @@ export class InventoryData {
         inventory.addCategoryWithItems(new ItemGroup("electronics", "Electronics"), [
             //TODO: Electronics
         ]);
+        inventory.addCategoryWithItems(new ItemGroup("test", "Test"), [
+            new Item("test1", 0.1, "Test 1", 0),
+            new Item("test2", 0.1, "Test 2", 0),
+            new Item("test3", 0.1, "Test 3", 0),
+            new Item("test4", 0.1, "Test 4", 0),
+            new Item("test5", 0.1, "Test 5", 0),
+            new Item("test6", 0.1, "Test 6", 0),
+            new Item("test7", 0.1, "Test 7", 0),
+            new Item("test8", 0.1, "Test 8", 0),
+            new Item("test9", 0.1, "Test 9", 0),
+            new Item("test10", 0.1, "Test 10", 0),
+            new Item("test11", 0.1, "Test 11", 0),
+            new Item("test12", 0.1, "Test 12", 0),
+            new Item("test13", 0.1, "Test 13", 0),
+            new Item("test14", 0.1, "Test 14", 0),
+            new Item("test15", 0.1, "Test 15", 0),
+        ])
     }
 }

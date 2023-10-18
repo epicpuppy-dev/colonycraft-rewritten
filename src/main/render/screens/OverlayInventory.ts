@@ -1,12 +1,14 @@
-import { game } from "../../..";
 import { ColonyCraft } from "../../ColonyCraft";
 import { KeyAction } from "../../player/KeyAction";
 import { KeyBind } from "../../player/KeyBind";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
+import { ScrollBar } from "../ui/ScrollBar";
+import { Slider } from "../ui/Slider";
 
 export class OverlayInventory extends Screen {
     private closeButton: Button;
+    private scrollBar: ScrollBar;
     private rowScroll: number = 0;
 
     constructor(game: ColonyCraft, width: number, height: number) {
@@ -37,6 +39,8 @@ export class OverlayInventory extends Screen {
         }));
         
         game.key.addBinding(new KeyBind("Open Inventory", "I", "KeyI", [game.key.actions.openInventory]));
+
+        this.scrollBar = new ScrollBar(game, Math.floor(7 * this.width / 8 - 24), Math.floor(this.height / 8 + 56), 16, Math.floor(3 * this.height / 4 - 104), "v", 0, 5, 5, 24, (game) => game.currentScreens.includes("inventory"));
     }
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
@@ -62,7 +66,7 @@ export class OverlayInventory extends Screen {
         ctx.strokeRect(Math.floor(this.width / 8 + 48), Math.floor(7 * this.height / 8 - 18), Math.floor((3 * this.width / 4 - 56) * Math.min((inventory.storageCapacity / (inventory.storageUsed == 0 ? 1 : inventory.storageUsed)), 1)), 10);
         ctx.strokeStyle = '#777777';
         ctx.strokeRect(Math.floor(this.width / 8 + 48), Math.floor(7 * this.height / 8 - 18), Math.floor(3 * this.width / 4 - 56), 10);
-        game.draw.text(`Storage: ${parseFloat(inventory.storageUsed.toFixed(1)).toLocaleString()} / ${parseInt(inventory.storageCapacity.toFixed(0)).toLocaleString()}`, Math.floor(this.width / 8 + 48), Math.floor(7 * this.height / 8 - 38), 14, "white");
+        game.draw.text(`Storage: ${game.draw.toShortNumber(inventory.storageUsed)} / ${game.draw.toShortNumber(inventory.storageCapacity)}`, Math.floor(this.width / 8 + 48), Math.floor(7 * this.height / 8 - 38), 14, "white");
 
         //Render the inventory itself
         /*
@@ -73,6 +77,8 @@ export class OverlayInventory extends Screen {
         the scroll bar will scroll in increments of 1 row
         */
 
+        this.rowScroll = Math.max(this.scrollBar.value, 0);
+
         const maxRows = Math.floor((3 * this.height / 4 - 104) / 20);
         let currentRow = 0;
         let currentColumn = 0;
@@ -82,14 +88,10 @@ export class OverlayInventory extends Screen {
             if (inventory.items[Object.keys(inventory.items)[i]].amount > maxItems) maxItems = inventory.items[Object.keys(inventory.items)[i]].amount;
         }
         //get width of maxItems
-        const maxwidth = game.draw.textWidth(`${maxItems.toLocaleString()}`, 14);
+        const maxwidth = game.draw.textWidth(`${game.draw.toShortNumber(maxItems)}`, 14);
 
         //loop through all inventory categories
         for (let i = 0; i < Object.keys(inventory.categories).length; i++) {
-            if (currentColumn > 0) {
-                currentColumn = 0;
-                currentRow++;
-            }
             //check if any items in the category have an amount greater than 0
             let hasItems = false;
             for (let j = 0; j < inventory.categories[Object.keys(inventory.categories)[i]].items.length; j++) {
@@ -103,9 +105,10 @@ export class OverlayInventory extends Screen {
             //if the current row is greater than the scroll value and less than the max rows plus scroll value, render the category header
             if (currentRow >= this.rowScroll && currentRow < this.rowScroll + maxRows) {
                 game.draw.textCenter(inventory.categories[Object.keys(inventory.categories)[i]].name, Math.floor(this.width / 2), Math.floor(this.height / 8 + 56 + 20 * (currentRow - this.rowScroll)), 14, "white");
-                //add 1 rows for the category header
-                currentRow++;
             }
+            //add 1 rows for the category header
+            currentRow++;
+            currentColumn = 0;
             //loop through all items in the category
             for (let j = 0; j < inventory.categories[Object.keys(inventory.categories)[i]].items.length; j++) {
                 //check if the current row is greater than the scroll value and less than the max rows plus scroll value
@@ -118,18 +121,26 @@ export class OverlayInventory extends Screen {
                     //render the item
                     game.draw.sprite(ctx, inventory.categories[Object.keys(inventory.categories)[i]].items[j].key + "Small", Math.floor(this.width / 8 + 8 + (3 * this.width / 8) * currentColumn), Math.floor(this.height / 8 + 56 + 20 * (currentRow - this.rowScroll)), 16, 16);
                     
-                    const amountWidth = game.draw.textWidth(`${inventory.categories[Object.keys(inventory.categories)[i]].items[j].amount.toLocaleString()}`, 14);
+                    const amountWidth = game.draw.textWidth(`${game.draw.toShortNumber(inventory.categories[Object.keys(inventory.categories)[i]].items[j].amount)}`, 14);
                     const widthDiff = maxwidth - amountWidth;
-                    game.draw.text(`${inventory.categories[Object.keys(inventory.categories)[i]].items[j].amount.toLocaleString()}x ${inventory.categories[Object.keys(inventory.categories)[i]].items[j].name}`, Math.floor(this.width / 8 + 30 + (3 * this.width / 8) * currentColumn) + widthDiff, Math.floor(this.height / 8 + 56 + 20 * (currentRow - this.rowScroll) + 1), 14, "white");
-                    //add 1 row for the item
-                    currentColumn++;
-                    if (currentColumn > 1) {
-                        currentColumn = 0;
-                        currentRow++;
-                    }
+                    game.draw.text(`${game.draw.toShortNumber(inventory.categories[Object.keys(inventory.categories)[i]].items[j].amount)} ${inventory.categories[Object.keys(inventory.categories)[i]].items[j].name}`, Math.floor(this.width / 8 + 30 + (3 * this.width / 8) * currentColumn) + widthDiff, Math.floor(this.height / 8 + 56 + 20 * (currentRow - this.rowScroll) + 1), 14, "white");
+                    
+                }
+                currentColumn++;
+                if (currentColumn > 1) {
+                    currentColumn = 0;
+                    currentRow++;
                 }
             }
+            if (currentColumn > 0) {
+                currentColumn = 0;
+                currentRow++;
+            }
         }
+
+        this.scrollBar.setBounds(this.rowScroll, maxRows, Math.floor(currentRow - maxRows));
+        this.scrollBar.render(ctx);
+
         game.draw.renderText(ctx);
     }
 

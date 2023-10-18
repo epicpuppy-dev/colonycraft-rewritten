@@ -4,6 +4,7 @@ import { Job } from "../../content/colony/jobs/Job";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
 import { ClickHandler } from "../ui/ClickHandler";
+import { ScrollBar } from "../ui/ScrollBar";
 
 export class PanelJobs extends Screen {
     private increaseIndex: number = 0;
@@ -15,6 +16,7 @@ export class PanelJobs extends Screen {
     private minusClickable: ClickHandler;
     private jobsAvailable: Job[] = [];
     private buttonOffset: number = 100;
+    private scrollBar: ScrollBar;
 
     constructor(game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
@@ -51,6 +53,14 @@ export class PanelJobs extends Screen {
 
         game.mouse.registerClickable(this.plusClickable);
         game.mouse.registerClickable(this.minusClickable);
+
+        this.scrollBar = new ScrollBar(game, Math.floor(this.width - 24), 130, 16, Math.floor(this.height - 142), "v", 0, 5, 5, 40, (game, x, y) => {
+            return game.currentScreens.includes("game") && 
+                !game.currentScreens.includes("overlay") &&
+                x > Math.floor(2 * this.width / 3) &&
+                x < Math.floor(this.width) &&
+                y > 50 && y < Math.floor(this.height);
+        });
     }
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
@@ -64,6 +74,7 @@ export class PanelJobs extends Screen {
 
         const maxRows = Math.floor((this.height - 138) / 40);
         let row = 0;
+        this.rowScroll = Math.max(this.scrollBar.value, 0);
 
         game.draw.textSmallCenter("Modify By:", Math.floor(5 * this.width / 6), 98, 7, "#FFFFFF");
         game.draw.textCenter(this.increaseSteps[this.increaseIndex][1], Math.floor(5 * this.width / 6), 110, 14, "#FFFFFF");
@@ -76,30 +87,35 @@ export class PanelJobs extends Screen {
 
         const jobs = game.colony.jobs;
         let maxWidth = game.draw.textWidth("1.23k / 1.23k", 14);
+        this.jobsAvailable = [];
 
         for (const job of jobs.jobPriority) {
-            if (row >= maxRows + this.rowScroll) break;
-            if (row < this.rowScroll) continue;
             if (jobs.jobs[job].unlocked(game)) {
-                this.jobsAvailable.push(jobs.jobs[job]);
-                maxWidth = Math.max(maxWidth, game.draw.textWidth(jobs.jobs[job].name, 14));
-                game.draw.textCenter(jobs.jobs[job].name, Math.floor(5 * this.width / 6), 130 + 40 * row, 14, "#FFFFFF");
-                if (jobs.jobs[job].maxWorkers(game) !== Infinity) {
-                    game.draw.textCenter(game.draw.toShortNumber(jobs.jobs[job].workersAssigned) + " / " + game.draw.toShortNumber(jobs.jobs[job].maxWorkers(game)), Math.floor(5 * this.width / 6), 150 + 40 * row, 14, "#FFFFFF");
-                } else {
-                    game.draw.textCenter(game.draw.toShortNumber(jobs.jobs[job].workersAssigned), Math.floor(5 * this.width / 6), 150 + 40 * row, 14, "#FFFFFF");
+                if (row >= this.rowScroll && row < this.rowScroll + maxRows) {
+                    this.jobsAvailable.push(jobs.jobs[job]);
+                    maxWidth = Math.max(maxWidth, game.draw.textWidth(jobs.jobs[job].name, 14));
+                    game.draw.textCenter(jobs.jobs[job].name, Math.floor(5 * this.width / 6), 130 + 40 * (row - this.rowScroll), 14, "#FFFFFF");
+                    if (jobs.jobs[job].maxWorkers(game) !== Infinity) {
+                        game.draw.textCenter(game.draw.toShortNumber(jobs.jobs[job].workersAssigned) + " / " + game.draw.toShortNumber(jobs.jobs[job].maxWorkers(game)), Math.floor(5 * this.width / 6), 150 + 40 * (row - this.rowScroll), 14, "#FFFFFF");
+                    } else {
+                        game.draw.textCenter(game.draw.toShortNumber(jobs.jobs[job].workersAssigned), Math.floor(5 * this.width / 6), 150 + 40 * (row - this.rowScroll), 14, "#FFFFFF");
+                    }
+                    game.draw.textCenter("+", Math.floor(5 * this.width / 6) + this.buttonOffset, 140 + 40 * (row - this.rowScroll), 21, "#FFFFFF");
+                    game.draw.textCenter("-", Math.floor(5 * this.width / 6) - this.buttonOffset, 140 + 40 * (row - this.rowScroll), 21, "#FFFFFF");
+                    ctx.beginPath();
+                    ctx.roundRect(Math.floor(5 * this.width / 6) - this.buttonOffset - 12, 140 + 40 * (row - this.rowScroll), 21, 21, 3);
+                    ctx.roundRect(Math.floor(5 * this.width / 6) + this.buttonOffset - 12, 140 + 40 * (row - this.rowScroll), 21, 21, 3);
+                    ctx.stroke();
                 }
-                game.draw.textCenter("+", Math.floor(5 * this.width / 6) + this.buttonOffset, 140 + 40 * row, 21, "#FFFFFF");
-                game.draw.textCenter("-", Math.floor(5 * this.width / 6) - this.buttonOffset, 140 + 40 * row, 21, "#FFFFFF");
-                ctx.beginPath();
-                ctx.roundRect(Math.floor(5 * this.width / 6) - this.buttonOffset - 12, 140 + 40 * row, 21, 21, 3);
-                ctx.roundRect(Math.floor(5 * this.width / 6) + this.buttonOffset - 12, 140 + 40 * row, 21, 21, 3);
-                ctx.stroke();
                 row++;
             }
         }
 
         this.buttonOffset = Math.floor(maxWidth / 2 + 24);
+
+        this.scrollBar.setBounds(this.rowScroll, maxRows, Math.floor(row - maxRows));
+
+        this.scrollBar.render(ctx);
 
         game.draw.renderText(ctx);
     }

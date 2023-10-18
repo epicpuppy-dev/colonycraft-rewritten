@@ -3,10 +3,12 @@ import { KeyAction } from "../../player/KeyAction";
 import { KeyBind } from "../../player/KeyBind";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
+import { ScrollBar } from "../ui/ScrollBar";
 
 export class OverlayTraits extends Screen {
     private closeButton: Button;
     private rowScroll: number = 0;
+    private scrollBar: ScrollBar;
 
     constructor (game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
@@ -36,6 +38,8 @@ export class OverlayTraits extends Screen {
         }));
         
         game.key.addBinding(new KeyBind("Open Traits", "E", "KeyE", [game.key.actions.openTraits]));
+
+        this.scrollBar = new ScrollBar(game, Math.floor(7 * this.width / 8 - 24), Math.floor(this.height / 8 + 56), 16, Math.floor(3 * this.height / 4 - 66), "v", 0, 5, 5, 88, (game) => game.currentScreens.includes("traits"));
     }
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
@@ -51,24 +55,30 @@ export class OverlayTraits extends Screen {
         game.draw.sprite(ctx, "close", Math.floor(7 * this.width / 8 - 31), Math.floor(this.height / 8 + 6), 24, 24);
         game.draw.textCenter("Current Traits", Math.floor(this.width / 2), Math.floor(this.height / 8 + 12), 28, "white");
 
-        const maxRows = Math.floor((3 * this.height / 4 - 56) / 88);
+        const rowHeight = 100
+        const maxRows = Math.floor((3 * this.height / 4 - 46) / rowHeight);
         const traits = game.colony.traits;
 
         let currentRow = 0;
         let currentColumn = 0;
 
+        this.rowScroll = Math.max(this.scrollBar.value, 0);
+
+        let areaWidth = 3 * this.width / 4 - 24;
+        let leftOffset = this.width / 8
+
         for (let i = 0; i < Object.keys(traits.traits).length; i++) {
             const trait = traits.traits[Object.keys(traits.traits)[i]];
             if (!trait.unlocked) continue;
             if (currentRow >= this.rowScroll && currentRow < maxRows + this.rowScroll) {
-                ctx.strokeRect(Math.floor(this.width / 8 + currentColumn * this.width / 4 + 10), Math.floor(this.height / 8 + 56 + currentRow * 96), Math.floor(this.width / 4 - 20), 68);
-                game.draw.textCenter(trait.name, Math.floor(this.width / 4 + currentColumn * this.width / 4), Math.floor(this.height / 8 + 60 + currentRow * 96), 14, "white");
+                ctx.strokeRect(Math.floor(leftOffset + currentColumn * areaWidth / 3 + 10), Math.floor(this.height / 8 + 56 + (currentRow - this.rowScroll) * rowHeight), Math.floor(areaWidth / 3 - 20), rowHeight - 20);
+                game.draw.textCenter(trait.name, Math.floor(leftOffset + areaWidth / 6 + currentColumn * areaWidth / 3), Math.floor(this.height / 8 + 62 + (currentRow - this.rowScroll) * rowHeight), 14, "white");
                 //trait type
                 const color = trait.type === "s" ? "#8A2BE2" : trait.type === "c" ? "#ADFF2F" : trait.type === "p" ? "#FF7F50" : "#DAA520";
-                game.draw.textSmallCenter(trait.type === "s" ? "Social" : trait.type === "c" ? "Cultural" : trait.type === "p" ? "Political" : "Religious", Math.floor(this.width / 4 + currentColumn * this.width / 4), Math.floor(this.height / 8 + 60 + currentRow * 96 + 20), 7, color);
+                game.draw.textSmallCenter(trait.type === "s" ? "Social" : trait.type === "c" ? "Cultural" : trait.type === "p" ? "Political" : "Religious", Math.floor(leftOffset + areaWidth / 6 + currentColumn * areaWidth / 3), Math.floor(this.height / 8 + 62 + (currentRow - this.rowScroll) * rowHeight + 20), 7, color);
                 //description
                 for (let j = 0; j < trait.desc.length; j++) {
-                    game.draw.textSmallCenter(trait.desc[j], Math.floor(this.width / 4 + currentColumn * this.width / 4), Math.floor(this.height / 8 + 60 + currentRow * 96 + 30 + j * 10), 7, "white");
+                    game.draw.textSmallCenter(trait.desc[j], Math.floor(leftOffset + areaWidth / 6 + currentColumn * areaWidth / 3), Math.floor(this.height / 8 + 62 + (currentRow - this.rowScroll) * rowHeight + 30 + j * 10), 7, "white");
                 }
             }
             currentColumn++;
@@ -77,6 +87,12 @@ export class OverlayTraits extends Screen {
                 currentRow++;
             }
         }
+        if (currentColumn > 0) {
+            currentRow++;
+        }
+
+        this.scrollBar.setBounds(this.rowScroll, maxRows, Math.floor(currentRow - maxRows));
+        this.scrollBar.render(ctx);
 
         game.draw.renderText(ctx);
     }
@@ -84,5 +100,4 @@ export class OverlayTraits extends Screen {
     public active(game: ColonyCraft): boolean {
         return game.currentScreens.includes("traits");
     }
-    
 }
