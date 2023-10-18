@@ -8,12 +8,12 @@ export class InventoryData {
     public static addItems (inventory: Inventory) {
         //Volume is space per 1,000 units
         inventory.addCategoryWithItems(new ItemGroup("food", "Food"), [
-            new FoodItem("berries", 0.2, "Berries", 0.05, 0.4, 0.1, 0.15, 5),
-            new FoodItem("herbs", 0.1, "Wild Herbs", 0.05, 0.2, 0.2, -0.2, 3),
+            new FoodItem("berries", 0.2, "Berries", 0.05, 0.4, 0.1, 0.5, 5),
+            new FoodItem("herbs", 0.1, "Wild Herbs", 0.05, 0.25, 0.2, -0.5, 3),
         ]);
         inventory.addCategoryWithItems(new ItemGroup("fluids", "Fluids"), [
-            new FluidItem("freshWater", 0.5, "Fresh Water", 0.05, 0.5, 0.5, 0.25, 10),
-            new FluidItem("muddyWater", 0.5, "Muddy Water", 0.1, 0.5, -4, -1, 2),
+            new FluidItem("freshWater", 0.5, "Fresh Water", 0.05, 0.5, 0, 0.2, 10),
+            new FluidItem("muddyWater", 0.5, "Muddy Water", 0.1, 0.5, -10, -5, 2),
         ]);
         inventory.addCategoryWithItems(new ItemGroup("primitive", "Primitive Materials"), [
             new Item("sticks", 1, "Sticks", 0.01), //TODO: Balance

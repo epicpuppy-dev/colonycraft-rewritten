@@ -1,4 +1,3 @@
-import { game } from "../..";
 import { ColonyCraft } from "../ColonyCraft";
 
 export abstract class TickingEntity {

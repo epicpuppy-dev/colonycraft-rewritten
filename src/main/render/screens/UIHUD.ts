@@ -3,18 +3,18 @@ import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
 
 export class UIHUD extends Screen {
-    private inventoryButton: Button;
+    private statsButton: Button;
 
     constructor(game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
         
-        this.inventoryButton = new Button(100, -50, this.width - 200, 100, (game: ColonyCraft) => {
-            game.currentScreens.push("inventory", "overlay");
+        this.statsButton = new Button(100, -50, this.width - 200, 100, (game: ColonyCraft) => {
+            game.currentScreens.push("stats", "overlay");
         } , (game: ColonyCraft) => {
             return game.currentScreens.includes("game") && !game.currentScreens.includes("overlay");
         });
 
-        game.mouse.registerClickable(this.inventoryButton);
+        game.mouse.registerClickable(this.statsButton);
     }
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {

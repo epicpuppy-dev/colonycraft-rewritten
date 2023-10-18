@@ -34,6 +34,10 @@ import { PanelBuildings } from "./render/screens/PanelBuildings";
 import { BuildingData } from "./data/BuildingData";
 import { OverlayBuildings } from "./render/screens/OverlayBuildings";
 import { RecipeData } from "./data/RecipeData";
+import { PanelInventory } from "./render/screens/PanelInventory";
+import { StatsManager } from "./content/stats/StatsManager";
+import { StatsData } from "./data/StatsData";
+import { OverlayStats } from "./render/screens/OverlayStats";
 
 export class ColonyCraft {
     public width: number;
@@ -48,6 +52,7 @@ export class ColonyCraft {
     public entities: EntityController;
     public loot: LootManager;
     public key: KeyController;
+    public stats: StatsManager;
 
     private font: TextRenderer;
     private fontSmall: TextRenderer;
@@ -85,6 +90,24 @@ export class ColonyCraft {
         //Initialize Controls
         this.mouse = new MouseController();
 
+        //Initialize Colony
+        this.colony = new Colony(this);
+        this.loot = new LootManager();
+
+        //Initialize Stats
+        this.stats = new StatsManager(this);
+
+        //Add data
+        UnlockableData.addUnlockables(this);
+        InventoryData.addItems(this.colony.inventory);
+        LootData.addLoot(this.loot, this.colony.inventory);
+        RecipeData.addRecipes(this, this.colony.recipes);
+        JobData.addJobs(this, this.colony.jobs);
+        BuildingData.addBuildings(this, this.colony.buildings);
+        StatsData.addStats(this, this.stats);
+
+        //this.colony.research.active = this.colony.research.technologies.test;
+
         this.currentScreens = [];
 
         //Initialize Screens
@@ -96,6 +119,7 @@ export class ColonyCraft {
             new PanelResearch(this, this.width, this.height),
             new PanelTraits(this, this.width, this.height),
             new PanelBuildings(this, this.width, this.height),
+            new PanelInventory(this, this.width, this.height),
         ]);
         this.renderer.addLayerWithScreens(new LayerUI(this), [
             new UIPerformance(this.width, this.height),
@@ -106,24 +130,11 @@ export class ColonyCraft {
            new OverlayResearch(this, this.width, this.height),
            new OverlayTraits(this, this.width, this.height),
            new OverlayBuildings(this, this.width, this.height),
+           new OverlayStats(this, this.width, this.height),
         ]);
         this.currentScreens.push("title");
 
         SpriteData.addSprites(this.sprites);
-
-        //Initialize Colony
-        this.colony = new Colony(this);
-        this.loot = new LootManager();
-
-        //Add data
-        UnlockableData.addUnlockables(this);
-        InventoryData.addItems(this.colony.inventory);
-        LootData.addLoot(this.loot, this.colony.inventory);
-        RecipeData.addRecipes(this, this.colony.recipes);
-        JobData.addJobs(this, this.colony.jobs);
-        BuildingData.addBuildings(this, this.colony.buildings);
-
-        //this.colony.research.active = this.colony.research.technologies.test;
 
         //Initialize Simulation
         this.simulation = new SimulationController();
@@ -136,6 +147,7 @@ export class ColonyCraft {
 
     public tick() {
         if (!this.simulation.running) return;
+        this.clock.dayTotal++;
         if (++this.clock.day > 30) {
             this.clock.day = 1;
             if (++this.clock.season > 4) {

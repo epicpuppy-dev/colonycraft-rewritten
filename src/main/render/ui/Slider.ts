@@ -6,10 +6,6 @@ export class Slider {
     protected max: number;
     public value: number;
     protected initialValue: number;
-    protected barColor: string;
-    protected sliderColor: string;
-    protected hoverColor: string;
-    protected heldColor: string;
     protected x: number;
     protected y: number;
     protected width: number;
@@ -17,16 +13,20 @@ export class Slider {
     protected type: "h" | "v";
     protected barSize: number;
     protected slidable: Slidable;
+    protected colors: {
+        bar: string,
+        slider: string,
+        hover: string,
+        held: string
+    }
 
-    constructor(game: ColonyCraft, x: number, y: number, width: number, height: number, type: "h" | "v", min: number, max: number, active: (game: ColonyCraft, x: number, y: number) => boolean = () => true, displaySize: number, barColor: string = "#333333", sliderColor: string = "#777777", hoverColor: string = "#999999", heldColor: string = "#bbbbbb") {
+    constructor(game: ColonyCraft, x: number, y: number, width: number, height: number, type: "h" | "v", min: number, max: number, active: (game: ColonyCraft, x: number, y: number) => boolean = () => true, displaySize: number, 
+        colors: {bar: string, slider: string, hover: string, held: string} = {bar: "#333333", slider: "#777777", hover: "#999999", held: "#bbbbbb"}) {
         this.min = min;
         this.max = max;
         this.value = this.min;
         this.initialValue = this.value;
-        this.barColor = barColor;
-        this.sliderColor = sliderColor;
-        this.hoverColor = hoverColor;
-        this.heldColor = heldColor;
+        this.colors = colors;
         this.x = x;
         this.y = y;
         this.width = width;
@@ -58,9 +58,9 @@ export class Slider {
     }
 
     public render(ctx: OffscreenCanvasRenderingContext2D) {
-        ctx.fillStyle = this.barColor;
+        ctx.fillStyle = this.colors.bar;
         ctx.fillRect(this.x, this.y, this.width, this.height);
-        ctx.fillStyle = this.slidable.held ? this.heldColor : this.slidable.hover ? this.hoverColor : this.sliderColor;
+        ctx.fillStyle = this.slidable.held ? this.colors.held : this.slidable.hover ? this.colors.hover : this.colors.slider;
         let widthPortion = isFinite((this.value - this.min) / (this.max - this.min)) ? (this.value - this.min) / (this.max - this.min) : 1;
         if (this.type == "h") {
             ctx.fillRect(Math.round(this.x + (this.width - this.barSize) * widthPortion), this.y, Math.round(this.barSize), this.height);

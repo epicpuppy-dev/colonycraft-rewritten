@@ -100,5 +100,4 @@ export class OverlayTraits extends Screen {
     public active(game: ColonyCraft): boolean {
         return game.currentScreens.includes("traits");
     }
-    
 }

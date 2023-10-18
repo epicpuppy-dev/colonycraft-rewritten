@@ -16,6 +16,7 @@ export class KeyController {
     }
 
     private keydown(event: KeyboardEvent): void {
+        event.preventDefault();
         //loop through all bindings
         for (const binding of this.bindings) if (binding.code === event.code) {
             binding.keyheld = true;

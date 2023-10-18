@@ -51,9 +51,12 @@ export class WelfareUpdate extends TickingEntity {
         }
 
         if (foodConsumed < foodRequired) {
-            healthChange -= (foodRequired - foodConsumed) * 5;
-            moraleChange -= (foodRequired - foodConsumed) * 5;
+            healthChange -= (foodRequired - foodConsumed) * 15;
+            moraleChange -= (foodRequired - foodConsumed) * 6;
         }
+
+        // Make health take 3x longer to change
+        healthChange /= 3;
 
         welfare.health = Math.min(Math.max(welfare.health + healthChange / foodRequired / 1000, 0), 1);
         welfare.morale = Math.min(Math.max(welfare.morale + moraleChange / foodRequired / 1000, 0), 1);
@@ -80,9 +83,12 @@ export class WelfareUpdate extends TickingEntity {
         }
 
         if (fluidsConsumed < fluidsRequired) {
-            healthChange -= (fluidsRequired - fluidsConsumed) * 10;
-            moraleChange -= (fluidsRequired - fluidsConsumed) * 10;
+            healthChange -= (fluidsRequired - fluidsConsumed) * 25;
+            moraleChange -= (fluidsRequired - fluidsConsumed) * 8;
         }
+
+        // Make health take 3x longer to change
+        healthChange /= 3;
 
         welfare.health = Math.min(Math.max(welfare.health + healthChange / fluidsRequired / 1000, 0), 1);
         welfare.morale = Math.min(Math.max(welfare.morale + moraleChange / fluidsRequired / 1000, 0), 1);
