@@ -38,6 +38,8 @@ import { PanelInventory } from "./render/screens/PanelInventory";
 import { StatsManager } from "./content/stats/StatsManager";
 import { StatsData } from "./data/StatsData";
 import { OverlayStats } from "./render/screens/OverlayStats";
+import { SaveManager } from "./saving/SaveManager";
+import { OverlayPause } from "./render/screens/OverlayPause";
 
 export class ColonyCraft {
     public width: number;
@@ -53,6 +55,7 @@ export class ColonyCraft {
     public loot: LootManager;
     public key: KeyController;
     public stats: StatsManager;
+    public save: SaveManager;
 
     private font: TextRenderer;
     private fontSmall: TextRenderer;
@@ -75,6 +78,9 @@ export class ColonyCraft {
         this.canvas.style.left = '0';
         this.canvas.style.top = '0';
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+
+        //Initalize Save Manager
+        this.save = new SaveManager();
 
         //Initialize Entity Ticker
         this.entities = new EntityController();
@@ -126,11 +132,12 @@ export class ColonyCraft {
             new UIHUD(this, this.width, this.height),
         ]);
         this.renderer.addLayerWithScreens(new LayerOverlay(this), [
-           new OverlayInventory(this, this.width, this.height), 
-           new OverlayResearch(this, this.width, this.height),
-           new OverlayTraits(this, this.width, this.height),
-           new OverlayBuildings(this, this.width, this.height),
-           new OverlayStats(this, this.width, this.height),
+            new OverlayPause(this, this.width, this.height),
+            new OverlayInventory(this, this.width, this.height), 
+            new OverlayResearch(this, this.width, this.height),
+            new OverlayTraits(this, this.width, this.height),
+            new OverlayBuildings(this, this.width, this.height),
+            new OverlayStats(this, this.width, this.height),
         ]);
         this.currentScreens.push("title");
 

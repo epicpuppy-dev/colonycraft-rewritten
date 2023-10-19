@@ -55,6 +55,11 @@ export class ClockController {
         this.nextTick = 0;
     }
 
+    startTicking(game: ColonyCraft) {
+        this.nextTick = window.setTimeout(() => this.startTick(game), 1000 / this.tps);
+        this.tickStart = performance.now();
+    }
+
     resetFrameTime () {
         this.frameTime = [1000 / this.fps];
         this.frameStart = performance.now();
