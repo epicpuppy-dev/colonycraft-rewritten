@@ -9,8 +9,7 @@
     "build-dev": "webpack --mode development",
     "build-prod": "webpack --mode production",
     "preversion": "npm run build-prod",
-    "version": "echo \"export const version = '$npm_package_version';\" > src/version.ts&&git stage src/version.ts",
-    "postversion": "git push"
+    "version": "echo \"export const version = '$npm_package_version';\" > src/version.ts&&git stage src/version.ts"
   },
   "repository": {
     "type": "git",
