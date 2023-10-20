@@ -1,3 +1,4 @@
+import { ColonyCraft } from "../../../../ColonyCraft";
 import { Item } from "../Item";
 
 export class FluidItem extends Item {
@@ -6,8 +7,8 @@ export class FluidItem extends Item {
     public morale: number; // how much morale the fluid gives (If 100% of fluid consumption (by saturation) is this, then morale changes by 1 unit = 0.1% / tick)
     public priority: number; // how much priority the fluid has (higher priority means it is consumed first, equal priorities will consume fluid at random)
 
-    constructor(id: string, volume: number, name: string, decay: number, saturation: number, health: number, morale: number, priority: number) {
-        super(id, volume, name, decay);
+    constructor(game: ColonyCraft, id: string, volume: number, name: string, decay: number, saturation: number, health: number, morale: number, priority: number) {
+        super(game, id, volume, name, decay);
         this.saturation = saturation;
         this.health = health;
         this.morale = morale;

@@ -3,8 +3,9 @@ import { Item } from "./Item";
 import { InventoryDecay } from "./InventoryDecay";
 import { ItemGroup } from "./ItemGroup";
 import { ColonyCraft } from "../../../ColonyCraft";
+import { Saveable } from "../../../saving/Saveable";
 
-export class Inventory {
+export class Inventory implements Saveable {
     public categories: { [key: string]: ItemGroup } = {};
     public items: { [key: string]: Item } = {};
     public storageCapacity: number = 10;
@@ -17,6 +18,8 @@ export class Inventory {
         this.monitor1 = new InventoryMonitor(game, 97);
         this.monitor2 = new InventoryMonitor(game, 99);
         this.decay = new InventoryDecay(game);
+
+        game.save.register(this, "inv");
     }
 
     public addCategory(category: ItemGroup) {
@@ -33,5 +36,13 @@ export class Inventory {
         for (let item of items) {
             this.addItem(group, item);
         }
+    }
+
+    public save (): string {
+        return `${this.storageCapacity.toString(36)}`;
+    }
+
+    public load (data: string) {
+        if (!isNaN(parseInt(data, 36))) this.storageCapacity = parseInt(data, 36);
     }
 }

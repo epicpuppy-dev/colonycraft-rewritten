@@ -1,8 +1,9 @@
 import { ColonyCraft } from "../../../ColonyCraft";
+import { Saveable } from "../../../saving/Saveable";
 import { Building } from "./Building";
 import { BuildingUpdate } from "./BuildingUpdate";
 
-export class BuildingManager {
+export class BuildingManager implements Saveable {
     public landMax: number = 10;
     public landUsed: number = 0;
     public landPending: number = 0;
@@ -14,6 +15,8 @@ export class BuildingManager {
 
     constructor (game: ColonyCraft) {
         this.update = new BuildingUpdate(game);
+
+        game.save.register(this, "bldg");
     }
 
     public addBuilding (building: Building) {
@@ -81,5 +84,18 @@ export class BuildingManager {
             this.landPending -= Math.abs(clampAmount) * building.area;
         }
         building.target += clampAmount;
+    }
+
+    public save (): string {
+        return `${this.landMax.toString(36)}-${this.landUsed.toString(36)}-${this.landPending.toString(36)}-${this.queueSize.toString(36)}-${this.workLeft.toString(36)}`;
+    }
+
+    public load (data: string) {
+        let split = data.split("-");
+        if (!isNaN(parseInt(split[0], 36))) this.landMax = parseInt(split[0], 36);
+        if (!isNaN(parseInt(split[1], 36))) this.landUsed = parseInt(split[1], 36);
+        if (!isNaN(parseInt(split[2], 36))) this.landPending = parseInt(split[2], 36);
+        if (!isNaN(parseInt(split[3], 36))) this.queueSize = parseInt(split[3], 36);
+        if (!isNaN(parseInt(split[4], 36))) this.workLeft = parseInt(split[4], 36);
     }
 }

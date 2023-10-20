@@ -1,6 +1,7 @@
 import { ColonyCraft } from "../ColonyCraft";
+import { Saveable } from "../saving/Saveable";
 
-export class ClockController {
+export class ClockController implements Saveable {
     public year: number = 1;
     public season: number = 1;
     public day: number = 1;
@@ -23,13 +24,15 @@ export class ClockController {
     public tps: number;
     private nextTick: number = 0;
 
-    constructor (fps: number, tps: number) {
+    constructor (game: ColonyCraft, fps: number, tps: number) {
         this.fps = fps;
         this.tps = tps;
         this.frameStart = performance.now();
         this.tickStart = performance.now();
         this.frameTime = [1000 / fps];
         this.tickTime = [1000 / tps];
+
+        game.save.register(this, "clock");
     }
 
     startTick(game: ColonyCraft) {
@@ -53,6 +56,11 @@ export class ClockController {
     stopTick () {
         clearTimeout(this.nextTick);
         this.nextTick = 0;
+    }
+
+    startTicking(game: ColonyCraft) {
+        this.nextTick = window.setTimeout(() => this.startTick(game), 1000 / this.tps);
+        this.tickStart = performance.now();
     }
 
     resetFrameTime () {
@@ -89,5 +97,17 @@ export class ClockController {
     changeFPS (fps: number) {
         this.fps = fps;
         this.frameTime = [1000 / fps];
+    }
+
+    public save (): string {
+        return `${this.year.toString(36)}-${this.season.toString(36)}-${this.day.toString(36)}-${this.dayTotal.toString(36)}`;
+    }
+
+    public load (data: string) {
+        let split = data.split("-");
+        if (!isNaN(parseInt(split[0], 36))) this.year = parseInt(split[0], 36);
+        if (!isNaN(parseInt(split[1], 36))) this.season = parseInt(split[1], 36);
+        if (!isNaN(parseInt(split[2], 36))) this.day = parseInt(split[2], 36);
+        if (!isNaN(parseInt(split[3], 36))) this.dayTotal = parseInt(split[3], 36);
     }
 }

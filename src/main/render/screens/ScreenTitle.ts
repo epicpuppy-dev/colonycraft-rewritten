@@ -1,4 +1,3 @@
-import { game } from "../../..";
 import { ColonyCraft } from "../../ColonyCraft";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
@@ -11,7 +10,7 @@ export class ScreenTitle extends Screen {
         this.startButton = new Button(Math.floor(this.width / 2 - 36), Math.floor(this.height / 2 + 24), 72, 72, (game: ColonyCraft) => {
             game.currentScreens.splice(game.currentScreens.indexOf("title"), 1);
             game.currentScreens.push("game");
-            game.simulation.toggleRunning(true);
+            game.simulation.toggleRunning(game, true);
         }, (game: ColonyCraft) => {
             return game.currentScreens.includes("title");
         });

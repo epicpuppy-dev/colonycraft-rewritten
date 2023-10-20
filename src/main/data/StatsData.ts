@@ -4,7 +4,7 @@ import { StatsManager } from "../content/stats/StatsManager";
 
 export class StatsData {
     public static addStats (game: ColonyCraft, manager: StatsManager) {
-        const intervals = {"daily": 1, "quarterly": 10, "yearly": 60};
+        const intervals = {"daily": 2, "quarterly": 30, "yearly": 120};
         manager.addStatistic(new Statistic(game, "population", "Total", intervals, (game: ColonyCraft) => {
             return game.colony.population.seniors + game.colony.population.adults + game.colony.population.children + game.colony.population.babies;
         }));

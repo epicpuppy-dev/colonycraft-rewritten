@@ -14,9 +14,9 @@ export class OverlayStats extends Screen {
     private welfareButton: Button;
     private graphs: {[type: string]: Graph};
     private intervals: {[key: string]: [number, string[], number]} = {
-        "daily": [6, ["Now", "20d", "40d", "60d", "80d", "100d", "120d"], 120],
-        "quarterly": [5, ["Now", "2y", "4y", "6y", "8y", "10y"], 120],
-        "yearly": [5, ["Now", "10y", "20y", "30y", "40y", "50y"], 100]
+        "daily": [6, ["Now", "20d", "40d", "60d", "80d", "100d", "120d"], 60],
+        "quarterly": [5, ["Now", "2y", "4y", "6y", "8y", "10y"], 40],
+        "yearly": [5, ["Now", "10y", "20y", "30y", "40y", "50y"], 50]
     };
     private interval: string = "daily";
     private type: string = "population";
@@ -75,8 +75,8 @@ export class OverlayStats extends Screen {
         game.mouse.registerClickable(this.yearlyButton);
 
         this.graphs = {
-            welfare: new Graph(Math.floor(this.width / 4), Math.floor(this.height / 4), Math.floor(this.width / 2), Math.floor(this.height / 2), 0, 1, 6, ["Now", "20d", "40d", "60d", "80d", "100d", "120d"], 4, ["0%", "25%", "50%", "75%", "100%"], "daily", 120, {"#dc1414": game.stats.stats.health, "#dcd614": game.stats.stats.morale}),
-            population: new Graph(Math.floor(this.width / 4), Math.floor(this.height / 4), Math.floor(this.width / 2), Math.floor(this.height / 2), 0, null, 6, ["Now", "20d", "40d", "60d", "80d", "100d", "120d"], 4, null, "daily", 120, {"#ffffff": game.stats.stats.population, "#98fb98": game.stats.stats.babies, "#48d1cc": game.stats.stats.children, "#6495ed": game.stats.stats.adults, "#9370db": game.stats.stats.seniors})
+            welfare: new Graph(Math.floor(this.width / 4), Math.floor(this.height / 4), Math.floor(this.width / 2), Math.floor(this.height / 2), 0, 1, 6, ["Now", "20d", "40d", "60d", "80d", "100d", "120d"], 4, ["0%", "25%", "50%", "75%", "100%"], "daily", 60, {"#dc1414": game.stats.stats.health, "#dcd614": game.stats.stats.morale}),
+            population: new Graph(Math.floor(this.width / 4), Math.floor(this.height / 4), Math.floor(this.width / 2), Math.floor(this.height / 2), 0, null, 6, ["Now", "20d", "40d", "60d", "80d", "100d", "120d"], 4, null, "daily", 60, {"#ffffff": game.stats.stats.population, "#98fb98": game.stats.stats.babies, "#48d1cc": game.stats.stats.children, "#6495ed": game.stats.stats.adults, "#9370db": game.stats.stats.seniors})
         };
     }
 

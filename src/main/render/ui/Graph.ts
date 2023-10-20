@@ -109,7 +109,7 @@ export class Graph {
                 i++;
             }
             ctx.stroke();
-            if (numbers) {
+            if (numbers && stat.data[0]) {
                 let y = Math.round(this.y + this.height - stat.data[0] / range * this.height - 4);
                 while (true) {
                     let overlap = false;
