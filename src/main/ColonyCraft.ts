@@ -40,6 +40,9 @@ import { StatsData } from "./data/StatsData";
 import { OverlayStats } from "./render/screens/OverlayStats";
 import { SaveManager } from "./saving/SaveManager";
 import { OverlayPause } from "./render/screens/OverlayPause";
+import { LayerOverlay2 } from "./render/layers/LayerOverlay2";
+import { Overlay2Save } from "./render/screens/Overlay2Save";
+import { Overlay2Load } from "./render/screens/Overlay2Load";
 
 export class ColonyCraft {
     public width: number;
@@ -105,7 +108,7 @@ export class ColonyCraft {
 
         //Add data
         UnlockableData.addUnlockables(this);
-        InventoryData.addItems(this.colony.inventory);
+        InventoryData.addItems(this, this.colony.inventory);
         LootData.addLoot(this.loot, this.colony.inventory);
         RecipeData.addRecipes(this, this.colony.recipes);
         JobData.addJobs(this, this.colony.jobs);
@@ -139,6 +142,10 @@ export class ColonyCraft {
             new OverlayBuildings(this, this.width, this.height),
             new OverlayStats(this, this.width, this.height),
         ]);
+        this.renderer.addLayerWithScreens(new LayerOverlay2(this), [
+            new Overlay2Save(this, this.width, this.height),
+            new Overlay2Load(this, this.width, this.height)
+        ]);
         this.currentScreens.push("title");
 
         SpriteData.addSprites(this.sprites);
@@ -147,7 +154,7 @@ export class ColonyCraft {
         this.simulation = new SimulationController();
 
         //Create clock controller and start frame and tick
-        this.clock = new ClockController(60, 1);
+        this.clock = new ClockController(this, 60, 1);
         this.clock.startFrame(this);
         //this.clock.startTick();
     }

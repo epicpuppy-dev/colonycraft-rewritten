@@ -2,6 +2,17 @@ import { Saveable } from "./Saveable";
 
 export class SaveManager {
     private saveables: {[path: string]: Saveable} = {};
+    public storage: number = 0;
+    public toSave: string = "";
+    public saves: {name: string, id: string, size: number, year: number, timestamp: string}[] = [];
+
+    constructor () {
+        const metadata = window.localStorage.getItem("_CCMeta");
+        if (metadata == null) return;
+        const data = JSON.parse(metadata);
+        if (data.saves) this.saves = data.saves;
+        if (data.storage) this.storage = data.storage;
+    }
 
     public register (saveable: Saveable, path: string): void {
         this.saveables[path] = saveable;
@@ -10,7 +21,8 @@ export class SaveManager {
     public save (): string {
         let string = "CCSaveFormat-1.0";
         for (let saveable in this.saveables) {
-            string += `/${saveable};${this.saveables[saveable].save()}`;
+            let add = this.saveables[saveable].save();
+            if (add.length > 0) string += `/${saveable};${add}`;
         }
         return string;
     }

@@ -16,7 +16,7 @@ export class OverlayPause extends Screen {
                 game.currentScreens.push("pause", "overlay");
                 game.simulation.toggleRunning(game, false);
             }
-            else if (game.currentScreens.includes("pause")) {
+            else if (game.currentScreens.includes("pause") && !game.currentScreens.includes("overlay2")) {
                 game.currentScreens.splice(game.currentScreens.indexOf("pause"), 1);
                 game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);
                 game.simulation.toggleRunning(game, true);
@@ -29,24 +29,23 @@ export class OverlayPause extends Screen {
             game.currentScreens.splice(game.currentScreens.indexOf("pause"), 1);
             game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);
             game.simulation.toggleRunning(game, true);
-        }, (game: ColonyCraft) => game.currentScreens.includes("pause"));
+        }, (game: ColonyCraft) => game.currentScreens.includes("pause") && !game.currentScreens.includes("overlay2"));
 
         this.saveButton = new Button(Math.floor(this.width / 2 - 130), Math.floor(this.height / 2 - 40), 260, 32, (game: ColonyCraft) => {
-            const save = game.save.save();
-            alert(save);
-            alert((save.length / 512).toFixed(2) + "KB");
-        }, (game: ColonyCraft) => game.currentScreens.includes("pause"));
+            game.currentScreens.push("save", "overlay2");
+            game.save.toSave = game.save.save();
+        }, (game: ColonyCraft) => game.currentScreens.includes("pause") && !game.currentScreens.includes("overlay2"));
 
         this.loadButton = new Button(Math.floor(this.width / 2 - 130), Math.floor(this.height / 2 + 8), 260, 32, (game: ColonyCraft) => {
-            game.save.load(prompt("Enter save data:") as string);
-        }, (game: ColonyCraft) => game.currentScreens.includes("pause"));
+            game.currentScreens.push("load", "overlay2");
+        }, (game: ColonyCraft) => game.currentScreens.includes("pause") && !game.currentScreens.includes("overlay2"));
 
         this.exitButton = new Button(Math.floor(this.width / 2 - 130), Math.floor(this.height / 2 + 56), 260, 32, (game: ColonyCraft) => {
             game.currentScreens.splice(game.currentScreens.indexOf("pause"), 1);
             game.currentScreens.splice(game.currentScreens.indexOf("game"), 1);
             game.currentScreens.push("title");
             game.simulation.toggleRunning(game, false);
-        }, (game: ColonyCraft) => game.currentScreens.includes("pause"));
+        }, (game: ColonyCraft) => game.currentScreens.includes("pause") && !game.currentScreens.includes("overlay2"));
 
         game.mouse.registerClickable(this.resumeButton);
         game.mouse.registerClickable(this.saveButton);
