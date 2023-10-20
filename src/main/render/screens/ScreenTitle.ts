@@ -1,3 +1,4 @@
+import { version } from "../../../version";
 import { ColonyCraft } from "../../ColonyCraft";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
@@ -21,6 +22,7 @@ export class ScreenTitle extends Screen {
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
         game.draw.textCenter("ColonyCraft", Math.floor(this.width / 2), Math.floor(this.height / 2 - 100), 56, "white");
         game.draw.sprite(ctx, "play", Math.floor(this.width / 2 - 36), Math.floor(this.height / 2 + 24), 72, 72);
+        game.draw.text("v" + version, 10, this.height - 20, 14, "white");
         game.draw.renderText(ctx);
     }
 

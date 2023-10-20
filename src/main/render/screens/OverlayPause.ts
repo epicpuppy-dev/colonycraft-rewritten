@@ -1,3 +1,4 @@
+import { version } from "../../../version";
 import { ColonyCraft } from "../../ColonyCraft";
 import { KeyAction } from "../../player/KeyAction";
 import { Screen } from "../Screen";
@@ -74,6 +75,8 @@ export class OverlayPause extends Screen {
         game.draw.textCenter("Save Game", Math.floor(this.width / 2), Math.floor(this.height / 2 - 32), 14, "white");
         game.draw.textCenter("Load Game", Math.floor(this.width / 2), Math.floor(this.height / 2 + 16), 14, "white");
         game.draw.textCenter("Exit to Main Menu", Math.floor(this.width / 2), Math.floor(this.height / 2 + 64), 14, "white");
+
+        game.draw.text("v" + version, 10, this.height - 20, 14, "white");
 
         game.draw.renderText(ctx);
     }
