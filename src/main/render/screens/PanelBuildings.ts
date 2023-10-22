@@ -10,13 +10,15 @@ export class PanelBuildings extends Screen {
         this.buildingButton = new Button(0, 294, Math.floor(width / 3), 70, (game: ColonyCraft) => {
             game.currentScreens.push("buildings", "overlay");
         }, (game: ColonyCraft) => {
-            return game.currentScreens.includes("game") && !game.currentScreens.includes("overlay");
+            return game.currentScreens.includes("game") && !game.currentScreens.includes("overlay") && game.colony.research.technologies.build1.unlocked;
         });
 
         game.mouse.registerClickable(this.buildingButton);
     }
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
+        if (!game.colony.research.technologies.build1.unlocked) return;
+
         ctx.beginPath();
         ctx.roundRect(-50, 294, Math.floor(this.width / 3 + 50), 70, 10);
         ctx.fillStyle = "#222222";

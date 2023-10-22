@@ -11,9 +11,9 @@ export class Technology extends Unlockable implements Saveable {
     public id: string;
     public name: string;
     public desc: string[];
-    public prereqs: Unlockable[];
+    public prereqs: string[];
 
-    constructor (game: ColonyCraft, id: string, name: string, needed: TechPoints, desc: string[] = [], prereqs: Unlockable[] = []) {
+    constructor (game: ColonyCraft, id: string, name: string, needed: TechPoints, desc: string[] = [], prereqs: string[] = []) {
         super();
         this.id = id;
         this.name = name;

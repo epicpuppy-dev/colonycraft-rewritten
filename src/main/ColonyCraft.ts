@@ -107,7 +107,7 @@ export class ColonyCraft {
         this.stats = new StatsManager(this);
 
         //Add data
-        UnlockableData.addUnlockables(this);
+        UnlockableData.addUnlockables(this, this.colony.research, this.colony.traits);
         InventoryData.addItems(this, this.colony.inventory);
         LootData.addLoot(this.loot, this.colony.inventory);
         RecipeData.addRecipes(this, this.colony.recipes);

@@ -31,7 +31,7 @@ export class OverlayInventory extends Screen {
         game.draw.addCloseAction(game.key.actions.closeInventory);
 
         game.key.addAction(new KeyAction("openInventory", "Open Inventory", (game: ColonyCraft) => {
-            if (game.currentScreens.includes("game") && !game.currentScreens.includes("overlay")) game.currentScreens.push("inventory", "overlay");
+            if (game.currentScreens.includes("game") && !game.currentScreens.includes("overlay") && game.colony.research.technologies.storage1.unlocked) game.currentScreens.push("inventory", "overlay");
             else if (game.currentScreens.includes("inventory")) {
                 game.currentScreens.splice(game.currentScreens.indexOf("inventory"), 1);
                 game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);

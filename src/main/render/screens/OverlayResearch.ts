@@ -30,7 +30,7 @@ export class OverlayResearch extends Screen {
             if ((x - this.width / 8) % (areaWidth / 4) < 10 || (x - this.width / 8) % (areaWidth / 2) > (areaWidth / 2 - 10)) return;
             const column = x - this.width / 8 < areaWidth / 2 ? 0 : 1;
             const index = row * 2 + column + (game.colony.research.active != null ? -2 : 0);
-            if (index >= this.technologiesAvailable.length || index < 0) return;
+            if (index >= this.technologiesAvailable.length || index < 0 || this.technologiesAvailable[index].unlocked) return;
             game.colony.research.active = this.technologiesAvailable[index];
         }, (game: ColonyCraft) => {
             return game.currentScreens.includes("research");
@@ -73,7 +73,7 @@ export class OverlayResearch extends Screen {
         ctx.lineWidth = 2;
         ctx.stroke();
         game.draw.sprite(ctx, "close", Math.floor(7 * this.width / 8 - 31), Math.floor(this.height / 8 + 6), 24, 24);
-        game.draw.textCenter("Research", Math.floor(this.width / 2), Math.floor(this.height / 8 + 12), 28, "white");
+        game.draw.textCenter("Discovery", Math.floor(this.width / 2), Math.floor(this.height / 8 + 12), 28, "white");
 
         //Row height = 124
         const maxRows = Math.floor((3 * this.height / 4 - 46) / 124);
@@ -149,19 +149,36 @@ export class OverlayResearch extends Screen {
         let areaWidth = 3 * this.width / 4 - 24;
         let leftOffset = this.width / 8;
 
+        const researchesList = [];
+        const researchedList = [];
         for (let i = 0; i < Object.keys(research.technologies).length; i++) {
             const technology = research.technologies[Object.keys(research.technologies)[i]];
-            if (technology.unlocked || research.active === technology) continue;
+            if (technology.unlocked) researchedList.push(technology);
+            else researchesList.push(technology);
+        }
+
+        researchesList.push(...researchedList);
+
+        for (let i = 0; i < researchesList.length; i++) {
+            const technology = researchesList[i];
+            if (technology === research.active) continue;
             let available = true;
             for (let j = 0; j < technology.prereqs.length; j++) {
-                if (!technology.prereqs[j].unlocked) available = false;
+                if (research.technologies[technology.prereqs[j]]) {
+                    if (!research.technologies[technology.prereqs[j]].unlocked) available = false;
+                } else if (game.colony.traits.traits[technology.prereqs[j]]) {
+                    if (!game.colony.traits.traits[technology.prereqs[j]].unlocked) available = false;
+                }
             }
             if (!available) continue;
             if (currentRow >= this.rowScroll + (research.active != null ? 1 : 0) && currentRow < this.rowScroll + maxRows) {
                 this.technologiesAvailable.push(technology);
-                if (technology.progress > 0) {
+                if (technology.progress > 0 && !technology.unlocked) {
                     ctx.fillStyle = '#00ff00';
                     ctx.fillRect(Math.floor(leftOffset + currentColumn * areaWidth / 2 + 10), Math.floor(this.height / 8 + 56 + 124 * (currentRow - this.rowScroll)), Math.floor((areaWidth / 2 - 20) * technology.progress), 4)
+                } else if (technology.unlocked) {
+                    ctx.fillStyle = '#222c22';
+                    ctx.fillRect(Math.floor(leftOffset + currentColumn * areaWidth / 2 + 10), Math.floor(this.height / 8 + 56 + 124 * (currentRow - this.rowScroll)), Math.floor(areaWidth / 2 - 20), 104);
                 }
                 ctx.strokeRect(Math.floor(leftOffset + currentColumn * areaWidth / 2 + 10), Math.floor(this.height / 8 + 56 + 124 * (currentRow - this.rowScroll)), Math.floor(areaWidth / 2 - 20), 104);
                 game.draw.textCenter(technology.name, Math.floor(leftOffset + areaWidth / 4 + currentColumn * areaWidth / 2), Math.floor(this.height / 8 + 64 + 124 * (currentRow - this.rowScroll)), 14, "white");
@@ -172,13 +189,15 @@ export class OverlayResearch extends Screen {
                 }
 
                 //draw cost
-                let cardWidth = areaWidth / 2 - 20;
+                if (!technology.unlocked) {
+                    let cardWidth = areaWidth / 2 - 20;
                 if (technology.needed.invention > 0) game.draw.textCenter(game.draw.toShortNumber(technology.needed.invention - technology.current.invention), Math.floor(leftOffset + 10 + cardWidth / 12 + currentColumn * areaWidth / 2), Math.floor(this.height / 8 + 140 + 124 * (currentRow - this.rowScroll)), 14, "#1E90FF");
                 if (technology.needed.math > 0) game.draw.textCenter(game.draw.toShortNumber(technology.needed.math - technology.current.math), Math.floor(leftOffset + 10 + 3 * cardWidth / 12 + currentColumn * areaWidth / 2), Math.floor(this.height / 8 + 140 + 124 * (currentRow - this.rowScroll)), 14, "#FFD700");
                 if (technology.needed.physics > 0) game.draw.textCenter(game.draw.toShortNumber(technology.needed.physics - technology.current.physics), Math.floor(leftOffset + 10 + 5 * cardWidth / 12 + currentColumn * areaWidth / 2), Math.floor(this.height / 8 + 140 + 124 * (currentRow - this.rowScroll)), 14, "#48D1CC");
                 if (technology.needed.chemistry > 0) game.draw.textCenter(game.draw.toShortNumber(technology.needed.chemistry - technology.current.chemistry), Math.floor(leftOffset + 10 + 7 * cardWidth / 12 + currentColumn * areaWidth / 2), Math.floor(this.height / 8 + 140 + 124 * (currentRow - this.rowScroll)), 14, "#FF4500");
                 if (technology.needed.biology > 0) game.draw.textCenter(game.draw.toShortNumber(technology.needed.biology - technology.current.biology), Math.floor(leftOffset + 10 + 9 * cardWidth / 12 + currentColumn * areaWidth / 2), Math.floor(this.height / 8 + 140 + 124 * (currentRow - this.rowScroll)), 14, "#32CD32");
-                if (technology.needed.quantum > 0) game.draw.textCenter(game.draw.toShortNumber(technology.needed.quantum - technology.current.quantum), Math.floor(leftOffset + 10 + 11 * cardWidth / 12 + currentColumn * areaWidth / 2), Math.floor(this.height / 8 + 140 + 124 * (currentRow - this.rowScroll)), 14, "#FF42EE");    
+                if (technology.needed.quantum > 0) game.draw.textCenter(game.draw.toShortNumber(technology.needed.quantum - technology.current.quantum), Math.floor(leftOffset + 10 + 11 * cardWidth / 12 + currentColumn * areaWidth / 2), Math.floor(this.height / 8 + 140 + 124 * (currentRow - this.rowScroll)), 14, "#FF42EE");
+                }
             }
             currentColumn++;
             if (currentColumn > 1) {

@@ -10,13 +10,15 @@ export class PanelInventory extends Screen {
         this.inventoryButton = new Button(0, 364, Math.floor(width / 3), 50, (game: ColonyCraft) => {
             game.currentScreens.push("inventory", "overlay");
         }, (game: ColonyCraft) => {
-            return game.currentScreens.includes("game") && !game.currentScreens.includes("overlay");
+            return game.currentScreens.includes("game") && !game.currentScreens.includes("overlay") && game.colony.research.technologies.storage1.unlocked;
         });
 
         game.mouse.registerClickable(this.inventoryButton);
     }
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
+        if (!game.colony.research.technologies.storage1.unlocked) return;
+
         ctx.beginPath();
         ctx.roundRect(-50, 364, Math.floor(this.width / 3 + 50), 40, 10);
         ctx.fillStyle = "#222222";

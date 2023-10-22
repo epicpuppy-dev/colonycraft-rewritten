@@ -54,9 +54,10 @@ export class TraitUpdate extends TickingEntity {
                 if (manager.traits[trait].unlocked || manager.traits[trait].type != "s") continue;
                 let valid = true;
                 for (const req of manager.traits[trait].prereqs) {
-                    if (!req.unlocked) {
-                        valid = false;
-                        break;
+                    if (manager.traits[req]) {
+                        if (!manager.traits[req].unlocked) valid = false;
+                    } else if (game.colony.research.technologies[req]) {
+                        if (!game.colony.research.technologies[req].unlocked) valid = false;
                     }
                 }
                 if (valid) available.push(trait);
@@ -69,9 +70,10 @@ export class TraitUpdate extends TickingEntity {
                 if (manager.traits[trait].unlocked || manager.traits[trait].type != "c") continue;
                 let valid = true;
                 for (const req of manager.traits[trait].prereqs) {
-                    if (!req.unlocked) {
-                        valid = false;
-                        break;
+                    if (manager.traits[req]) {
+                        if (!manager.traits[req].unlocked) valid = false;
+                    } else if (game.colony.research.technologies[req]) {
+                        if (!game.colony.research.technologies[req].unlocked) valid = false;
                     }
                 }
                 if (valid) available.push(trait);
@@ -84,9 +86,10 @@ export class TraitUpdate extends TickingEntity {
                 if (manager.traits[trait].unlocked || manager.traits[trait].type != "p") continue;
                 let valid = true;
                 for (const req of manager.traits[trait].prereqs) {
-                    if (!req.unlocked) {
-                        valid = false;
-                        break;
+                    if (manager.traits[req]) {
+                        if (!manager.traits[req].unlocked) valid = false;
+                    } else if (game.colony.research.technologies[req]) {
+                        if (!game.colony.research.technologies[req].unlocked) valid = false;
                     }
                 }
                 if (valid) available.push(trait);
@@ -99,9 +102,10 @@ export class TraitUpdate extends TickingEntity {
                 if (manager.traits[trait].unlocked || manager.traits[trait].type != "r") continue;
                 let valid = true;
                 for (const req of manager.traits[trait].prereqs) {
-                    if (!req.unlocked) {
-                        valid = false;
-                        break;
+                    if (manager.traits[req]) {
+                        if (!manager.traits[req].unlocked) valid = false;
+                    } else if (game.colony.research.technologies[req]) {
+                        if (!game.colony.research.technologies[req].unlocked) valid = false;
                     }
                 }
                 if (valid) available.push(trait);

@@ -27,23 +27,23 @@ export class PanelJobs extends Screen {
             this.increaseIndex = Math.max(0, this.increaseIndex - 1);
         }, (game) => game.currentScreens.includes("game") && game.currentScreens.length == 1);
 
-        const maxRows = Math.floor((this.height - 138) / 40);
+        const maxRows = Math.floor((this.height - 138) / 50);
 
-        this.plusClickable = new ClickHandler(0, 140, this.width, 21 + 40 * maxRows, (game, x, y) => {
+        this.plusClickable = new ClickHandler(0, 136, this.width, 21 + 50 * maxRows, (game, x, y) => {
             if (x < Math.floor(5 * this.width / 6) + this.buttonOffset - 12 || x > Math.floor(5 * this.width / 6) + this.buttonOffset + 12) return;
-            const yRelative = y - 140;
-            const yLeft = yRelative % 40;
+            const yRelative = y - 136;
+            const yLeft = yRelative % 50;
             if (yLeft > 21) return;
-            const row = Math.floor(yRelative / 40);
+            const row = Math.floor(yRelative / 50);
             if (row > this.jobsAvailable.length - 1) return;
             this.plus(game, row);
         }, (game) => game.currentScreens.includes("game") && game.currentScreens.length == 1);
-        this.minusClickable = new ClickHandler(0, 140, this.width, 21 + 40 * maxRows, (game, x, y) => {
+        this.minusClickable = new ClickHandler(0, 136, this.width, 21 + 50 * maxRows, (game, x, y) => {
             if (x < Math.floor(5 * this.width / 6) - this.buttonOffset - 12 || x > Math.floor(5 * this.width / 6) - this.buttonOffset + 12) return;
-            const yRelative = y - 140;
-            const yLeft = yRelative % 40;
+            const yRelative = y - 136;
+            const yLeft = yRelative % 50;
             if (yLeft > 21) return;
-            const row = Math.floor(yRelative / 40);
+            const row = Math.floor(yRelative / 50);
             if (row > this.jobsAvailable.length - 1) return;
             this.minus(game, row);
         }, (game) => game.currentScreens.includes("game") && game.currentScreens.length == 1);
@@ -72,7 +72,7 @@ export class PanelJobs extends Screen {
 
         game.draw.textCenter("Jobs", Math.floor(5 * this.width / 6), 62, 21, "#FFFFFF");
 
-        const maxRows = Math.floor((this.height - 138) / 40);
+        const maxRows = Math.floor((this.height - 138) / 50);
         let row = 0;
         this.rowScroll = Math.max(this.scrollBar.value, 0);
 
@@ -86,7 +86,7 @@ export class PanelJobs extends Screen {
         game.draw.textCenter("-", Math.floor(5 * this.width / 6) - 50, 100, 21, "#FFFFFF");
 
         const jobs = game.colony.jobs;
-        let maxWidth = game.draw.textWidth("1.23k / 1.23k", 14);
+        let maxWidth = game.draw.textWidth("1.23k/1.23k", 14);
         this.jobsAvailable = [];
 
         for (const job of jobs.jobPriority) {
@@ -94,17 +94,18 @@ export class PanelJobs extends Screen {
                 if (row >= this.rowScroll && row < this.rowScroll + maxRows) {
                     this.jobsAvailable.push(jobs.jobs[job]);
                     maxWidth = Math.max(maxWidth, game.draw.textWidth(jobs.jobs[job].name, 14));
-                    game.draw.textCenter(jobs.jobs[job].name, Math.floor(5 * this.width / 6), 130 + 40 * (row - this.rowScroll), 14, "#FFFFFF");
+                    game.draw.textCenter(jobs.jobs[job].name, Math.floor(5 * this.width / 6), 130 + 50 * (row - this.rowScroll), 14, "#FFFFFF");
                     if (jobs.jobs[job].maxWorkers(game) !== Infinity) {
-                        game.draw.textCenter(game.draw.toShortNumber(jobs.jobs[job].workersAssigned) + " / " + game.draw.toShortNumber(jobs.jobs[job].maxWorkers(game)), Math.floor(5 * this.width / 6), 150 + 40 * (row - this.rowScroll), 14, "#FFFFFF");
+                        game.draw.textCenter(game.draw.toShortNumber(jobs.jobs[job].workersAssigned) + "/" + game.draw.toShortNumber(jobs.jobs[job].maxWorkers(game)), Math.floor(5 * this.width / 6), 150 + 50 * (row - this.rowScroll), 14, "#FFFFFF");
                     } else {
-                        game.draw.textCenter(game.draw.toShortNumber(jobs.jobs[job].workersAssigned), Math.floor(5 * this.width / 6), 150 + 40 * (row - this.rowScroll), 14, "#FFFFFF");
+                        game.draw.textCenter(game.draw.toShortNumber(jobs.jobs[job].workersAssigned), Math.floor(5 * this.width / 6), 150 + 50 * (row - this.rowScroll), 14, "#FFFFFF");
                     }
-                    game.draw.textCenter("+", Math.floor(5 * this.width / 6) + this.buttonOffset, 140 + 40 * (row - this.rowScroll), 21, "#FFFFFF");
-                    game.draw.textCenter("-", Math.floor(5 * this.width / 6) - this.buttonOffset, 140 + 40 * (row - this.rowScroll), 21, "#FFFFFF");
+                    game.draw.textSmallCenter(jobs.jobs[job].desc, Math.floor(5 * this.width / 6), 168 + 50 * (row - this.rowScroll), 7, "#FFFFFF");
+                    game.draw.textCenter("+", Math.floor(5 * this.width / 6) + this.buttonOffset, 136 + 50 * (row - this.rowScroll), 21, "#FFFFFF");
+                    game.draw.textCenter("-", Math.floor(5 * this.width / 6) - this.buttonOffset, 136 + 50 * (row - this.rowScroll), 21, "#FFFFFF");
                     ctx.beginPath();
-                    ctx.roundRect(Math.floor(5 * this.width / 6) - this.buttonOffset - 12, 140 + 40 * (row - this.rowScroll), 21, 21, 3);
-                    ctx.roundRect(Math.floor(5 * this.width / 6) + this.buttonOffset - 12, 140 + 40 * (row - this.rowScroll), 21, 21, 3);
+                    ctx.roundRect(Math.floor(5 * this.width / 6) - this.buttonOffset - 12, 136 + 50 * (row - this.rowScroll), 21, 21, 3);
+                    ctx.roundRect(Math.floor(5 * this.width / 6) + this.buttonOffset - 12, 136 + 50 * (row - this.rowScroll), 21, 21, 3);
                     ctx.stroke();
                 }
                 row++;
@@ -122,7 +123,7 @@ export class PanelJobs extends Screen {
 
     private plus(game: ColonyCraft, index: number) {
         const job = this.jobsAvailable[index];
-        job.assign(game, Math.min(Math.max(game.colony.population.adults - game.colony.jobs.workersAssigned, 0), job.maxWorkers(game) - job.workersAssigned, this.increaseSteps[this.increaseIndex][0]));
+        job.assign(game, Math.min(Math.max(game.colony.population.adults - game.colony.jobs.workersAssigned, 0), job.maxWorkers(game) - job.workersAssigned, this.increaseSteps[this.increaseIndex][0], job.cost ? Math.floor(job.cost.item.amount / job.cost.amount) : Infinity));
     }
 
     private minus(game: ColonyCraft, index: number) {

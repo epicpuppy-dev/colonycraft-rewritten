@@ -9,11 +9,11 @@ export class Trait extends Unlockable implements Saveable {
     public needed: number;
     public current: number = 0;
     public desc: string[];
-    public prereqs: Unlockable[] = [];
+    public prereqs: string[] = [];
     public unlocked: boolean = false;
     public progress: number = 0;
 
-    constructor (game: ColonyCraft, id: string, name: string, type: "s"|"c"|"p"|"r", needed: number, desc: string[] = [], prereqs: Unlockable[] = []) {
+    constructor (game: ColonyCraft, id: string, name: string, type: "s"|"c"|"p"|"r", needed: number, desc: string[] = [], prereqs: string[] = []) {
         super();
         this.id = id;
         this.name = name;
