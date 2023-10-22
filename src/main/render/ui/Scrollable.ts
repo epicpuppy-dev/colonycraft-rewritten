@@ -41,6 +41,7 @@ export class Scrollable {
     }
 
     public setValue (value: number) {
+        if (this.value == value) return;
         this.value = value;
         this.scroll = (value - this.min) * this.ppu;
     }

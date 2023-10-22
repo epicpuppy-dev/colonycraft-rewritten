@@ -5,7 +5,7 @@ import { ClickHandler } from "../ui/ClickHandler";
 import { ScrollBar } from "../ui/ScrollBar";
 
 export class Overlay2Save extends Screen {
-    private textInput = "abcdefghijklmnopqrstuvwxyz";
+    private textInput = "";
     private blink = 0;
     private cancelButton: Button;
     private saveButton: Button;
@@ -32,8 +32,8 @@ export class Overlay2Save extends Screen {
             let date = new Date();
             game.save.saves.push({name: this.textInput, id: this.textInput.toLowerCase().replace(" ", ""), size: game.save.toSave.length * 2, year: game.clock.year, timestamp: `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`});
             window.localStorage.setItem(this.textInput.toLowerCase().replace(/\s/g, ''), game.save.toSave);
-            window.localStorage.setItem("_CCMeta", JSON.stringify({saves: game.save.saves, storage: game.save.storage}));
             game.save.storage += game.save.toSave.length * 2;
+            window.localStorage.setItem("_CCMeta", JSON.stringify({saves: game.save.saves, storage: game.save.storage}));
             game.currentScreens.splice(game.currentScreens.indexOf("save"), 1);
             game.currentScreens.splice(game.currentScreens.indexOf("overlay2"), 1);
         }, (game: ColonyCraft) => game.currentScreens.includes("save"));
@@ -102,8 +102,9 @@ export class Overlay2Save extends Screen {
         game.draw.text(this.textInput, Math.floor(this.width / 4 + 14), Math.floor(7 * this.height / 8 - 88), 14, "white");
         
         ctx.fillStyle = '#ffffff';
-        if (++this.blink > 5) ctx.fillRect(Math.floor(this.width / 4 + 14 + game.draw.textWidth(this.textInput, 14)), Math.floor(7 * this.height / 8 - 89), 2, 18);
-        if (this.blink > 10) this.blink = 0;
+        this.blink += game.clock.getFrameTime(game);
+        if (this.blink > 400) ctx.fillRect(Math.floor(this.width / 4 + 14 + game.draw.textWidth(this.textInput, 14)), Math.floor(7 * this.height / 8 - 89), 2, 18);
+        if (this.blink > 800) this.blink = 0;
 
         ctx.fillStyle = '#777777';
         const barWidth = (this.width / 2 - 20) * game.save.storage / (4096 * 1024);

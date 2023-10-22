@@ -82,7 +82,7 @@ export class PanelResearch extends Screen {
             }
         } else {
             game.draw.textCenter(`Press '${game.key.actions.openResearch.bindings[0].key}' to select`, Math.floor(this.width / 6), 72, 14, "#FFFFFF");
-            game.draw.textCenter("a new research", Math.floor(this.width / 6), 94, 14, "#FFFFFF");
+            game.draw.textCenter("a new discovery", Math.floor(this.width / 6), 94, 14, "#FFFFFF");
         }
 
         game.draw.renderText(ctx);

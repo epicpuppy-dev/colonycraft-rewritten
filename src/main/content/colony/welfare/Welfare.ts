@@ -11,6 +11,8 @@ export class Welfare implements Saveable {
 
     constructor(game: ColonyCraft) {
         this.update = new WelfareUpdate(game);
+        
+        game.save.register(this, "welfare");
     }
 
     public save (): string {

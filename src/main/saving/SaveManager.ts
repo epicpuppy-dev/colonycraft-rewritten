@@ -2,11 +2,12 @@ import { Saveable } from "./Saveable";
 
 export class SaveManager {
     private saveables: {[path: string]: Saveable} = {};
-    public storage: number = 0;
+    public storage: number;
     public toSave: string = "";
     public saves: {name: string, id: string, size: number, year: number, timestamp: string}[] = [];
 
     constructor () {
+        this.storage = 0;
         const metadata = window.localStorage.getItem("_CCMeta");
         if (metadata == null) return;
         const data = JSON.parse(metadata);

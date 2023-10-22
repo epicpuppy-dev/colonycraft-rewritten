@@ -20,12 +20,13 @@ export class ResearchManager implements Saveable {
 
     public save (): string {
         if (this.active != null) return `${this.active.id}`;
-        else return "";
+        else return " ";
     }
 
     public load (data: string) {
-        if (data.length > 0) {
-            if (this.technologies[data]) this.active = this.technologies[data];
+        if (data == " ") {
+            this.active = null;
         }
+        if (this.technologies[data]) this.active = this.technologies[data];
     }
 }

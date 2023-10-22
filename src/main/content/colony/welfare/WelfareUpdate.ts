@@ -27,6 +27,9 @@ export class WelfareUpdate extends TickingEntity {
             welfare.morale += (0.5 - welfare.morale) / (1 / decayConstant);
         }
 
+        //starting out buff: if no jobs are assigned, morale and health do not change
+        if (game.colony.jobs.workersAssigned == 0) return;
+
         //consume food
         const foodRequired = Math.ceil(game.colony.population.adults + game.colony.population.children / 2 + game.colony.population.seniors / 2 + game.colony.population.babies / 5);
         const foodAvailable: FoodItem[] = [];

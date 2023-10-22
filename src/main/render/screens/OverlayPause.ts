@@ -43,6 +43,7 @@ export class OverlayPause extends Screen {
 
         this.exitButton = new Button(Math.floor(this.width / 2 - 130), Math.floor(this.height / 2 + 56), 260, 32, (game: ColonyCraft) => {
             game.currentScreens.splice(game.currentScreens.indexOf("pause"), 1);
+            game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);
             game.currentScreens.splice(game.currentScreens.indexOf("game"), 1);
             game.currentScreens.push("title");
             game.simulation.toggleRunning(game, false);

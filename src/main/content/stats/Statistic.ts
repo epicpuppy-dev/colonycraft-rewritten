@@ -5,7 +5,7 @@ export class Statistic implements Saveable {
     //Amount of data points to store in memory
     public static readonly CACHESIZE = 160;
     //TODO: Amount of data points to save to file
-    public static readonly SAVESIZE = 10;
+    public static readonly SAVESIZE = 20;
 
     public id: string;
     public name: string;

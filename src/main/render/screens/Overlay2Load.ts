@@ -88,7 +88,7 @@ export class Overlay2Load extends Screen {
         ctx.fillStyle = '#444444';
         ctx.fillRect(Math.floor(this.width / 4 + 10 + barWidth), Math.floor(7 * this.height / 8 - 60), (this.width / 2 - 20) * game.save.toSave.length / 512 / 4096, 12);
         ctx.strokeRect(Math.floor(this.width / 4 + 10), Math.floor(7 * this.height / 8 - 60), Math.floor(this.width / 2 - 20), 12);
-        game.draw.textSmallCenter(`Storage Used: ${(game.save.storage / 1024).toFixed(1)}KB (+${(game.save.toSave.length / 512).toFixed(1)}KB) / 4MB`, Math.floor(this.width / 2), Math.floor(7 * this.height / 8 - 58), 7, "white");
+        game.draw.textSmallCenter(`Storage Used: ${(game.save.storage / 1024).toFixed(1)}KB / 4MB`, Math.floor(this.width / 2), Math.floor(7 * this.height / 8 - 58), 7, "white");
 
         ctx.beginPath();
         ctx.roundRect(Math.floor(this.width / 4 + 10), Math.floor(7 * this.height / 8 - 40), Math.floor(this.width / 4 - 15), 30, 4);

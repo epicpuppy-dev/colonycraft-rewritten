@@ -46,6 +46,7 @@ export class Slider {
         this.slidable = new Slidable(x, y, slidableWidth, slidableHeight, active, () => {}, () => {
             this.initialValue = this.value;
         }, (game, x, y, offsetX, offsetY) => {
+            if (this.max - this.min <= 0) return;
             if (this.type == "h") {
                 this.setValue(Math.round(Math.min(Math.max(this.min, this.initialValue + (this.max - this.min) * offsetX / (this.width - this.barSize)), this.max)));
             } else {
