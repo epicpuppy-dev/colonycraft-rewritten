@@ -4,6 +4,7 @@ import { TechPoints } from "../content/colony/research/TechPoints";
 import { Technology } from "../content/colony/research/Technology";
 import { Trait } from "../content/colony/traits/Trait";
 import { TraitManager } from "../content/colony/traits/TraitManager";
+import { WelfareTrait } from "../content/colony/traits/custom/WelfareTrait";
 
 export class UnlockableData {
     public static addUnlockables (game: ColonyCraft, research: ResearchManager, development: TraitManager) {
@@ -12,7 +13,8 @@ export class UnlockableData {
         research.registerTechnology(new Technology(game, "math2", "Intermediate Mathematics", new TechPoints(500, 300), ['"5 x 5 = 25"'], ["math1"]));
 
         // 'Core' Techs
-        research.registerTechnology(new Technology(game, "survival1", "Survivalibility", new TechPoints(25), ['"The act of not dying"']));
+        research.registerTechnology(new Technology(game, "survival1", "Basic Survivalibility", new TechPoints(25), ['"The act of not dying"']));
+        research.registerTechnology(new Technology(game, "survival2", "Intermediate Survivalibility", new TechPoints(100), ['"The idea that there is a future"'], ["survival1"]));
         research.registerTechnology(new Technology(game, "crafting1", "Basic Crafting", new TechPoints(25), ["Unlocks Crafting Jobs", "New recipes will unlock a new job that crafts it", "", '"Combine stick with stick to make big stick"']));
         research.registerTechnology(new Technology(game, "build1", "Basic Construction", new TechPoints(40), ["Unlocks the Builder Job", "Unlocks the building menu", "", '"The idea that some things are more stable than others"'], ["crafting1", "survival1"]));
         research.registerTechnology(new Technology(game, "build2", "Intermediate Construction", new TechPoints(100, 50), ["Allows the building of more sturdy buildings", "", '"W A L L"'], ["math1", "build1", "planks1"]));
@@ -37,5 +39,8 @@ export class UnlockableData {
         research.registerTechnology(new Technology(game, "storage1", "Stockpiling", new TechPoints(50), ["Unlocks the Storage Pit Building", "Unlocks the storage menu", "", '"Put stuff in hole"'], ["build1"]));
         research.registerTechnology(new Technology(game, "storage2", "Storage Hut", new TechPoints(125, 50), ["Unlocks the Storage Hut Building", "", '"Put stuff in house"'], ["storage1", "build2"]));
         research.registerTechnology(new Technology(game, "kiln1", "Basic Kiln", new TechPoints(100), ["Unlocks the Basic Kiln Building", "", '"Hardening things using fire"'], ["composite1", "fire1", "build1"]));
+
+        // Social Traits
+        development.registerTrait(new WelfareTrait(game, "hope", "Hope", "s", 100, 0, 1, ["Belief in the future", "+0.1% base morale per tick"], ["survival2", "fire1"]));
     }
 }

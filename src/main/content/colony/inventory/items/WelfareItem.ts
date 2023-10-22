@@ -13,5 +13,7 @@ export class WelfareItem extends Item {
         this.health = health;
         this.morale = morale;
         this.type = type;
+
+        game.colony.welfare.addWelfareItem(this);
     }
 }

@@ -31,7 +31,7 @@ export class InventoryData {
         ]);
         inventory.addCategoryWithItems(new ItemGroup("basic", "Basic Materials"), [
             new Item(game, "composite", 4, "Brick Composite", 0.01), //TODO: Balance
-            new WelfareItem(game, "campfire", 20, "Campfire", 0.1, 10, 5, 5, "passive"),
+            new WelfareItem(game, "campfire", 20, "Campfire", 0.1, 10, 2, 2, "passive"),
             new Item(game, "twine", 0.1, "Plant Twine", 0.005), //TODO: Balance
         ]);
         inventory.addCategoryWithItems(new ItemGroup("lumber", "Lumber"), [

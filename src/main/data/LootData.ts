@@ -11,7 +11,7 @@ export class LootData {
             {weight: 15, item: items.leaves, amount: 2},
             {weight: 24, item: items.berries, amount: 2},
             {weight: 18, item: items.herbs, amount: 2},
-            {weight: 24, item: items.fibre, amount: 2},
+            {weight: 20, item: items.fibre, amount: 2},
             {weight: 1, item: items.freshWater, amount: 1},
             {weight: 6, item: items.muddyWater, amount: 2},
         ]));

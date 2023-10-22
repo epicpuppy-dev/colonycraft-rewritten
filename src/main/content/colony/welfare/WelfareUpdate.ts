@@ -96,7 +96,7 @@ export class WelfareUpdate extends TickingEntity {
         welfare.health = Math.min(Math.max(welfare.health + healthChange / fluidsRequired / 1000, 0), 1);
         welfare.morale = Math.min(Math.max(welfare.morale + moraleChange / fluidsRequired / 1000, 0), 1);
 
-        // Welfare Items
+        // Welfare Items and Modifiers
         const itemsMax = Math.ceil(game.colony.population.adults + game.colony.population.children / 2 + game.colony.population.seniors / 2 + game.colony.population.babies / 5);
         healthChange = 0;
         moraleChange = 0;
@@ -105,8 +105,13 @@ export class WelfareUpdate extends TickingEntity {
             healthChange += maxConsumed * item.health * item.saturation;
             moraleChange += maxConsumed * item.morale * item.saturation;
             if (item.type == "active") {
-                item.amount -= maxConsumed;
+                item.amount -= Math.ceil(maxConsumed);
             }
+        }
+
+        for (const modifier of welfare.welfareModifiers) {
+            healthChange += modifier.getHealth(game) / 1000;
+            moraleChange += modifier.getMorale(game) / 1000;
         }
 
         // Make health take 3x longer to change
