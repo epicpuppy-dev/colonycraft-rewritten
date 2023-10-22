@@ -16,7 +16,7 @@ export class RecipeData {
 
         // Other
         manager.addRecipe(new Recipe("twine1", [{item: items.fibre, amount: 4}], [{item: items.twine, amount: 1}]));
-        manager.addRecipe(new Recipe("campfire1", [{item: items.sticks, amount: 8}, {item: items.twine, amount: 4}], [{item: items.campfire, amount: 1}]));
+        manager.addRecipe(new Recipe("campfire1", [{item: items.sticks, amount: 8}, {item: items.twine, amount: 4}], tables.campfire));
         manager.addRecipe(new Recipe("composite1", [{item: items.clay, amount: 2}, {item: items.mud, amount: 2}], [{item: items.stoneBricks, amount: 1}]));
         manager.addRecipe(new Recipe("brick1", [{item: items.sticks, amount: 10}, {item: items.composite, amount: 2}], [{item: items.bricks, amount: 1}]));
     }

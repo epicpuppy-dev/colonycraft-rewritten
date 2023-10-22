@@ -1,5 +1,6 @@
 import { ColonyCraft } from "../../../ColonyCraft";
 import { Saveable } from "../../../saving/Saveable";
+import { WelfareItem } from "../inventory/items/WelfareItem";
 import { WelfareUpdate } from "./WelfareUpdate";
 
 export class Welfare implements Saveable {
@@ -7,6 +8,7 @@ export class Welfare implements Saveable {
     public morale: number = 0.5;
     public healthModifier: number = 1;
     public workModifier: number = 1;
+    public welfareItems: WelfareItem[] = [];
     private update: WelfareUpdate;
 
     constructor(game: ColonyCraft) {

@@ -14,7 +14,7 @@ export class JobData {
         const buildings = game.colony.buildings.buildings;
 
         // Gathering Jobs
-        jobs.addJob(new ResourceJob(game, "forager", "Forager", 0, 8, tables.forager, () => true, () => Infinity));
+        jobs.addJob(new ResourceJob(game, "forager", "Forager", 0, 10, tables.forager, () => true, () => Infinity));
         jobs.addJob(new ResourceJob(game, "woodcutter", "Woodcutter", 0, 3, tables.woodcutter, () => techs.chopping1.unlocked, () => jobs.jobs.woodcutter.workersAssigned + items.tool1.amount, "Cost: 1 primitive tool", {item: items.tool1, amount: 1}));
         jobs.addJob(new ResourceJob(game, "digger", "Digger", 0, 8, tables.digger, () => techs.digging1.unlocked, () => jobs.jobs.digger.workersAssigned + items.tool1.amount, "Cost: 1 primitive tool", {item: items.tool1, amount: 1}));
 
@@ -38,9 +38,9 @@ export class JobData {
         jobs.addJob(new Job(game, "builder1", "Builder", 10, () => techs.build1.unlocked, () => Infinity, "Builds buildings"));
 
         // Production Jobs
-        jobs.addJob(new CraftingJob(game, "craftTwine1", "Twine Maker", 10, 4, recipes.twine1, () => techs.twine1.unlocked, () => Infinity, "Crafts 4 fibre -> 1 twine"));
+        jobs.addJob(new CraftingJob(game, "craftTwine1", "Twine Maker", 10, 2, recipes.twine1, () => techs.twine1.unlocked, () => Infinity, "Crafts 4 fibre -> 1 twine"));
         jobs.addJob(new CraftingJob(game, "craftTool1", "Toolmaker", 10, 1, recipes.tool1, () => techs.tools1.unlocked, () => Infinity, "Crafts 4 rocks -> 1 primitive tool"));
-        jobs.addJob(new CraftingJob(game, "firemaker1", "Firemaker", 10, 1, recipes.campfire1, () => techs.fire1.unlocked, () => jobs.jobs.firemaker1.workersAssigned + items.tool1.amount, "Crafts 8 sticks + 4 twine -> 1 campfire, Cost: 1 primitive tool", {item: items.tool1, amount: 1}));
+        jobs.addJob(new CraftingJob(game, "firemaker1", "Firemaker", 10, 1, recipes.campfire1, () => techs.fire1.unlocked, () => jobs.jobs.firemaker1.workersAssigned + items.tool1.amount, "Crafts 8 sticks + 4 twine -> 50% chance of 1 campfire, Cost: 1 primitive tool", {item: items.tool1, amount: 1}));
         jobs.addJob(new CraftingJob(game, "craftPlanks1", "Carpenter", 10, 2, recipes.planks1, () => techs.planks1.unlocked, () => jobs.jobs.craftPlanks1.workersAssigned + items.tool1.amount, "Crafts 1 log -> 4 planks, Cost: 1 primitive tool", {item: items.tool1, amount: 1}));
         jobs.addJob(new CraftingJob(game, "craftComposite1", "Composite Shaper", 10, 4, recipes.composite1, () => techs.composite1.unlocked, () => jobs.jobs.craftBricks1.workersAssigned + items.tool1.amount, "Crafts 2 mud + 2 clay -> 1 brick composite, Cost: 1 primitive tool", {item: items.tool1, amount: 1}));
         jobs.addJob(new CraftingJob(game, "craftBricks1", "Brickmaker", 10, 2, recipes.brick1, () => techs.bricks1.unlocked, () => buildings.kiln1.amount, "Crafts 10 sticks + 2 brick composite -> 1 brick, Req: 1 basic kiln"));
