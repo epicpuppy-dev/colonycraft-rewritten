@@ -26,7 +26,7 @@ export class UnlockableData {
 
         // Production Tech Line
         research.registerTechnology(new Technology(game, "twine1", "Plant Twine", new TechPoints(30), ["Unlocks the Plant Twine Recipe", "(Crafts 4 fibre -> 1 twine)", "", '"Roll grass make rope"'], ["crafting1", "survival1"]));
-        research.registerTechnology(new Technology(game, "fire1", "Firemaking", new TechPoints(50), ["Unlocks the Firemaker Job", "(Crafts 8 sticks + 4 twine -> 50% chance of 1 campfire)", "", '"Big hot burny stuff"'], ["tools1", "twine1"]));
+        research.registerTechnology(new Technology(game, "fire1", "Firemaking", new TechPoints(50), ["Unlocks the Firemaker Job", "(Crafts 8 sticks + 4 twine -> 75% chance of 1 campfire)", "", '"Big hot burny stuff"'], ["tools1", "twine1"]));
         research.registerTechnology(new Technology(game, "tools1", "Stone Knapping", new TechPoints(50), ["Unlocks the Stone Knapping Recipe", "(Crafts 4 rocks -> 1 primitive tool)", "", '"Make rock into sharp rock"'], ["crafting1", "survival1"]));
         research.registerTechnology(new Technology(game, "tools2", "Toolmaking", new TechPoints(125, 50), ["Unlocks the Basic Tools Recipe", "(Crafts 2 primitive tools + 4 twine -> 1 basic tool)", "", '"Putting together some rocks and sticks"'], ["tools1", "math1", "twine1"]));
         research.registerTechnology(new Technology(game, "planks1", "Basic Carpentry", new TechPoints(75), ["Unlocks the Planks Recipe", "(Crafts 1 log -> 4 planks)", "", '"It\'s easier to build with flat slabs of wood than with thick logs"'], ["chopping1", "build1"]));

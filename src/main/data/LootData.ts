@@ -6,14 +6,14 @@ export class LootData {
     public static addLoot (manager: LootManager, inventory: Inventory) {
         const items = inventory.items;
         manager.addLoot(new LootTable("forager", 1, [
-            {weight: 20, item: items.sticks, amount: 1},
-            {weight: 12, item: items.rocks, amount: 1},
-            {weight: 10, item: items.leaves, amount: 2},
-            {weight: 16, item: items.berries, amount: 2},
-            {weight: 12, item: items.herbs, amount: 2},
-            {weight: 16, item: items.fibre, amount: 2},
+            {weight: 26, item: items.sticks, amount: 1},
+            {weight: 18, item: items.rocks, amount: 1},
+            {weight: 15, item: items.leaves, amount: 2},
+            {weight: 24, item: items.berries, amount: 2},
+            {weight: 18, item: items.herbs, amount: 2},
+            {weight: 24, item: items.fibre, amount: 2},
             {weight: 1, item: items.freshWater, amount: 1},
-            {weight: 4, item: items.muddyWater, amount: 2},
+            {weight: 6, item: items.muddyWater, amount: 2},
         ]));
 
         manager.addLoot(new LootTable("woodcutter", 1, [
@@ -29,7 +29,7 @@ export class LootData {
         ]));
 
         manager.addLoot(new LootTable("campfire", 1, [
-            {weight: 1, item: items.campfire, amount: 1},
+            {weight: 3, item: items.campfire, amount: 1},
             {weight: 1, item: null, amount: 0}
         ]));
     }
