@@ -57,7 +57,7 @@ export class OverlayBuildings extends Screen {
         game.draw.addCloseAction(game.key.actions.closeBuildings);
 
         game.key.addAction(new KeyAction("openBuildings", "Open Buildings", (game: ColonyCraft) => {
-            if (game.currentScreens.includes("game") && !game.currentScreens.includes("overlay") && game.colony.research.technologies.construction1.unlocked) game.currentScreens.push("buildings", "overlay");
+            if (game.currentScreens.includes("game") && !game.currentScreens.includes("overlay") && game.colony.research.technologies.build1.unlocked) game.currentScreens.push("buildings", "overlay");
             else if (game.currentScreens.includes("buildings")) {
                 game.currentScreens.splice(game.currentScreens.indexOf("buildings"), 1);
                 game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);
