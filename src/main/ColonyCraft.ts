@@ -161,6 +161,7 @@ export class ColonyCraft {
 
     public tick() {
         if (!this.simulation.running) return;
+        if (this.colony.jobs.workersAssigned == 0 && this.clock.dayTotal == 0) return;
         this.clock.dayTotal++;
         if (++this.clock.day > 30) {
             this.clock.day = 1;

@@ -28,7 +28,7 @@ export class WelfareUpdate extends TickingEntity {
         }
 
         //starting out buff: if no jobs are assigned, morale and health do not change
-        if (game.colony.jobs.workersAssigned == 0) return;
+        if (game.colony.jobs.workersAssigned == 0 && game.clock.dayTotal <= 1) return;
 
         //consume food
         const foodRequired = Math.ceil(game.colony.population.adults + game.colony.population.children / 2 + game.colony.population.seniors / 2 + game.colony.population.babies / 5);
@@ -46,7 +46,7 @@ export class WelfareUpdate extends TickingEntity {
         while (foodConsumed < foodRequired && foodAvailable.length > 0) {
             const food = foodAvailable.shift();
             if (food == null) break;
-            const foodConsumedThisItem = Math.min(food.amount, (foodRequired - foodConsumed) / food.saturation);
+            const foodConsumedThisItem = Math.min(food.amount, Math.ceil((foodRequired - foodConsumed) / food.saturation));
             foodConsumed += foodConsumedThisItem * food.saturation;
             healthChange += foodConsumedThisItem * food.health * food.saturation;
             moraleChange += foodConsumedThisItem * food.morale * food.saturation;
@@ -80,7 +80,7 @@ export class WelfareUpdate extends TickingEntity {
         while (fluidsConsumed < fluidsRequired && fluidsAvailable.length > 0) {
             const fluid = fluidsAvailable.shift();
             if (fluid == null) break;
-            const fluidsConsumedThisItem = Math.min(fluid.amount, (fluidsRequired - fluidsConsumed) / fluid.saturation);
+            const fluidsConsumedThisItem = Math.min(fluid.amount, Math.ceil((fluidsRequired - fluidsConsumed) / fluid.saturation));
             fluidsConsumed += fluidsConsumedThisItem * fluid.saturation;
             fluid.amount -= fluidsConsumedThisItem;
         }

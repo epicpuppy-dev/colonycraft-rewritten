@@ -12,8 +12,7 @@ export class LootData {
             {weight: 24, item: items.berries, amount: 2},
             {weight: 18, item: items.herbs, amount: 2},
             {weight: 20, item: items.fibre, amount: 2},
-            {weight: 1, item: items.freshWater, amount: 1},
-            {weight: 6, item: items.muddyWater, amount: 2},
+            {weight: 8, item: items.muddyWater, amount: 1},
         ]));
 
         manager.addLoot(new LootTable("woodcutter", 1, [
@@ -26,6 +25,11 @@ export class LootData {
             {weight: 1, item: items.clay, amount: 1},
             {weight: 1, item: items.mud, amount: 1},
             {weight: 2, item: null, amount: 0}
+        ]));
+
+        manager.addLoot(new LootTable("water", 1, [
+            {weight: 1, item: items.freshWater, amount: 1},
+            {weight: 4, item: items.muddyWater, amount: 1},
         ]));
 
         manager.addLoot(new LootTable("campfire", 1, [

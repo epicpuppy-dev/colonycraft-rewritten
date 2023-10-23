@@ -20,6 +20,11 @@ export class InventoryData {
         inventory.addCategoryWithItems(new ItemGroup("tools", "Tools"), [
             new Item(game, "tool1", 1, "Primitive Tool", 0.005),
             new Item(game, "tool2", 1, "Basic Tool", 0.004),
+            new Item(game, "bucket1", 10, "Wooden Bucket", 0.004),
+        ]);
+        inventory.addCategoryWithItems(new ItemGroup("amenities", "Amenities"), [
+            new WelfareItem(game, "campfire", 20, "Campfire", 0.1, 10, 1.5, 1.5, "passive"),
+            new WelfareItem(game, "clothing1", 1, "Primitive Clothing", 0.02, 1, 1, 1, "passive"),
         ]);
         inventory.addCategoryWithItems(new ItemGroup("primitive", "Primitive Materials"), [
             new Item(game, "sticks", 1, "Sticks", 0.01), //TODO: Balance
@@ -31,8 +36,8 @@ export class InventoryData {
         ]);
         inventory.addCategoryWithItems(new ItemGroup("basic", "Basic Materials"), [
             new Item(game, "composite", 4, "Brick Composite", 0.01), //TODO: Balance
-            new WelfareItem(game, "campfire", 20, "Campfire", 0.1, 10, 2, 2, "passive"),
             new Item(game, "twine", 0.1, "Plant Twine", 0.005), //TODO: Balance
+            new Item(game, "cloth", 0.1, "Cloth", 0.005), //TODO: Balance
         ]);
         inventory.addCategoryWithItems(new ItemGroup("lumber", "Lumber"), [
             new Item(game, "logs", 4, "Logs", 0.01), //TODO: Balance
