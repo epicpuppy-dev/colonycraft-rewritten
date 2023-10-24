@@ -17,8 +17,6 @@ export class PanelBuildings extends Screen {
     }
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
-        if (!game.colony.research.technologies.build1.unlocked) return;
-
         ctx.beginPath();
         ctx.roundRect(-50, 294, Math.floor(this.width / 3 + 50), 70, 10);
         ctx.fillStyle = "#222222";

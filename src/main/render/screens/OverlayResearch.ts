@@ -76,7 +76,7 @@ export class OverlayResearch extends Screen {
         game.draw.textCenter("Discovery", Math.floor(this.width / 2), Math.floor(this.height / 8 + 12), 28, "white");
 
         //Row height = 124
-        const maxRows = Math.floor((3 * this.height / 4 - 46) / 124);
+        const maxRows = Math.floor((3 * this.height / 4 - 70) / 124);
 
         let currentRow = 0;
         let currentColumn = 0;
@@ -180,6 +180,10 @@ export class OverlayResearch extends Screen {
                     ctx.fillStyle = '#224422';
                     ctx.fillRect(Math.floor(leftOffset + currentColumn * areaWidth / 2 + 10), Math.floor(this.height / 8 + 56 + 124 * (currentRow - this.rowScroll)), Math.floor(areaWidth / 2 - 20), 104);
                 }
+                if (!technology.unlocked && technology.important) {
+                    ctx.fillStyle = '#444422';
+                    ctx.fillRect(Math.floor(leftOffset + currentColumn * areaWidth / 2 + 10), Math.floor(this.height / 8 + 56 + 124 * (currentRow - this.rowScroll)), Math.floor(areaWidth / 2 - 20), 104);
+                }
                 ctx.strokeRect(Math.floor(leftOffset + currentColumn * areaWidth / 2 + 10), Math.floor(this.height / 8 + 56 + 124 * (currentRow - this.rowScroll)), Math.floor(areaWidth / 2 - 20), 104);
                 game.draw.textCenter(technology.name, Math.floor(leftOffset + areaWidth / 4 + currentColumn * areaWidth / 2), Math.floor(this.height / 8 + 64 + 124 * (currentRow - this.rowScroll)), 14, "white");
 
@@ -209,7 +213,19 @@ export class OverlayResearch extends Screen {
             currentRow++;
         }
 
-        this.scrollBar.reposition(Math.floor(7 * this.width / 8 - 24), Math.floor(this.height / 8 + 56) + (research.active != null ? 124 : 0), 16, Math.floor(3 * this.height / 4 - 66) - (research.active != null ? 124 : 0));
+        //draw key
+        ctx.fillStyle = '#228822';
+        ctx.fillRect(Math.floor(this.width / 2 + 10), Math.floor(7 * this.height / 8 - 24), 16, 16);
+        ctx.strokeRect(Math.floor(this.width / 2 + 10), Math.floor(7 * this.height / 8 - 24), 16, 16);
+        game.draw.text("Completed", Math.floor(this.width / 2 + 32), Math.floor(7 * this.height / 8 - 22), 14, "#FFFFFF");
+
+        let imporantWidth = game.draw.textWidth("Important", 14);
+        ctx.fillStyle = '#888822';
+        ctx.fillRect(Math.floor(this.width / 2 - imporantWidth - 24), Math.floor(7 * this.height / 8 - 24), 16, 16);
+        ctx.strokeRect(Math.floor(this.width / 2 - imporantWidth - 24), Math.floor(7 * this.height / 8 - 24), 16, 16);
+        game.draw.text("Important", Math.floor(this.width / 2 - imporantWidth - 2), Math.floor(7 * this.height / 8 - 22), 14, "#FFFFFF");
+
+        this.scrollBar.reposition(Math.floor(7 * this.width / 8 - 24), Math.floor(this.height / 8 + 56) + (research.active != null ? 124 : 0), 16, Math.floor(3 * this.height / 4 - 90) - (research.active != null ? 124 : 0));
 
         this.scrollBar.setBounds(this.rowScroll, maxRows - (research.active != null ? 1 : 0), Math.floor(currentRow - maxRows));
         this.scrollBar.render(ctx);

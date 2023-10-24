@@ -12,8 +12,9 @@ export class Technology extends Unlockable implements Saveable {
     public name: string;
     public desc: string[];
     public prereqs: string[];
+    public important: boolean;
 
-    constructor (game: ColonyCraft, id: string, name: string, needed: TechPoints, desc: string[] = [], prereqs: string[] = []) {
+    constructor (game: ColonyCraft, id: string, name: string, needed: TechPoints, desc: string[] = [], prereqs: string[] = [], important: boolean = false) {
         super();
         this.id = id;
         this.name = name;
@@ -21,6 +22,7 @@ export class Technology extends Unlockable implements Saveable {
         this.current = new TechPoints();
         this.prereqs = prereqs;
         this.desc = desc;
+        this.important = important;
 
         game.save.register(this, "res." + this.id);
     }
