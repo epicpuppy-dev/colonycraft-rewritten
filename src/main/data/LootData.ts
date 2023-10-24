@@ -11,7 +11,7 @@ export class LootData {
             {weight: 15, item: items.leaves, amount: 2},
             {weight: 24, item: items.berries, amount: 2},
             {weight: 18, item: items.herbs, amount: 2},
-            {weight: 20, item: items.fibre, amount: 2},
+            {weight: 20, item: items.fiber, amount: 2},
             {weight: 8, item: items.muddyWater, amount: 1},
         ]));
 
@@ -34,6 +34,16 @@ export class LootData {
 
         manager.addLoot(new LootTable("campfire", 1, [
             {weight: 3, item: items.campfire, amount: 1},
+            {weight: 1, item: null, amount: 0}
+        ]));
+
+        manager.addLoot(new LootTable("wheat", 1, [
+            {weight: 3, item: items.wheat, amount: 1},
+            {weight: 1, item: null, amount: 0}
+        ]));
+
+        manager.addLoot(new LootTable("potato", 1, [
+            {weight: 3, item: items.potato, amount: 1},
             {weight: 1, item: null, amount: 0}
         ]));
     }

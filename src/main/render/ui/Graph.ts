@@ -102,15 +102,15 @@ export class Graph {
             const stat = this.statistics[color].stat.data[this.interval];
             ctx.strokeStyle = color;
             ctx.beginPath();
-            ctx.moveTo(this.x + this.width, this.y + this.height - stat.data[0] / range * this.height);
+            ctx.moveTo(this.x + this.width, this.y + this.height - (stat.data[0] - min) / range * this.height);
             for (const point of stat.data) {
                 if (i > this.points) break;
                 ctx.lineTo(this.x + this.width - i * this.width / this.points, this.y + this.height - point / range * this.height);
                 i++;
             }
             ctx.stroke();
-            if (numbers && stat.data[0]) {
-                let y = Math.round(this.y + this.height - stat.data[0] / range * this.height - 4);
+            if (numbers && stat.data[0] !== undefined) {
+                let y = Math.round(this.y + this.height - (stat.data[0] - min) / range * this.height - 4);
                 while (true) {
                     let overlap = false;
                     for (const pos of numberPos) {

@@ -177,7 +177,7 @@ export class OverlayResearch extends Screen {
                     ctx.fillStyle = '#00ff00';
                     ctx.fillRect(Math.floor(leftOffset + currentColumn * areaWidth / 2 + 10), Math.floor(this.height / 8 + 56 + 124 * (currentRow - this.rowScroll)), Math.floor((areaWidth / 2 - 20) * technology.progress), 4)
                 } else if (technology.unlocked) {
-                    ctx.fillStyle = '#222c22';
+                    ctx.fillStyle = '#224422';
                     ctx.fillRect(Math.floor(leftOffset + currentColumn * areaWidth / 2 + 10), Math.floor(this.height / 8 + 56 + 124 * (currentRow - this.rowScroll)), Math.floor(areaWidth / 2 - 20), 104);
                 }
                 ctx.strokeRect(Math.floor(leftOffset + currentColumn * areaWidth / 2 + 10), Math.floor(this.height / 8 + 56 + 124 * (currentRow - this.rowScroll)), Math.floor(areaWidth / 2 - 20), 104);

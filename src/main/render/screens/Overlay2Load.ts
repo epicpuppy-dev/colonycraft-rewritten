@@ -75,7 +75,7 @@ export class Overlay2Load extends Screen {
                     ctx.fillStyle = "#777777";
                 }
                 game.draw.textCenter(save.name, Math.floor(this.width / 4 + areaWidth / 2), Math.floor(this.height / 8 + 50 + 38 * (currentRow - this.rowScroll)), 14, "white");
-                game.draw.textSmallCenter(`Year ${save.year} - ${save.timestamp} - ${(save.size / 1024).toFixed(1)}KB`, Math.floor(this.width / 4 + areaWidth / 2), Math.floor(this.height / 8 + 70 + 38 * (currentRow - this.rowScroll)), 7, "white");
+                game.draw.textSmallCenter(`Year ${save.year} - ${save.timestamp} - ${save.version ? "v" + save.version : "Unknown Version"} - ${(save.size / 1024).toFixed(1)}KB`, Math.floor(this.width / 4 + areaWidth / 2), Math.floor(this.height / 8 + 70 + 38 * (currentRow - this.rowScroll)), 7, "white");
                 ctx.fillRect(Math.floor(this.width / 4 + 20), Math.floor(this.height / 8 + 80 + 38 * (currentRow - this.rowScroll)), Math.floor(this.width / 2 - 64), 2);
                 this.available.push(save.name);
             }

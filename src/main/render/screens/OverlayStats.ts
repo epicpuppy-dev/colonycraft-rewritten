@@ -12,6 +12,8 @@ export class OverlayStats extends Screen {
     private yearlyButton: Button;
     private populationButton: Button;
     private welfareButton: Button;
+    private storageButton: Button;
+    private landButton: Button;
     private graphs: {[type: string]: Graph};
     private intervals: {[key: string]: [number, string[], number]} = {
         "daily": [6, ["Now", "20d", "40d", "60d", "80d", "100d", "120d"], 60],
@@ -50,15 +52,23 @@ export class OverlayStats extends Screen {
         
         game.key.addBinding(new KeyBind("Open Stats", "Tab", "Tab", [game.key.actions.openStats]));
 
-        this.populationButton = new Button(Math.floor(this.width / 2 - 150), Math.floor(this.height / 4 - 32), 150, 24, (game: ColonyCraft) => {
+        this.populationButton = new Button(Math.floor(this.width / 2 - 300), Math.floor(this.height / 4 - 32), 150, 24, (game: ColonyCraft) => {
             this.type = "population";
         }, (game: ColonyCraft) => game.currentScreens.includes("stats"));
-        this.welfareButton = new Button(Math.floor(this.width / 2), Math.floor(this.height / 4 - 32), 150, 24, (game: ColonyCraft) => {
+        this.welfareButton = new Button(Math.floor(this.width / 2 - 150), Math.floor(this.height / 4 - 32), 150, 24, (game: ColonyCraft) => {
             this.type = "welfare";
+        }, (game: ColonyCraft) => game.currentScreens.includes("stats"));
+        this.storageButton = new Button(Math.floor(this.width / 2), Math.floor(this.height / 4 - 32), 150, 24, (game: ColonyCraft) => {
+            this.type = "storage";
+        }, (game: ColonyCraft) => game.currentScreens.includes("stats"));
+        this.landButton = new Button(Math.floor(this.width / 2 + 150), Math.floor(this.height / 4 - 32), 150, 24, (game: ColonyCraft) => {
+            this.type = "land";
         }, (game: ColonyCraft) => game.currentScreens.includes("stats"));
 
         game.mouse.registerClickable(this.populationButton);
         game.mouse.registerClickable(this.welfareButton);
+        game.mouse.registerClickable(this.storageButton);
+        game.mouse.registerClickable(this.landButton);
 
         this.dailyButton = new Button(Math.floor(this.width / 2 - 90), Math.floor(13 * this.height / 16 - 12), 60, 24, (game: ColonyCraft) => {
             this.changeInterval("daily");
@@ -76,7 +86,9 @@ export class OverlayStats extends Screen {
 
         this.graphs = {
             welfare: new Graph(Math.floor(this.width / 4), Math.floor(this.height / 4), Math.floor(this.width / 2), Math.floor(this.height / 2), 0, 1, 6, ["Now", "20d", "40d", "60d", "80d", "100d", "120d"], 4, ["0%", "25%", "50%", "75%", "100%"], "daily", 60, {"#dc1414": game.stats.stats.health, "#dcd614": game.stats.stats.morale}),
-            population: new Graph(Math.floor(this.width / 4), Math.floor(this.height / 4), Math.floor(this.width / 2), Math.floor(this.height / 2), 0, null, 6, ["Now", "20d", "40d", "60d", "80d", "100d", "120d"], 4, null, "daily", 60, {"#ffffff": game.stats.stats.population, "#98fb98": game.stats.stats.babies, "#48d1cc": game.stats.stats.children, "#6495ed": game.stats.stats.adults, "#9370db": game.stats.stats.seniors})
+            population: new Graph(Math.floor(this.width / 4), Math.floor(this.height / 4), Math.floor(this.width / 2), Math.floor(this.height / 2), 0, null, 6, ["Now", "20d", "40d", "60d", "80d", "100d", "120d"], 4, null, "daily", 60, {"#ffffff": game.stats.stats.population, "#98fb98": game.stats.stats.babies, "#48d1cc": game.stats.stats.children, "#6495ed": game.stats.stats.adults, "#9370db": game.stats.stats.seniors}),
+            storage: new Graph(Math.floor(this.width / 4), Math.floor(this.height / 4), Math.floor(this.width / 2), Math.floor(this.height / 2), 0, null, 6, ["Now", "20d", "40d", "60d", "80d", "100d", "120d"], 4, null, "daily", 60, {"#ffffff": game.stats.stats.storageCapacity, "#ffcc77": game.stats.stats.storageUsed, "#77ff77": game.stats.stats.storageFree}),
+            land: new Graph(Math.floor(this.width / 4), Math.floor(this.height / 4), Math.floor(this.width / 2), Math.floor(this.height / 2), 0, null, 6, ["Now", "20d", "40d", "60d", "80d", "100d", "120d"], 4, null, "daily", 60, {"#ffffff": game.stats.stats.landMax, "#ff77dd": game.stats.stats.landUsed, "#77aaff": game.stats.stats.landPending, "#77ddff": game.stats.stats.landFree})
         };
     }
 
@@ -95,12 +107,18 @@ export class OverlayStats extends Screen {
 
         //draw type selector
         ctx.fillStyle = '#444444';
-        if (this.type == "population") ctx.fillRect(Math.floor(this.width / 2 - 150), Math.floor(this.height / 4 - 32), 150, 24);
+        if (this.type == "population") ctx.fillRect(Math.floor(this.width / 2 - 300), Math.floor(this.height / 4 - 32), 150, 24);
+        ctx.strokeRect(Math.floor(this.width / 2 - 300), Math.floor(this.height / 4 - 32), 150, 24);
+        game.draw.textCenter("Population", Math.floor(this.width / 2 - 225), Math.floor(this.height / 4 - 28), 14, "white");
+        if (this.type == "welfare") ctx.fillRect(Math.floor(this.width / 2 - 150), Math.floor(this.height / 4 - 32), 150, 24);
         ctx.strokeRect(Math.floor(this.width / 2 - 150), Math.floor(this.height / 4 - 32), 150, 24);
-        game.draw.textCenter("Population", Math.floor(this.width / 2 - 75), Math.floor(this.height / 4 - 28), 14, "white");
-        if (this.type == "welfare") ctx.fillRect(Math.floor(this.width / 2), Math.floor(this.height / 4 - 32), 150, 24);
+        game.draw.textCenter("Welfare", Math.floor(this.width / 2 - 75), Math.floor(this.height / 4 - 28), 14, "white");
+        if (this.type == "storage") ctx.fillRect(Math.floor(this.width / 2), Math.floor(this.height / 4 - 32), 150, 24);
         ctx.strokeRect(Math.floor(this.width / 2), Math.floor(this.height / 4 - 32), 150, 24);
-        game.draw.textCenter("Welfare", Math.floor(this.width / 2 + 75), Math.floor(this.height / 4 - 28), 14, "white");
+        game.draw.textCenter("Storage", Math.floor(this.width / 2 + 75), Math.floor(this.height / 4 - 28), 14, "white");
+        if (this.type == "land") ctx.fillRect(Math.floor(this.width / 2 + 150), Math.floor(this.height / 4 - 32), 150, 24);
+        ctx.strokeRect(Math.floor(this.width / 2 + 150), Math.floor(this.height / 4 - 32), 150, 24);
+        game.draw.textCenter("Land", Math.floor(this.width / 2 + 225), Math.floor(this.height / 4 - 28), 14, "white");
 
         //draw time selector
         if (this.interval == "daily") ctx.fillRect(Math.floor(this.width / 2 - 90), Math.floor(13 * this.height / 16 - 12), 60, 24);

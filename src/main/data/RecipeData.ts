@@ -15,11 +15,16 @@ export class RecipeData {
         manager.addRecipe(new Recipe("tool2", [{item: items.tool1, amount: 2}, {item: items.twine, amount: 4}], [{item: items.tool2, amount: 1}]));
         manager.addRecipe(new Recipe("bucket1", [{item: items.planks, amount: 2}], [{item: items.bucket1, amount: 1}]));
 
+        // Food
+        manager.addRecipe(new Recipe("flour1", [{item: items.wheat, amount: 2}], [{item: items.flour, amount: 2}]));
+        manager.addRecipe(new Recipe("bread1", [{item: items.flour, amount: 2}, {item: items.freshWater, amount: 1}], [{item: items.bread, amount: 1}]));
+
         // Other
-        manager.addRecipe(new Recipe("twine1", [{item: items.fibre, amount: 4}], [{item: items.twine, amount: 1}]));
-        manager.addRecipe(new Recipe("cloth1", [{item: items.fibre, amount: 8}], [{item: items.cloth, amount: 1}]));
+        manager.addRecipe(new Recipe("twine1", [{item: items.fiber, amount: 4}], [{item: items.twine, amount: 1}]));
+        manager.addRecipe(new Recipe("cloth1", [{item: items.fiber, amount: 8}], [{item: items.cloth, amount: 1}]));
+        manager.addRecipe(new Recipe("clothing1", [{item: items.cloth, amount: 2}], [{item: items.clothing1, amount: 1}]));
         manager.addRecipe(new Recipe("campfire1", [{item: items.sticks, amount: 8}, {item: items.twine, amount: 4}], tables.campfire));
-        manager.addRecipe(new Recipe("composite1", [{item: items.clay, amount: 2}, {item: items.mud, amount: 2}], [{item: items.stoneBricks, amount: 1}]));
+        manager.addRecipe(new Recipe("composite1", [{item: items.clay, amount: 2}, {item: items.mud, amount: 2}], [{item: items.composite, amount: 1}]));
         manager.addRecipe(new Recipe("brick1", [{item: items.sticks, amount: 10}, {item: items.composite, amount: 2}], [{item: items.bricks, amount: 1}]));
     }
 }

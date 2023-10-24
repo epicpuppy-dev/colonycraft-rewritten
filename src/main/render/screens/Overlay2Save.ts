@@ -1,3 +1,4 @@
+import { version } from "../../../version";
 import { ColonyCraft } from "../../ColonyCraft";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
@@ -30,7 +31,7 @@ export class Overlay2Save extends Screen {
                 game.save.saves.splice(game.save.saves.indexOf(overwrite), 1);
             }
             let date = new Date();
-            game.save.saves.push({name: this.textInput, id: this.textInput.toLowerCase().replace(" ", ""), size: game.save.toSave.length * 2, year: game.clock.year, timestamp: `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`});
+            game.save.saves.push({name: this.textInput, id: this.textInput.toLowerCase().replace(" ", ""), size: game.save.toSave.length * 2, year: game.clock.year, timestamp: date.toLocaleTimeString([], {year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute:'2-digit'}), version: version});
             window.localStorage.setItem(this.textInput.toLowerCase().replace(/\s/g, ''), game.save.toSave);
             game.save.storage += game.save.toSave.length * 2;
             window.localStorage.setItem("_CCMeta", JSON.stringify({saves: game.save.saves, storage: game.save.storage}));
@@ -91,7 +92,7 @@ export class Overlay2Save extends Screen {
                     ctx.fillStyle = "#777777";
                 }
                 game.draw.textCenter(save.name, Math.floor(this.width / 4 + areaWidth / 2), Math.floor(this.height / 8 + 50 + 38 * (currentRow - this.rowScroll)), 14, "white");
-                game.draw.textSmallCenter(`Year ${save.year} - ${save.timestamp} - ${(save.size / 1024).toFixed(1)}KB`, Math.floor(this.width / 4 + areaWidth / 2), Math.floor(this.height / 8 + 70 + 38 * (currentRow - this.rowScroll)), 7, "white");
+                game.draw.textSmallCenter(`Year ${save.year} - ${save.timestamp} - ${save.version ? "v" + save.version : "Unknown Version"} - ${(save.size / 1024).toFixed(1)}KB`, Math.floor(this.width / 4 + areaWidth / 2), Math.floor(this.height / 8 + 70 + 38 * (currentRow - this.rowScroll)), 7, "white");
                 ctx.fillRect(Math.floor(this.width / 4 + 20), Math.floor(this.height / 8 + 80 + 38 * (currentRow - this.rowScroll)), Math.floor(this.width / 2 - 64), 2);
                 this.available.push(save.name);
             }

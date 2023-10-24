@@ -4,7 +4,7 @@ export class SaveManager {
     private saveables: {[path: string]: Saveable} = {};
     public storage: number;
     public toSave: string = "";
-    public saves: {name: string, id: string, size: number, year: number, timestamp: string}[] = [];
+    public saves: {name: string, id: string, size: number, year: number, timestamp: string, version: string}[] = [];
 
     constructor () {
         this.storage = 0;
