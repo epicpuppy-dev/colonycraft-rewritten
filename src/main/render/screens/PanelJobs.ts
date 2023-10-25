@@ -14,7 +14,7 @@ export class PanelJobs extends Screen {
     private minusButton: Button;
     private plusClickable: ClickHandler;
     private minusClickable: ClickHandler;
-    private jobsAvailable: Job[] = [];
+    private jobsAvailable: (Job | null)[] = [];
     private buttonOffset: number = 100;
     private scrollBar: ScrollBar;
 
@@ -55,7 +55,7 @@ export class PanelJobs extends Screen {
         game.mouse.registerClickable(this.minusClickable);
 
         this.scrollBar = new ScrollBar(game, Math.floor(this.width - 24), 130, 16, Math.floor(this.height - 142), "v", 0, 5, 5, 40, (game, x, y) => {
-            return game.currentScreens.includes("game") && 
+            return game.currentScreens.includes("game") &&
                 !game.currentScreens.includes("overlay") &&
                 x > Math.floor(2 * this.width / 3) &&
                 x < Math.floor(this.width) &&
@@ -89,18 +89,36 @@ export class PanelJobs extends Screen {
         let maxWidth = game.draw.textWidth("1.23k/1.23k", 14);
         this.jobsAvailable = [];
 
-        for (const job of jobs.jobPriority) {
-            if (jobs.jobs[job].unlocked(game)) {
+        ctx.fillStyle = "#777777";
+        for (const id of jobs.groupPriority) {
+            const group = jobs.groups[id];
+            let hasJobs = false;
+            for (const job of group.jobs) {
+                if (job.unlocked(game)) {
+                    hasJobs = true;
+                    break;
+                }
+            }
+            if (!hasJobs) continue;
+            if (row >= this.rowScroll && row < this.rowScroll + maxRows) {
+                ctx.fillRect(Math.floor(9 * this.width / 12), 136 + 50 * (row - this.rowScroll), Math.floor(this.width / 6), 1);
+                ctx.fillRect(Math.floor(9 * this.width / 12), 166 + 50 * (row - this.rowScroll), Math.floor(this.width / 6), 1);
+                game.draw.textCenter(`- ${group.name} -`, Math.floor(5 * this.width / 6), 144 + 50 * (row - this.rowScroll), 14, "#FFFFFF");
+                this.jobsAvailable.push(null);
+            }
+            row++;
+            for (const job of group.jobs) {
+                if (!job.unlocked(game)) continue;
+                maxWidth = Math.max(maxWidth, game.draw.textWidth(job.name, 14));
                 if (row >= this.rowScroll && row < this.rowScroll + maxRows) {
-                    this.jobsAvailable.push(jobs.jobs[job]);
-                    maxWidth = Math.max(maxWidth, game.draw.textWidth(jobs.jobs[job].name, 14));
-                    game.draw.textCenter(jobs.jobs[job].name, Math.floor(5 * this.width / 6), 130 + 50 * (row - this.rowScroll), 14, "#FFFFFF");
-                    if (jobs.jobs[job].maxWorkers(game) !== Infinity) {
-                        game.draw.textCenter(game.draw.toShortNumber(jobs.jobs[job].workersAssigned) + "/" + game.draw.toShortNumber(jobs.jobs[job].maxWorkers(game)), Math.floor(5 * this.width / 6), 150 + 50 * (row - this.rowScroll), 14, "#FFFFFF");
+                    this.jobsAvailable.push(job);
+                    game.draw.textCenter(job.name, Math.floor(5 * this.width / 6), 130 + 50 * (row - this.rowScroll), 14, "#FFFFFF");
+                    if (job.maxWorkers(game) !== Infinity) {
+                        game.draw.textCenter(game.draw.toShortNumber(job.workersAssigned) + "/" + game.draw.toShortNumber(job.maxWorkers(game)), Math.floor(5 * this.width / 6), 150 + 50 * (row - this.rowScroll), 14, "#FFFFFF");
                     } else {
-                        game.draw.textCenter(game.draw.toShortNumber(jobs.jobs[job].workersAssigned), Math.floor(5 * this.width / 6), 150 + 50 * (row - this.rowScroll), 14, "#FFFFFF");
+                        game.draw.textCenter(game.draw.toShortNumber(job.workersAssigned), Math.floor(5 * this.width / 6), 150 + 50 * (row - this.rowScroll), 14, "#FFFFFF");
                     }
-                    game.draw.textSmallCenter(jobs.jobs[job].desc, Math.floor(5 * this.width / 6), 168 + 50 * (row - this.rowScroll), 7, "#FFFFFF");
+                    game.draw.textSmallCenter(job.desc, Math.floor(5 * this.width / 6), 168 + 50 * (row - this.rowScroll), 7, "#FFFFFF");
                     game.draw.textCenter("+", Math.floor(5 * this.width / 6) + this.buttonOffset, 136 + 50 * (row - this.rowScroll), 21, "#FFFFFF");
                     game.draw.textCenter("-", Math.floor(5 * this.width / 6) - this.buttonOffset, 136 + 50 * (row - this.rowScroll), 21, "#FFFFFF");
                     ctx.beginPath();
@@ -110,6 +128,7 @@ export class PanelJobs extends Screen {
                 }
                 row++;
             }
+
         }
 
         this.buttonOffset = Math.floor(maxWidth / 2 + 24);
@@ -123,12 +142,12 @@ export class PanelJobs extends Screen {
 
     private plus(game: ColonyCraft, index: number) {
         const job = this.jobsAvailable[index];
-        job.assign(game, Math.min(Math.max(game.colony.population.adults - game.colony.jobs.workersAssigned, 0), job.maxWorkers(game) - job.workersAssigned, this.increaseSteps[this.increaseIndex][0], job.cost ? Math.floor(job.cost.item.amount / job.cost.amount) : Infinity));
+        if (job) job.assign(game, Math.min(Math.max(game.colony.population.adults - game.colony.jobs.workersAssigned, 0), job.maxWorkers(game) - job.workersAssigned, this.increaseSteps[this.increaseIndex][0], job.cost ? Math.floor(job.cost.item.amount / job.cost.amount) : Infinity));
     }
 
     private minus(game: ColonyCraft, index: number) {
         const job = this.jobsAvailable[index];
-        job.unassign(game, Math.min(job.workersAssigned, this.increaseSteps[this.increaseIndex][0]));
+        if (job) job.unassign(game, Math.min(job.workersAssigned, this.increaseSteps[this.increaseIndex][0]));
     }
 
     public active(game: ColonyCraft): boolean {

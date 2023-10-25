@@ -71,6 +71,8 @@ export class ColonyCraft {
         //Set width and height
         this.width = window.innerWidth;
         this.height = window.innerHeight;
+        //this.width = 1280;
+        //this.height = 720;
 
         //Create canvas
         this.canvas = document.createElement('canvas');

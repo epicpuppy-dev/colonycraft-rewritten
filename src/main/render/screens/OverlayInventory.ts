@@ -19,7 +19,7 @@ export class OverlayInventory extends Screen {
         }, (game: ColonyCraft) => {
             return game.currentScreens.includes("inventory");
         });
-        
+
         game.mouse.registerClickable(this.closeButton);
 
         game.key.addAction(new KeyAction("closeInventory", "Close Inventory", (game: ColonyCraft) => {
@@ -37,7 +37,7 @@ export class OverlayInventory extends Screen {
                 game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);
             }
         }));
-        
+
         game.key.addBinding(new KeyBind("Open Inventory", "I", "KeyI", [game.key.actions.openInventory]));
 
         this.scrollBar = new ScrollBar(game, Math.floor(7 * this.width / 8 - 24), Math.floor(this.height / 8 + 56), 16, Math.floor(3 * this.height / 4 - 104), "v", 0, 5, 5, 24, (game) => game.currentScreens.includes("inventory"));
@@ -109,30 +109,29 @@ export class OverlayInventory extends Screen {
             }
             //if the category has no items, skip it
             if (!hasItems) continue;
-            //if the current row is greater than the scroll value and less than the max rows plus scroll value, render the category header
+
             if (currentRow >= this.rowScroll && currentRow < this.rowScroll + maxRows) {
-                game.draw.textCenter(inventory.categories[Object.keys(inventory.categories)[i]].name, Math.floor(this.width / 2), Math.floor(this.height / 8 + 56 + 20 * (currentRow - this.rowScroll)), 14, "white");
+                game.draw.textCenter(`- ${inventory.categories[Object.keys(inventory.categories)[i]].name} -`, Math.floor(this.width / 2), Math.floor(this.height / 8 + 56 + 20 * (currentRow - this.rowScroll)), 14, "white");
             }
             //add 1 rows for the category header
             currentRow++;
             currentColumn = 0;
             //loop through all items in the category
             for (let j = 0; j < inventory.categories[Object.keys(inventory.categories)[i]].items.length; j++) {
-                //check if the current row is greater than the scroll value and less than the max rows plus scroll value
-                if (currentRow >= this.rowScroll && currentRow < this.rowScroll + maxRows) {
-                    //check if amount is greater than 0
-                    if (!(inventory.categories[Object.keys(inventory.categories)[i]].items[j].amount > 0)) {
-                        continue;
-                    }
+                //check if amount is greater than 0
+                if (!(inventory.categories[Object.keys(inventory.categories)[i]].items[j].amount > 0)) {
+                    continue;
+                }
 
+                if (currentRow >= this.rowScroll && currentRow < this.rowScroll + maxRows) {
                     //render the item
                     game.draw.sprite(ctx, inventory.categories[Object.keys(inventory.categories)[i]].items[j].key + "Small", Math.floor(this.width / 8 + 8 + (3 * this.width / 8) * currentColumn), Math.floor(this.height / 8 + 56 + 20 * (currentRow - this.rowScroll)), 16, 16);
-                    
+
                     let amount = inventory.categories[Object.keys(inventory.categories)[i]].items[j].amount;
                     const amountWidth = game.draw.textWidth(`${preciseInventory ? game.draw.toShortNumber(amount) : amount < 100 ? "Few" : amount < 1000 ? "Some" : "Many"}`, 14);
                     const widthDiff = maxwidth - amountWidth;
                     game.draw.text(`${preciseInventory ? game.draw.toShortNumber(amount) : amount < 100 ? "Few" : amount < 1000 ? "Some" : "Many"} ${inventory.categories[Object.keys(inventory.categories)[i]].items[j].name}`, Math.floor(this.width / 8 + 30 + (3 * this.width / 8) * currentColumn) + widthDiff, Math.floor(this.height / 8 + 56 + 20 * (currentRow - this.rowScroll) + 1), 14, "white");
-                    
+
                 }
                 currentColumn++;
                 if (currentColumn > 1) {

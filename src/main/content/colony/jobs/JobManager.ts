@@ -6,7 +6,7 @@ import { JobGroup } from "./JobGroup";
 export class JobManager implements Saveable {
     public jobs: { [key: string]: Job } = {};
     public groups: { [key: string]: JobGroup } = {};
-    public jobPriority: string[] = [];
+    public groupPriority: string[] = [];
     public workersAssigned: number = 0;
 
     constructor (game: ColonyCraft) {
@@ -15,6 +15,10 @@ export class JobManager implements Saveable {
 
     public addGroup(group: JobGroup) {
         this.groups[group.key] = group;
+        this.groupPriority.push(group.key);
+        this.groupPriority.sort((a, b) => {
+            return this.groups[a].priority - this.groups[b].priority;
+        });
     }
 
     public addGroupWithJobs(group: JobGroup, jobs: Job[]) {
@@ -26,10 +30,6 @@ export class JobManager implements Saveable {
 
     public addJob (group: JobGroup, job: Job) {
         this.jobs[job.id] = job;
-        this.jobPriority.push(job.id);
-        this.jobPriority.sort((a, b) => {
-            return this.jobs[a].priority - this.jobs[b].priority;
-        });
         group.jobs.push(job);
     }
 
