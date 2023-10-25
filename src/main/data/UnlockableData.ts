@@ -68,6 +68,7 @@ export class UnlockableData {
 
         // Social Traits
         development.registerTrait(new WelfareTrait(game, "acceptance", "Acceptance", "s", 200, 0, 1, ["Acceptance of this dire situation", "+0.1% base morale per tick"], ["survival1"]));
-        development.registerTrait(new WelfareTrait(game, "hope", "Hope", "s", 500, 0, 2, ["Belief in the future", "+0.2% base morale per tick"], ["clothing1", "fire1", "acceptance"]));
+        development.registerTrait(new WelfareTrait(game, "community", "Community", "s", 500, 0, 1, ["Supporting each other", "+0.1% base morale per tick"], ["fire1", "clothing1", "acceptance"]));
+        development.registerTrait(new WelfareTrait(game, "hope", "Hope", "s", 800, 0, 2, ["Belief in the future", "+0.2% base morale per tick"], ["farming1", "water1", "hope"]));
     }
 }
