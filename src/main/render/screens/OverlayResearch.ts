@@ -180,8 +180,11 @@ export class OverlayResearch extends Screen {
                     ctx.fillStyle = '#224422';
                     ctx.fillRect(Math.floor(leftOffset + currentColumn * areaWidth / 2 + 10), Math.floor(this.height / 8 + 56 + 124 * (currentRow - this.rowScroll)), Math.floor(areaWidth / 2 - 20), 104);
                 }
-                if (!technology.unlocked && technology.important) {
+                if (!technology.unlocked && technology.type == "progress") {
                     ctx.fillStyle = '#444422';
+                    ctx.fillRect(Math.floor(leftOffset + currentColumn * areaWidth / 2 + 10), Math.floor(this.height / 8 + 56 + 124 * (currentRow - this.rowScroll)), Math.floor(areaWidth / 2 - 20), 104);
+                } else if (!technology.unlocked && technology.type == "food") {
+                    ctx.fillStyle = '#224444';
                     ctx.fillRect(Math.floor(leftOffset + currentColumn * areaWidth / 2 + 10), Math.floor(this.height / 8 + 56 + 124 * (currentRow - this.rowScroll)), Math.floor(areaWidth / 2 - 20), 104);
                 }
                 ctx.strokeRect(Math.floor(leftOffset + currentColumn * areaWidth / 2 + 10), Math.floor(this.height / 8 + 56 + 124 * (currentRow - this.rowScroll)), Math.floor(areaWidth / 2 - 20), 104);
@@ -214,16 +217,23 @@ export class OverlayResearch extends Screen {
         }
 
         //draw key
-        ctx.fillStyle = '#228822';
-        ctx.fillRect(Math.floor(this.width / 2 + 10), Math.floor(7 * this.height / 8 - 24), 16, 16);
-        ctx.strokeRect(Math.floor(this.width / 2 + 10), Math.floor(7 * this.height / 8 - 24), 16, 16);
-        game.draw.text("Completed", Math.floor(this.width / 2 + 32), Math.floor(7 * this.height / 8 - 22), 14, "#FFFFFF");
+        let progressWidth = game.draw.textWidth("Progression", 14);
+        let foodWidth = game.draw.textWidth("Food Production", 14);
 
-        let imporantWidth = game.draw.textWidth("Important", 14);
+        ctx.fillStyle = '#228822';
+        ctx.fillRect(Math.floor(this.width / 2 + 20 + progressWidth / 2), Math.floor(7 * this.height / 8 - 24), 16, 16);
+        ctx.strokeRect(Math.floor(this.width / 2 + 20 + progressWidth / 2), Math.floor(7 * this.height / 8 - 24), 16, 16);
+        game.draw.text("Completed", Math.floor(this.width / 2 + 42 + progressWidth / 2), Math.floor(7 * this.height / 8 - 22), 14, "#FFFFFF");
+
         ctx.fillStyle = '#888822';
-        ctx.fillRect(Math.floor(this.width / 2 - imporantWidth - 24), Math.floor(7 * this.height / 8 - 24), 16, 16);
-        ctx.strokeRect(Math.floor(this.width / 2 - imporantWidth - 24), Math.floor(7 * this.height / 8 - 24), 16, 16);
-        game.draw.text("Important", Math.floor(this.width / 2 - imporantWidth - 2), Math.floor(7 * this.height / 8 - 22), 14, "#FFFFFF");
+        ctx.fillRect(Math.floor(this.width / 2 - progressWidth / 2 - 22), Math.floor(7 * this.height / 8 - 24), 16, 16);
+        ctx.strokeRect(Math.floor(this.width / 2 - progressWidth / 2 - 22), Math.floor(7 * this.height / 8 - 24), 16, 16);
+        game.draw.text("Progression", Math.floor(this.width / 2 - progressWidth / 2), Math.floor(7 * this.height / 8 - 22), 14, "#FFFFFF");
+
+        ctx.fillStyle = '#228888';
+        ctx.fillRect(Math.floor(this.width / 2 - progressWidth / 2 - foodWidth - 62), Math.floor(7 * this.height / 8 - 24), 16, 16);
+        ctx.strokeRect(Math.floor(this.width / 2 - progressWidth / 2 - foodWidth - 62), Math.floor(7 * this.height / 8 - 24), 16, 16);
+        game.draw.text("Food Production", Math.floor(this.width / 2 - progressWidth / 2 - foodWidth - 40), Math.floor(7 * this.height / 8 - 22), 14, "#FFFFFF");
 
         this.scrollBar.reposition(Math.floor(7 * this.width / 8 - 24), Math.floor(this.height / 8 + 56) + (research.active != null ? 124 : 0), 16, Math.floor(3 * this.height / 4 - 90) - (research.active != null ? 124 : 0));
 

@@ -15,6 +15,15 @@ export class LootData {
             {weight: 8, item: items.muddyWater, amount: 1},
         ]));
 
+        manager.addLoot(new LootTable("gatherer", 1, [
+            {weight: 14, item: items.sticks, amount: 1},
+            {weight: 9, item: items.rocks, amount: 1},
+            {weight: 8, item: items.leaves, amount: 2},
+            {weight: 12, item: items.berries, amount: 2},
+            {weight: 9, item: items.herbs, amount: 2},
+            {weight: 10, item: items.fiber, amount: 2},
+        ]));
+
         manager.addLoot(new LootTable("woodcutter", 1, [
             {weight: 4, item: items.logs, amount: 2},
             {weight: 2, item: items.sticks, amount: 5},
@@ -45,6 +54,27 @@ export class LootData {
         manager.addLoot(new LootTable("potato", 1, [
             {weight: 3, item: items.potato, amount: 1},
             {weight: 1, item: null, amount: 0}
+        ]));
+
+        manager.addLoot(new LootTable("cookedFish", 1, [
+            {weight: 3, item: items.cookedFish, amount: 1},
+            {weight: 1, item: null, amount: 0}
+        ]));
+
+        manager.addLoot(new LootTable("fish", 1, [
+            {weight: 2, item: items.fish, amount: 1},
+            {weight: 1, item: null, amount: 0}
+        ]));
+
+        manager.addLoot(new LootTable("cookedMeat", 1, [
+            {weight: 3, item: items.cookedMeat, amount: 1},
+            {weight: 1, item: null, amount: 0}
+        ]));
+
+        manager.addLoot(new LootTable("hunter", 1, [
+            {weight: 1, item: items.meat, amount: 3},
+            {weight: 1, item: items.hide, amount: 1},
+            {weight: 2, item: null, amount: 0}
         ]));
     }
 }

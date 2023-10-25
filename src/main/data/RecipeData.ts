@@ -8,16 +8,19 @@ export class RecipeData {
         const tables = game.loot.loot;
 
         // Lumber
-        manager.addRecipe(new Recipe("planks1", [{item: items.logs, amount: 1}], [{item: items.lumber, amount: 4}]));
+        manager.addRecipe(new Recipe("planks1", [{item: items.logs, amount: 1}], [{item: items.planks, amount: 4}]));
 
         // Tools
         manager.addRecipe(new Recipe("tool1", [{item: items.rocks, amount: 4}], [{item: items.tool1, amount: 1}]));
         manager.addRecipe(new Recipe("tool2", [{item: items.tool1, amount: 2}, {item: items.twine, amount: 4}], [{item: items.tool2, amount: 1}]));
+        manager.addRecipe(new Recipe("basket1", [{item: items.twine, amount: 4}, {item: items.cloth, amount: 1}], [{item: items.basket1, amount: 1}]));
         manager.addRecipe(new Recipe("bucket1", [{item: items.planks, amount: 2}], [{item: items.bucket1, amount: 1}]));
 
         // Food
         manager.addRecipe(new Recipe("flour1", [{item: items.wheat, amount: 2}], [{item: items.flour, amount: 2}]));
         manager.addRecipe(new Recipe("bread1", [{item: items.flour, amount: 2}, {item: items.freshWater, amount: 1}], [{item: items.bread, amount: 1}]));
+        manager.addRecipe(new Recipe("cookedFish1", [{item: items.fish, amount: 1}], tables.cookedFish));
+        manager.addRecipe(new Recipe("cookedMeat1", [{item: items.meat, amount: 1}], tables.cookedMeat));
 
         // Other
         manager.addRecipe(new Recipe("twine1", [{item: items.fiber, amount: 4}], [{item: items.twine, amount: 1}]));

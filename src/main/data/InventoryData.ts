@@ -11,8 +11,12 @@ export class InventoryData {
         //Volume is space per 1,000 units
         inventory.addCategoryWithItems(new ItemGroup("food", "Food"), [
             new FoodItem(game, "berries", 0.2, "Berries", 0.05, 0.4, 0.25, 1, 5),
-            new FoodItem(game, "herbs", 0.1, "Wild Herbs", 0.05, 0.25, 0.5, -2, 3),
-            new FoodItem(game, "bread", 0.2, "Bread", 0.05, 1, 0.5, 0.5, 10)
+            new FoodItem(game, "herbs", 0.1, "Wild Herbs", 0.04, 0.25, 0.5, -2, 3),
+            new FoodItem(game, "bread", 0.2, "Bread", 0.04, 1, 0.5, 0.5, 10),
+            new FoodItem(game, "cookedFish", 0.25, "Cooked Fish", 0.04, 0.5, 2, 3, 10),
+            new FoodItem(game, "cookedMeat", 0.25, "Cooked Meat", 0.04, 0.5, 2, 3, 10),
+            new FoodItem(game, "fish", 0.25, "Raw Fish", 0.08, 0.5, 0, 0.5, 3),
+            new FoodItem(game, "meat", 0.25, "Raw Meat", 0.08, 0.5, 0, 0, 3),
         ]);
         inventory.addCategoryWithItems(new ItemGroup("liquids", "Liquids"), [
             new FluidItem(game, "freshWater", 0.5, "Fresh Water", 0.05, 0.5, 0, 0.5, 10),
@@ -21,6 +25,7 @@ export class InventoryData {
         inventory.addCategoryWithItems(new ItemGroup("tools", "Tools"), [
             new Item(game, "tool1", 1, "Primitive Tool", 0.005),
             new Item(game, "tool2", 1, "Basic Tool", 0.004),
+            new Item(game, "basket1", 10, "Basic Basket", 0.004),
             new Item(game, "bucket1", 10, "Wooden Bucket", 0.004),
         ]);
         inventory.addCategoryWithItems(new ItemGroup("amenities", "Amenities"), [
@@ -32,6 +37,7 @@ export class InventoryData {
             new Item(game, "rocks", 2, "Rocks", 0.005), //TODO: Balance
             new Item(game, "leaves", 0.5, "Leaves", 0.02), //TODO: Balance
             new Item(game, "fiber", 0.5, "Plant Fiber", 0.01), //TODO: Balance
+            new Item(game, "hide", 0.5, "Animal Hide", 0.01), //TODO: Balance
             new Item(game, "clay", 4, "Clay", 0.01), //TODO: Balance
             new Item(game, "mud", 4, "Mud", 0.01), //TODO: Balance
         ]);
@@ -48,7 +54,7 @@ export class InventoryData {
         ]);
         inventory.addCategoryWithItems(new ItemGroup("agriculture", "Agriculture"), [
             new Item(game, "wheat", 1, "Wheat", 0.005), //TODO: Balance
-            new FoodItem(game, "potato", 1, "Potato", 0.005, 0.25, 0.4, 0.3, 5), //TODO: Balance
+            new FoodItem(game, "potato", 1, "Potato", 0.01, 0.25, 0.4, 0.3, 5), //TODO: Balance
         ]);
         inventory.addCategoryWithItems(new ItemGroup("mining", "Mining"), [
             new Item(game, "stone", 5, "Stone", 0.0025), //TODO: Balance
