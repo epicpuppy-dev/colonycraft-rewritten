@@ -5,9 +5,9 @@ import { SpriteRenderer } from "./SpriteRenderer";
 import { TextRenderer } from "./TextRenderer";
 
 export class RenderUtil {
-    private font: TextRenderer;
-    private fontSmall: TextRenderer;
-    private sprites: SpriteRenderer;
+    readonly font: TextRenderer;
+    readonly fontSmall: TextRenderer;
+    readonly sprites: SpriteRenderer;
     public closeButton: KeyBind;
 
     constructor(game: ColonyCraft, font: TextRenderer, fontSmall: TextRenderer, sprites: SpriteRenderer) {

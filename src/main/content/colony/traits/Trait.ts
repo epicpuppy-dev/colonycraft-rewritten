@@ -36,4 +36,10 @@ export class Trait extends Unlockable implements Saveable {
         if (split[1] === "1") this.unlocked = true;
         if (!isNaN(parseInt(split[2], 36))) this.current = parseInt(split[2], 36);
     }
+
+    public newGame() {
+        this.progress = 0;
+        this.unlocked = false;
+        this.current = 0;
+    }
 }

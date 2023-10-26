@@ -10,8 +10,7 @@
     "build-prod": "webpack --mode production",
     "preversion": "npm run build-prod",
     "version": "echo \"export const version = '$npm_package_version';\" > src/version.ts&&git stage src/version.ts",
-    "postversion": "npm run build-prod",
-    "uploadtestserver": "rm -r ~/Desktop/Server/CCTestServer/src&&cp -r dist/. ~/Desktop/Server/CCTestServer/src"
+    "uploadtestserver": "npm run build-prod&&rm -r ~/Desktop/Server/CCTestServer/src&&cp -r dist/. ~/Desktop/Server/CCTestServer/src"
   },
   "repository": {
     "type": "git",

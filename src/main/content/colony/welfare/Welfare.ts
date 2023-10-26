@@ -29,6 +29,11 @@ export class Welfare implements Saveable {
         if (!isNaN(parseFloat(split[1]))) this.morale = parseFloat(split[1]);
     }
 
+    public newGame() {
+        this.health = 0.5;
+        this.morale = 0.5;
+    }
+
     public addWelfareItem (item: WelfareItem) {
         this.welfareItems.push(item);
     }

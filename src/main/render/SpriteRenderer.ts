@@ -1,9 +1,9 @@
-import { Sprite } from "../data/Sprite";
-import { SpriteSheet } from "../data/SpriteSheet";
+import { Sprite } from "./Sprite";
+import { SpriteSheet } from "./SpriteSheet";
 
 export class SpriteRenderer {
-    private sheets: {[key: string]: SpriteSheet};
-    private sprites: {[key: string]: Sprite};
+    readonly sheets: {[key: string]: SpriteSheet};
+    readonly sprites: {[key: string]: Sprite};
 
     public renderSprite(name: string, ctx: OffscreenCanvasRenderingContext2D, x: number, y: number, width: number, height: number): void {
         if (this.sprites[name]) this.sprites[name].render(ctx, x, y, width, height);

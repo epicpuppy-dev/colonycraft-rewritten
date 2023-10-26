@@ -1,7 +1,7 @@
 import { ColonyCraft } from "../../ColonyCraft";
 import { Saveable } from "../../saving/Saveable";
 
-export class Statistic implements Saveable {
+export class Statistic /*implements Saveable*/ {
     //Amount of data points to store in memory
     public static readonly CACHESIZE = 160;
     //TODO: Amount of data points to save to file
@@ -24,7 +24,7 @@ export class Statistic implements Saveable {
         }
         this.monitor = monitor;
 
-        game.save.register(this, "stat." + this.id);
+        //game.save.register(this, "stat." + this.id);
     }
 
     public tick (game: ColonyCraft) {
@@ -43,7 +43,7 @@ export class Statistic implements Saveable {
         }
         return max;
     }
-
+    /*
     public save (): string {
         let string = "";
         for (const collect in this.data) {
@@ -67,4 +67,5 @@ export class Statistic implements Saveable {
             else this.data[split2[0]].data = split2[2].split(",").map((e) => parseInt(e, 36));
         }
     }
+    */
 }

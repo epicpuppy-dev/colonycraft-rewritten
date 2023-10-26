@@ -29,4 +29,8 @@ export class ResearchManager implements Saveable {
         }
         if (this.technologies[data]) this.active = this.technologies[data];
     }
+
+    public newGame() {
+        this.active = null;
+    }
 }

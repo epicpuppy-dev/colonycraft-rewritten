@@ -3,10 +3,14 @@ import { Sprite } from "./Sprite";
 export class SpriteSheet {
     private image: HTMLImageElement;
     private sprites: {[key: string]: Sprite};
+    public loaded: boolean = false;
 
     constructor(src: string) {
         this.image = new Image();
         this.image.src = src;
+        this.image.onload = () => {
+            this.loaded = true;
+        }
         this.sprites = {};
     }
 

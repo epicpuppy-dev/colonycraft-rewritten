@@ -40,4 +40,8 @@ export class JobManager implements Saveable {
     public load (data: string) {
         if (!isNaN(parseInt(data, 36))) this.workersAssigned = parseInt(data, 36);
     }
+
+    public newGame() {
+        this.workersAssigned = 0;
+    }
 }

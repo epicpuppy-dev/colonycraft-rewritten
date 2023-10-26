@@ -89,6 +89,13 @@ export class PanelJobs extends Screen {
         let maxWidth = game.draw.textWidth("1.23k/1.23k", 14);
         this.jobsAvailable = [];
 
+        //calculate max width
+        for (const job in jobs.jobs) {
+            if (jobs.jobs[job].unlocked(game)) maxWidth = Math.max(maxWidth, game.draw.textWidth(jobs.jobs[job].name, 14));
+        }
+
+        this.buttonOffset = Math.floor(maxWidth / 2 + 24);
+        
         ctx.fillStyle = "#777777";
         for (const id of jobs.groupPriority) {
             const group = jobs.groups[id];
@@ -109,7 +116,6 @@ export class PanelJobs extends Screen {
             row++;
             for (const job of group.jobs) {
                 if (!job.unlocked(game)) continue;
-                maxWidth = Math.max(maxWidth, game.draw.textWidth(job.name, 14));
                 if (row >= this.rowScroll && row < this.rowScroll + maxRows) {
                     this.jobsAvailable.push(job);
                     game.draw.textCenter(job.name, Math.floor(5 * this.width / 6), 130 + 50 * (row - this.rowScroll), 14, "#FFFFFF");
@@ -130,8 +136,6 @@ export class PanelJobs extends Screen {
             }
 
         }
-
-        this.buttonOffset = Math.floor(maxWidth / 2 + 24);
 
         this.scrollBar.setBounds(this.rowScroll, maxRows, Math.floor(row - maxRows));
 

@@ -104,4 +104,12 @@ export class BuildingManager implements Saveable {
         if (!isNaN(parseInt(split[3], 36))) this.queueSize = parseInt(split[3], 36);
         if (!isNaN(parseInt(split[4], 36))) this.workLeft = parseInt(split[4], 36);
     }
+
+    public newGame() {
+        this.landMax = 10;
+        this.landUsed = 0;
+        this.landPending = 0;
+        this.queueSize = 0;
+        this.workLeft = 0;
+    }
 }

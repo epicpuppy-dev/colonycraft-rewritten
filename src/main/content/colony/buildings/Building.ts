@@ -45,5 +45,11 @@ export class Building implements Saveable {
         if (!isNaN(parseInt(split[2], 36))) this.progress = parseInt(split[2], 36);
     }
 
+    public newGame() {
+        this.amount = 0;
+        this.target = 0;
+        this.progress = 0;
+    }
+
     public tick (game: ColonyCraft) {}
 }

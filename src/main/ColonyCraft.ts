@@ -43,6 +43,7 @@ import { OverlayPause } from "./render/screens/OverlayPause";
 import { LayerOverlay2 } from "./render/layers/LayerOverlay2";
 import { Overlay2Save } from "./render/screens/Overlay2Save";
 import { Overlay2Load } from "./render/screens/Overlay2Load";
+import { ScreenLoading } from "./render/screens/ScreenLoading";
 
 export class ColonyCraft {
     public width: number;
@@ -84,11 +85,14 @@ export class ColonyCraft {
         this.canvas.style.top = '0';
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
 
-        //Initalize Save Manager
-        this.save = new SaveManager();
-
         //Initialize Entity Ticker
         this.entities = new EntityController();
+
+        //Initalize Save Manager
+        this.save = new SaveManager(this);
+
+        //Initialize Controls
+        this.mouse = new MouseController();
         this.key = new KeyController();
 
         //Initialize Renderers
@@ -97,9 +101,6 @@ export class ColonyCraft {
         this.fontSmall = new TextRenderer(this, FontData.small, fontImageSmall, 7, 9, 1);
         this.sprites = new SpriteRenderer();
         this.draw = new RenderUtil(this, this.font, this.fontSmall, this.sprites);
-
-        //Initialize Controls
-        this.mouse = new MouseController();
 
         //Initialize Colony
         this.colony = new Colony(this);
@@ -124,6 +125,7 @@ export class ColonyCraft {
         //Initialize Screens
         this.renderer.addLayerWithScreens(new LayerGame(this), [
             new ScreenTitle(this, this.width, this.height),
+            new ScreenLoading(this, this.width, this.height),
         ]);
         this.renderer.addLayerWithScreens(new LayerPanel(this), [
             new PanelJobs(this, this.width, this.height),
@@ -148,7 +150,9 @@ export class ColonyCraft {
             new Overlay2Save(this, this.width, this.height),
             new Overlay2Load(this, this.width, this.height)
         ]);
-        this.currentScreens.push("title");
+
+        //set screen to loading
+        this.currentScreens.push("loading");
 
         SpriteData.addSprites(this.sprites);
 

@@ -12,7 +12,7 @@ export class Inventory {
     public storageCapacity: number = 10;
     public storageUsed: number = 0;
     public storageUpdate: StorageUpdate;
-    private preUpdate: InventoryUpdate;
+    public preUpdate: InventoryUpdate;
     private postUpdate: InventoryUpdate;
     private decay: InventoryDecay;
 

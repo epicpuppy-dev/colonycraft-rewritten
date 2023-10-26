@@ -35,7 +35,7 @@ export class ClockController implements Saveable {
         game.save.register(this, "clock");
     }
 
-    startTick(game: ColonyCraft) {
+    public startTick(game: ColonyCraft) {
         game.tick();
         const timePassed = performance.now() - this.tickStart;
         this.tickTime.push(Math.max(timePassed, 1000 / this.tps));
@@ -44,7 +44,7 @@ export class ClockController implements Saveable {
         this.tickStart = performance.now();
     }
 
-    startFrame(game: ColonyCraft) {
+    public startFrame(game: ColonyCraft) {
         game.render();
         const timePassed = performance.now() - this.frameStart;
         this.frameTime.push(Math.max(timePassed, 1000 / this.fps));
@@ -53,48 +53,48 @@ export class ClockController implements Saveable {
         this.frameStart = performance.now();
     }
 
-    stopTick () {
+    public stopTick () {
         clearTimeout(this.nextTick);
         this.nextTick = 0;
     }
 
-    startTicking(game: ColonyCraft) {
+    public startTicking(game: ColonyCraft) {
         this.nextTick = window.setTimeout(() => this.startTick(game), 1000 / this.tps);
         this.tickStart = performance.now();
     }
 
-    resetFrameTime () {
+    public resetFrameTime () {
         this.frameTime = [1000 / this.fps];
         this.frameStart = performance.now();
     }
 
-    resetTickTime () {
+    public resetTickTime () {
         this.tickTime = [1000 / this.tps];
         this.tickStart = performance.now();
     }
 
-    getFPS (game: ColonyCraft): number {
+    public getFPS (game: ColonyCraft): number {
         return 1000 / (this.frameTime.reduce((a, b) => a + b) / this.frameTime.length);
     }
 
-    getFrameTime (game: ColonyCraft): number {
+    public getFrameTime (game: ColonyCraft): number {
         return this.frameTime.reduce((a, b) => a + b) / this.frameTime.length;
     }
 
-    getTPS (game: ColonyCraft): number {
+    public getTPS (game: ColonyCraft): number {
         return 1000 / (this.tickTime.reduce((a, b) => a + b) / this.tickTime.length);
     }
 
-    getTickTime (game: ColonyCraft): number {
+    public getTickTime (game: ColonyCraft): number {
         return this.tickTime.reduce((a, b) => a + b) / this.tickTime.length;
     }
 
-    changeTPS (tps: number) {
+    public changeTPS (tps: number) {
         this.tps = tps;
         this.tickTime = [1000 / tps];
     }
 
-    changeFPS (fps: number) {
+    public changeFPS (fps: number) {
         this.fps = fps;
         this.frameTime = [1000 / fps];
     }
@@ -109,5 +109,12 @@ export class ClockController implements Saveable {
         if (!isNaN(parseInt(split[1], 36))) this.season = parseInt(split[1], 36);
         if (!isNaN(parseInt(split[2], 36))) this.day = parseInt(split[2], 36);
         if (!isNaN(parseInt(split[3], 36))) this.dayTotal = parseInt(split[3], 36);
+    }
+
+    public newGame() {
+        this.year = 1;
+        this.season = 1;
+        this.day = 1;
+        this.dayTotal = 0;
     }
 }

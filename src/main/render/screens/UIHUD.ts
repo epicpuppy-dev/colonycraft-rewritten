@@ -4,17 +4,26 @@ import { Button } from "../ui/Button";
 
 export class UIHUD extends Screen {
     private statsButton: Button;
+    private menuButton: Button;
 
     constructor(game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
         
         this.statsButton = new Button(100, -50, this.width - 200, 100, (game: ColonyCraft) => {
             game.currentScreens.push("stats", "overlay");
-        } , (game: ColonyCraft) => {
+        }, (game: ColonyCraft) => {
+            return game.currentScreens.includes("game") && !game.currentScreens.includes("overlay");
+        });
+
+        this.menuButton = new Button(this.width - 100, 0, 100, 50, (game: ColonyCraft) => {
+            game.currentScreens.push("pause", "overlay");
+            game.simulation.toggleRunning(game, false);
+        }, (game: ColonyCraft) => {
             return game.currentScreens.includes("game") && !game.currentScreens.includes("overlay");
         });
 
         game.mouse.registerClickable(this.statsButton);
+        game.mouse.registerClickable(this.menuButton);
     }
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
@@ -67,6 +76,14 @@ export class UIHUD extends Screen {
         game.draw.sprite(ctx, "workersSmall", 296, 28, 16, 16)
         game.draw.text(`${game.draw.toShortNumber(game.colony.population.adults - game.colony.jobs.workersAssigned)}`, 316, 30, 14, "#6495ED");
         //game.draw.text(`1.11m`, 316, 30, 14, "#6495ED");
+
+        //Draw Menu Button
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.roundRect(this.width - 65, 10, 30, 5, 3);
+        ctx.roundRect(this.width - 65, 20, 30, 5, 3);
+        ctx.roundRect(this.width - 65, 30, 30, 5, 3);
+        ctx.fill();
 
         game.draw.renderText(ctx);
     }
