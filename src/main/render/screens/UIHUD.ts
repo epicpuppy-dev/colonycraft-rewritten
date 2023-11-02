@@ -9,7 +9,7 @@ export class UIHUD extends Screen {
     constructor(game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
         
-        this.statsButton = new Button(100, -50, this.width - 200, 100, (game: ColonyCraft) => {
+        this.statsButton = new Button(this.width - 152, 0, 52, 50, (game: ColonyCraft) => {
             game.currentScreens.push("stats", "overlay");
         }, (game: ColonyCraft) => {
             return game.currentScreens.includes("game") && !game.currentScreens.includes("overlay");
@@ -77,12 +77,15 @@ export class UIHUD extends Screen {
         game.draw.text(`${game.draw.toShortNumber(game.colony.population.adults - game.colony.jobs.workersAssigned)}`, 316, 30, 14, "#6495ED");
         //game.draw.text(`1.11m`, 316, 30, 14, "#6495ED");
 
+        //Draw Stats Icon
+        game.draw.sprite(ctx, "stats", Math.floor(game.width - 142), 8, 32, 32);
+
         //Draw Menu Button
         ctx.fillStyle = "#ffffff";
         ctx.beginPath();
-        ctx.roundRect(this.width - 65, 10, 30, 5, 3);
-        ctx.roundRect(this.width - 65, 20, 30, 5, 3);
-        ctx.roundRect(this.width - 65, 30, 30, 5, 3);
+        ctx.roundRect(this.width - 40, 10, 30, 5, 3);
+        ctx.roundRect(this.width - 40, 20, 30, 5, 3);
+        ctx.roundRect(this.width - 40, 30, 30, 5, 3);
         ctx.fill();
 
         game.draw.renderText(ctx);

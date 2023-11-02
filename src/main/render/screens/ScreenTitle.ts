@@ -33,12 +33,6 @@ export class ScreenTitle extends Screen {
         ctx.strokeStyle = "#777777";
         ctx.fillStyle = "#222222";
         ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.roundRect(Math.floor(this.width / 2 - 200), Math.floor(this.height / 2 - 10), 400, 52, 8);
-        ctx.roundRect(Math.floor(this.width / 2 - 200), Math.floor(this.height / 2 + 60), 400, 52, 8);
-        ctx.roundRect(Math.floor(this.width / 2 - 200), Math.floor(this.height / 2 + 130), 400, 52, 8);
-        ctx.fill();
-        ctx.stroke();
 
         game.draw.textCenter("Start", Math.floor(this.width / 2), Math.floor(this.height / 2), 28, "white");
         game.draw.textCenter("Load Game", Math.floor(this.width / 2), Math.floor(this.height / 2 + 70), 28, "white");

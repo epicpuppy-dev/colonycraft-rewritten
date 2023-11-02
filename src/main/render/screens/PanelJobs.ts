@@ -1,6 +1,7 @@
 import { game } from "../../..";
 import { ColonyCraft } from "../../ColonyCraft";
 import { Job } from "../../content/colony/jobs/Job";
+import { JobGroup } from "../../content/colony/jobs/JobGroup";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
 import { ClickHandler } from "../ui/ClickHandler";
@@ -12,9 +13,10 @@ export class PanelJobs extends Screen {
     private rowScroll: number = 0;
     private plusButton: Button;
     private minusButton: Button;
+    private minimizeClickable: ClickHandler;
     private plusClickable: ClickHandler;
     private minusClickable: ClickHandler;
-    private jobsAvailable: (Job | null)[] = [];
+    private jobsAvailable: (Job | JobGroup)[] = [];
     private buttonOffset: number = 100;
     private scrollBar: ScrollBar;
 
@@ -47,12 +49,23 @@ export class PanelJobs extends Screen {
             if (row > this.jobsAvailable.length - 1) return;
             this.minus(game, row);
         }, (game) => game.currentScreens.includes("game") && game.currentScreens.length == 1);
+        this.minimizeClickable = new ClickHandler(0, 136, this.width, 21 + 50 * maxRows, (game, x, y) => {
+            if (x < Math.floor(this.width - 54) || x > Math.floor(this.width - 33)) return;
+            const yRelative = y - 136;
+            const yLeft = yRelative % 50;
+            if (yLeft > 21) return;
+            const row = Math.floor(yRelative / 50);
+            if (row > this.jobsAvailable.length - 1) return;
+            const job = this.jobsAvailable[row];
+            if (job instanceof JobGroup) job.minimized = !job.minimized;
+        }, (game) => game.currentScreens.includes("game") && game.currentScreens.length == 1);
 
         game.mouse.registerClickable(this.plusButton);
         game.mouse.registerClickable(this.minusButton);
 
         game.mouse.registerClickable(this.plusClickable);
         game.mouse.registerClickable(this.minusClickable);
+        game.mouse.registerClickable(this.minimizeClickable);
 
         this.scrollBar = new ScrollBar(game, Math.floor(this.width - 24), 130, 16, Math.floor(this.height - 142), "v", 0, 5, 5, 40, (game, x, y) => {
             return game.currentScreens.includes("game") &&
@@ -111,9 +124,14 @@ export class PanelJobs extends Screen {
                 ctx.fillRect(Math.floor(9 * this.width / 12), 136 + 50 * (row - this.rowScroll), Math.floor(this.width / 6), 1);
                 ctx.fillRect(Math.floor(9 * this.width / 12), 166 + 50 * (row - this.rowScroll), Math.floor(this.width / 6), 1);
                 game.draw.textCenter(`- ${group.name} -`, Math.floor(5 * this.width / 6), 144 + 50 * (row - this.rowScroll), 14, "#FFFFFF");
-                this.jobsAvailable.push(null);
+                game.draw.text(group.minimized ? "+" : "-", Math.floor(this.width - 48), 144 + 50 * (row - this.rowScroll), 21, "#FFFFFF");
+                ctx.beginPath();
+                ctx.roundRect(Math.floor(this.width - 54), 144 + 50 * (row - this.rowScroll), 21, 21, 3);
+                ctx.stroke();
+                this.jobsAvailable.push(group);
             }
             row++;
+            if (group.minimized) continue;
             for (const job of group.jobs) {
                 if (!job.unlocked(game)) continue;
                 if (row >= this.rowScroll && row < this.rowScroll + maxRows) {
@@ -146,12 +164,12 @@ export class PanelJobs extends Screen {
 
     private plus(game: ColonyCraft, index: number) {
         const job = this.jobsAvailable[index];
-        if (job) job.assign(game, Math.min(Math.max(game.colony.population.adults - game.colony.jobs.workersAssigned, 0), job.maxWorkers(game) - job.workersAssigned, this.increaseSteps[this.increaseIndex][0], job.cost ? Math.floor(job.cost.item.amount / job.cost.amount) : Infinity));
+        if (job instanceof Job) job.assign(game, Math.min(Math.max(game.colony.population.adults - game.colony.jobs.workersAssigned, 0), job.maxWorkers(game) - job.workersAssigned, this.increaseSteps[this.increaseIndex][0], job.cost ? Math.floor(job.cost.item.amount / job.cost.amount) : Infinity));
     }
 
     private minus(game: ColonyCraft, index: number) {
         const job = this.jobsAvailable[index];
-        if (job) job.unassign(game, Math.min(job.workersAssigned, this.increaseSteps[this.increaseIndex][0]));
+        if (job instanceof Job) job.unassign(game, Math.min(job.workersAssigned, this.increaseSteps[this.increaseIndex][0]));
     }
 
     public active(game: ColonyCraft): boolean {

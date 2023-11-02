@@ -35,6 +35,7 @@ export class SaveManager extends TickingEntity {
     }
 
     public load (data: string) {
+        this.newGame();
         let string = data.split("/");
         if (string[0] !== "CCSaveFormat-1.0") {
             alert("Invalid save format");
