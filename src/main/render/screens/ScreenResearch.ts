@@ -106,7 +106,7 @@ export class ScreenResearch extends Screen {
                             break;
                         }
                     }
-                    if (shown) game.colony.research.active = unlockable;
+                    if (shown && !unlockable.unlocked) game.colony.research.active = unlockable;
                     return;
                 }
             }
@@ -340,14 +340,16 @@ export class ScreenResearch extends Screen {
                         i++;
                     }
 
-                    game.draw.textSmallCenter("Costs:", Math.floor(5 * this.width / 6), this.height - 72, 7, "white");
-                    const active = game.colony.research.active;
-                    if (unlockable.needed.invention > 0) game.draw.textSmallCenter("Invention: " + (unlockable.progress > 0 || unlockable === active ? (game.draw.toShortNumber(unlockable.current.invention) + "/") : "") + game.draw.toShortNumber(unlockable.needed.invention), Math.floor(5 * this.width / 6), this.height - 62, 7, "#1e90ff");
-                    if (unlockable.needed.math > 0) game.draw.textSmallCenter("Math: " + (unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.math) + "/") : "") + game.draw.toShortNumber(unlockable.needed.math), Math.floor(5 * this.width / 6), this.height - 52, 7, "#ffd700");
-                    if (unlockable.needed.physics > 0) game.draw.textSmallCenter("Physics: " + (unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.physics) + "/") : "") + game.draw.toShortNumber(unlockable.needed.physics), Math.floor(5 * this.width / 6), this.height - 42, 7, "#48d1cc");
-                    if (unlockable.needed.chemistry > 0) game.draw.textSmallCenter("Chemistry: " + (unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.chemistry) + "/") : "") + game.draw.toShortNumber(unlockable.needed.chemistry), Math.floor(5 * this.width / 6), this.height - 32, 7, "#ff4500");
-                    if (unlockable.needed.biology > 0) game.draw.textSmallCenter("Biology: " + (unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.biology) + "/") : "") + game.draw.toShortNumber(unlockable.needed.biology), Math.floor(5 * this.width / 6), this.height - 22, 7, "#32cd32");
-                    if (unlockable.needed.quantum > 0) game.draw.textSmallCenter("Quantum: " + (unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.quantum) + "/") : "") + game.draw.toShortNumber(unlockable.needed.quantum), Math.floor(5 * this.width / 6), this.height - 12, 7, "#ff42ee");
+                    if (!unlockable.unlocked) {
+                        game.draw.textSmallCenter("Costs:", Math.floor(5 * this.width / 6), this.height - 72, 7, "white");
+                        const active = game.colony.research.active;
+                        if (unlockable.needed.invention > 0) game.draw.textSmallCenter("Invention: " + (unlockable.progress > 0 || unlockable === active ? (game.draw.toShortNumber(unlockable.current.invention) + "/") : "") + game.draw.toShortNumber(unlockable.needed.invention), Math.floor(5 * this.width / 6), this.height - 62, 7, "#1e90ff");
+                        if (unlockable.needed.math > 0) game.draw.textSmallCenter("Math: " + (unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.math) + "/") : "") + game.draw.toShortNumber(unlockable.needed.math), Math.floor(5 * this.width / 6), this.height - 52, 7, "#ffd700");
+                        if (unlockable.needed.physics > 0) game.draw.textSmallCenter("Physics: " + (unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.physics) + "/") : "") + game.draw.toShortNumber(unlockable.needed.physics), Math.floor(5 * this.width / 6), this.height - 42, 7, "#48d1cc");
+                        if (unlockable.needed.chemistry > 0) game.draw.textSmallCenter("Chemistry: " + (unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.chemistry) + "/") : "") + game.draw.toShortNumber(unlockable.needed.chemistry), Math.floor(5 * this.width / 6), this.height - 32, 7, "#ff4500");
+                        if (unlockable.needed.biology > 0) game.draw.textSmallCenter("Biology: " + (unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.biology) + "/") : "") + game.draw.toShortNumber(unlockable.needed.biology), Math.floor(5 * this.width / 6), this.height - 22, 7, "#32cd32");
+                        if (unlockable.needed.quantum > 0) game.draw.textSmallCenter("Quantum: " + (unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.quantum) + "/") : "") + game.draw.toShortNumber(unlockable.needed.quantum), Math.floor(5 * this.width / 6), this.height - 12, 7, "#ff42ee");
+                    }
 
                 } else if (unlockable instanceof Trait) {
                     switch (unlockable.type) {
@@ -371,22 +373,24 @@ export class ScreenResearch extends Screen {
                         i++;
                     }
 
-                    game.draw.textSmallCenter("Costs:", Math.floor(5 * this.width / 6), this.height - 22, 7, "white");
-                    if (unlockable.type == "s") {
-                        const active = game.colony.traits.active.s;
-                        game.draw.textSmallCenter((unlockable.progress > 0 || unlockable === active ? game.draw.toShortNumber(unlockable.current) + "/" : "") + game.draw.toShortNumber(unlockable.needed) + " Social Development Points", Math.floor(5 * this.width / 6), this.height - 12, 7, "#8a2be2");
-                    }
-                    else if (unlockable.type == "c") {
-                        const active = game.colony.traits.active.c;
-                        game.draw.textSmallCenter((unlockable.progress > 0 || unlockable === active ? game.draw.toShortNumber(unlockable.current) + "/" : "") + game.draw.toShortNumber(unlockable.needed) + " Cultural Development Points", Math.floor(5 * this.width / 6), this.height - 12, 7, "#adff2f");
-                    }
-                    else if (unlockable.type == "p") {
-                        const active = game.colony.traits.active.p;
-                        game.draw.textSmallCenter((unlockable.progress > 0 || unlockable === active ? game.draw.toShortNumber(unlockable.current) + "/" : "") + game.draw.toShortNumber(unlockable.needed) + " Political Development Points", Math.floor(5 * this.width / 6), this.height - 12, 7, "#ff7f50");
-                    }
-                    else if (unlockable.type == "r") {
-                        const active = game.colony.traits.active.r;
-                        game.draw.textSmallCenter((unlockable.progress > 0 || unlockable === active ? game.draw.toShortNumber(unlockable.current) + "/" : "") + game.draw.toShortNumber(unlockable.needed) + " Religious Development Points", Math.floor(5 * this.width / 6), this.height - 12, 7, "#daa520");
+                    if (!unlockable.unlocked) {
+                        game.draw.textSmallCenter("Costs:", Math.floor(5 * this.width / 6), this.height - 22, 7, "white");
+                        if (unlockable.type == "s") {
+                            const active = game.colony.traits.active.s;
+                            game.draw.textSmallCenter((unlockable.progress > 0 || unlockable === active ? game.draw.toShortNumber(unlockable.current) + "/" : "") + game.draw.toShortNumber(unlockable.needed) + " Social Development Points", Math.floor(5 * this.width / 6), this.height - 12, 7, "#8a2be2");
+                        }
+                        else if (unlockable.type == "c") {
+                            const active = game.colony.traits.active.c;
+                            game.draw.textSmallCenter((unlockable.progress > 0 || unlockable === active ? game.draw.toShortNumber(unlockable.current) + "/" : "") + game.draw.toShortNumber(unlockable.needed) + " Cultural Development Points", Math.floor(5 * this.width / 6), this.height - 12, 7, "#adff2f");
+                        }
+                        else if (unlockable.type == "p") {
+                            const active = game.colony.traits.active.p;
+                            game.draw.textSmallCenter((unlockable.progress > 0 || unlockable === active ? game.draw.toShortNumber(unlockable.current) + "/" : "") + game.draw.toShortNumber(unlockable.needed) + " Political Development Points", Math.floor(5 * this.width / 6), this.height - 12, 7, "#ff7f50");
+                        }
+                        else if (unlockable.type == "r") {
+                            const active = game.colony.traits.active.r;
+                            game.draw.textSmallCenter((unlockable.progress > 0 || unlockable === active ? game.draw.toShortNumber(unlockable.current) + "/" : "") + game.draw.toShortNumber(unlockable.needed) + " Religious Development Points", Math.floor(5 * this.width / 6), this.height - 12, 7, "#daa520");
+                        }
                     }
                 }
             }
