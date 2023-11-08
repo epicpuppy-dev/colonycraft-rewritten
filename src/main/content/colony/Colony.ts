@@ -7,6 +7,9 @@ import { TraitManager } from "./traits/TraitManager";
 import { Welfare } from "./welfare/Welfare";
 import { BuildingManager } from "./buildings/BuildingManager";
 import { RecipeManager } from "./crafting/RecipeManager";
+import { Unlockable } from "./other/Unlockable";
+import { Technology } from "./research/Technology";
+import { Trait } from "./traits/Trait";
 
 export class Colony {
     public inventory: Inventory;
@@ -30,5 +33,13 @@ export class Colony {
 
         // this.inventory.items.sticks.amount = 1000;
         // this.inventory.items.logs.amount = 1000;
+    }
+
+    public getUnlockable (id: string): Trait | Technology {
+        let unlockable: Trait | Technology = this.research.technologies[id];
+        if (!unlockable) {
+            unlockable = this.traits.traits[id];
+        }
+        return unlockable;
     }
 }

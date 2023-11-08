@@ -27,9 +27,9 @@ export class UnlockableData {
         research.registerTechnology(new Technology(game, "gatherer1", "Gathering", new TechPoints(150, 75), ["Unlocks the Gatherer Job", "Gathers twice as fast as foragers, but cannot gather water", "", '"Foragers with baskets can hold a whole lot more"'], ["baskets1", "survival1", "math1"]));
         research.registerTechnology(new Technology(game, "chopping1", "Woodcutting", new TechPoints(75), ["Unlocks the Woodcutter Job", "", '"Axe go chop chop"'], ["tools1", "survival1"]));
         research.registerTechnology(new Technology(game, "digging1", "Digging", new TechPoints(75), ["Unlocks the Digger Job", "", '"Diggy diggy hole"'], ["tools1", "survival1"]));
-        research.registerTechnology(new Technology(game, "fishing1", "Hand Fishing", new TechPoints(100), ["Unlocks the Fisher Job", "More consistent, but slightly less rewarding than hunting", "", '"Much harder to catch than it seems"'], ["survival1"], "food"));
+        research.registerTechnology(new Technology(game, "fishing1", "Hand Fishing", new TechPoints(100), ["Unlocks the Fisher Job", "Consistent, but less rewarding than hunting", "", '"Much harder to catch than it seems"'], ["survival1"], "food"));
         research.registerTechnology(new Technology(game, "fishing2", "Spear Fishing", new TechPoints(250, 125), ["Unlocks the Spear Fisher Job", "", '"A much more effective way of catching fish"'], ["fishing1", "tools2", "math1"], "food"));
-        research.registerTechnology(new Technology(game, "hunting1", "Endurance Hunting", new TechPoints(150), ["Unlocks the Hunter Job", "More variable, but slightly more rewarding than fishing", "", '"Hunting animals for food"'], ["survival1"], "food"));
+        research.registerTechnology(new Technology(game, "hunting1", "Endurance Hunting", new TechPoints(150), ["Unlocks the Hunter Job", "Risky, but more rewarding than fishing", "", '"Hunting animals for food"'], ["survival1"], "food"));
         research.registerTechnology(new Technology(game, "hunting2", "Spear Hunting", new TechPoints(400, 200), ["Unlocks the Spear Hunter Job", "", '"A much more effective way of hunting"'], ["hunting1", "tools2", "math1"], "food"));
         research.registerTechnology(new Technology(game, "water1", "Water Gathering", new TechPoints(150), ["Unlocks the Water Gatherer Job", "", '"By training foragers to use buckets, they can collect more water"'], ["buckets1", "explore1"]));
 
@@ -37,27 +37,27 @@ export class UnlockableData {
         research.registerTechnology(new Technology(game, "cooking1", "Cooking", new TechPoints(100), ["Unlocks the Cooking Jobs", "", '"Cooking food makes it taste better"'], ["survival1", "fire1"], "food"));
 
         // Farming Tech Line
-        research.registerTechnology(new Technology(game, "wheat1", "Wheat Farming", new TechPoints(300, 150), ["Unlocks the Wheat Crop", "(Grows fast, but not in the winter or spring)", "", '"Tastes bad 0/10 wouldn\'t reccommend"'], ["farming1"], "food"));
-        research.registerTechnology(new Technology(game, "potato1", "Potato Farming", new TechPoints(300, 150), ["Unlocks the Potato Crop", "(Grows slow, but during the entire year)", "", '"The perfect size to throw at people"'], ["farming1"], "food"));
+        research.registerTechnology(new Technology(game, "wheat1", "Wheat Farming", new TechPoints(300, 150), ["Unlocks the Wheat Crop", "Grows fast, but not in the winter or spring", "", '"Tastes bad 0/10 wouldn\'t reccommend"'], ["farming1"], "food"));
+        research.registerTechnology(new Technology(game, "potato1", "Potato Farming", new TechPoints(300, 150), ["Unlocks the Potato Crop", "Grows slow, but during the entire year", "", '"The perfect size to throw at people"'], ["farming1"], "food"));
 
         // Baking Tech Line
-        research.registerTechnology(new Technology(game, "flour1", "Wheat Processing", new TechPoints(400, 200), ["Unlocks the Flour Recipe", "(Crafts 2 wheat -> 2 flour)", "", '"Can be used to make a vareity of foods"'], ["wheat1"], "food"));
-        research.registerTechnology(new Technology(game, "bread1", "Bread", new TechPoints(500, 250), ["Unlocks the Bread Recipe", "(Crafts 2 flour + 1 fresh water -> 1 bread)", "", '"A simple food made from flour and water"'], ["flour1", "water1", "bakery1"], "food"));
+        research.registerTechnology(new Technology(game, "flour1", "Wheat Processing", new TechPoints(400, 200), ["Unlocks the Flour Recipe", "Crafts 2 wheat -> 2 flour", "", '"Can be used to make a vareity of foods"'], ["wheat1"], "food"));
+        research.registerTechnology(new Technology(game, "bread1", "Bread", new TechPoints(500, 250), ["Unlocks the Bread Recipe", "Crafts 2 flour + 1 fresh water -> 1 bread", "", '"A simple food made from flour and water"'], ["flour1", "water1", "bakery1"], "food"));
 
         // Production Tech Line
-        research.registerTechnology(new Technology(game, "twine1", "Plant Twine", new TechPoints(50), ["Unlocks the Plant Twine Recipe", "(Crafts 4 fiber -> 1 twine)", "", '"Roll grass make rope"'], ["crafting1"], "progress"));
-        research.registerTechnology(new Technology(game, "tools1", "Stone Knapping", new TechPoints(75), ["Unlocks the Stone Knapping Recipe", "(Crafts 4 rocks -> 1 primitive tool)", "", '"Make rock into sharp rock"'], ["crafting1"], "progress"));
-        research.registerTechnology(new Technology(game, "tools2", "Toolmaking", new TechPoints(200, 100), ["Unlocks the Basic Tools Recipe", "(Crafts 2 primitive tools + 4 twine -> 1 basic tool)", "", '"Putting together some rocks and sticks"'], ["tools1", "math1", "twine1"], "progress"));
-        research.registerTechnology(new Technology(game, "planks1", "Basic Carpentry", new TechPoints(100), ["Unlocks the Planks Recipe", "(Crafts 1 log -> 4 planks)", "", '"It\'s easier to build with flat slabs of wood than with thick logs"'], ["chopping1", "build1"]));
-        research.registerTechnology(new Technology(game, "buckets1", "Wooden Buckets", new TechPoints(125), ["Unlocks the Wooden Bucket Recipe", "(Crafts 2 planks -> 1 bucket)", "", '"Useful for carrying things"'], ["planks1"]));
-        research.registerTechnology(new Technology(game, "composite1", "Clay/Mud Working", new TechPoints(100), ["Unlocks the Brick Composite Recipe", "(Crafts 2 mud + 2 clay -> 1 brick composite)", "", '"Clay and mud is very soft and easy to work with"'], ["digging1"]));
-        research.registerTechnology(new Technology(game, "bricks1", "Brick Firing", new TechPoints(125), ["Unlocks the Brick Recipe", "(Crafts 2 brick composite -> 1 brick)", "", '"Bricks are a very sturdy building material"'], ["composite1", "kiln1"]));
-        research.registerTechnology(new Technology(game, "weaving1", "Weaving", new TechPoints(100), ["Unlocks the Cloth Recipe", "(Crafts 8 fiber -> 1 cloth)", "", '"Cloth is a very flexible material made from fiber"'], ["twine1", "tools1"]));
-        research.registerTechnology(new Technology(game, "baskets1", "Basket Weaving", new TechPoints(125), ["Unlocks the Basket Recipe", "(1 cloth + Crafts 4 twine -> 1 basket)", "", '"Baskets are useful for carrying things"'], ["twine1", "tools1"]));
+        research.registerTechnology(new Technology(game, "twine1", "Plant Twine", new TechPoints(50), ["Unlocks the Plant Twine Recipe", "Crafts 4 fiber -> 1 twine", "", '"Roll grass make rope"'], ["crafting1"], "progress"));
+        research.registerTechnology(new Technology(game, "tools1", "Stone Knapping", new TechPoints(75), ["Unlocks the Stone Knapping Recipe", "Crafts 4 rocks -> 1 primitive tool", "", '"Make rock into sharp rock"'], ["crafting1"], "progress"));
+        research.registerTechnology(new Technology(game, "tools2", "Toolmaking", new TechPoints(200, 100), ["Unlocks the Basic Tools Recipe", "Crafts 2 primitive tools + 4 twine -> 1 basic tool", "", '"Putting together some rocks and sticks"'], ["tools1", "math1", "twine1"], "progress"));
+        research.registerTechnology(new Technology(game, "planks1", "Basic Carpentry", new TechPoints(100), ["Unlocks the Planks Recipe", "Crafts 1 log -> 4 planks", "", '"It\'s easier to build with flat slabs of wood than with thick logs"'], ["chopping1", "build1"]));
+        research.registerTechnology(new Technology(game, "buckets1", "Wooden Buckets", new TechPoints(125), ["Unlocks the Wooden Bucket Recipe", "Crafts 2 planks -> 1 bucket", "", '"Useful for carrying things"'], ["planks1"]));
+        research.registerTechnology(new Technology(game, "composite1", "Clay/Mud Working", new TechPoints(100), ["Unlocks the Brick Composite Recipe", "Crafts 2 mud + 2 clay -> 1 brick composite", "", '"Clay and mud is very soft and easy to work with"'], ["digging1"]));
+        research.registerTechnology(new Technology(game, "bricks1", "Brick Firing", new TechPoints(125), ["Unlocks the Brick Recipe", "Crafts 2 brick composite -> 1 brick", "", '"Bricks are a very sturdy building material"'], ["composite1", "kiln1"]));
+        research.registerTechnology(new Technology(game, "weaving1", "Weaving", new TechPoints(100), ["Unlocks the Cloth Recipe", "Crafts 8 fiber -> 1 cloth", "", '"Cloth is a very flexible material made from fiber"'], ["twine1", "tools1"]));
+        research.registerTechnology(new Technology(game, "baskets1", "Basket Weaving", new TechPoints(125), ["Unlocks the Basket Recipe", "1 cloth + Crafts 4 twine -> 1 basket", "", '"Baskets are useful for carrying things"'], ["twine1", "tools1"]));
 
         // Amenity Tech Line
-        research.registerTechnology(new Technology(game, "fire1", "Firemaking", new TechPoints(75), ["Unlocks the Firemaker Job", "(Crafts 8 sticks + 4 twine -> 75% chance of 1 campfire)", "", '"Big hot burny stuff"'], ["tools1", "twine1"]));
-        research.registerTechnology(new Technology(game, "clothing1", "Primitive Clothing", new TechPoints(125), ["Unlocks the Primitive Clothing Recipe", "(Crafts 2 cloth -> 1 clothing)", "", '"Provides warmth and protection"'], ["weaving1"]));
+        research.registerTechnology(new Technology(game, "fire1", "Firemaking", new TechPoints(75), ["Unlocks the Firemaker Job", "Crafts 8 sticks + 4 twine -> 75% chance of 1 campfire", "", '"Big hot burny stuff"'], ["tools1", "twine1"]));
+        research.registerTechnology(new Technology(game, "clothing1", "Primitive Clothing", new TechPoints(125), ["Unlocks the Primitive Clothing Recipe", "Crafts 2 cloth -> 1 clothing", "", '"Provides warmth and protection"'], ["weaving1"]));
 
         // Construction Tech Line
         research.registerTechnology(new Technology(game, "storage1", "Stockpiling", new TechPoints(75, 35), ["Unlocks the Storage Pit Building", "Unlocks precise inventory", "", '"Put stuff in hole"'], ["build1", "math1"], "progress"));
@@ -69,6 +69,6 @@ export class UnlockableData {
         // Social Traits
         development.registerTrait(new WelfareTrait(game, "acceptance", "Acceptance", "s", 200, 0, 1, ["Acceptance of this dire situation", "+0.1% base morale per tick"], ["survival1"]));
         development.registerTrait(new WelfareTrait(game, "community", "Community", "s", 500, 0, 1, ["Supporting each other", "+0.1% base morale per tick"], ["fire1", "clothing1", "acceptance"]));
-        development.registerTrait(new WelfareTrait(game, "hope", "Hope", "s", 800, 0, 2, ["Belief in the future", "+0.2% base morale per tick"], ["farming1", "water1", "hope"]));
+        development.registerTrait(new WelfareTrait(game, "hope", "Hope", "s", 800, 0, 2, ["Belief in the future", "+0.2% base morale per tick"], ["farming1", "water1", "community"]));
     }
 }

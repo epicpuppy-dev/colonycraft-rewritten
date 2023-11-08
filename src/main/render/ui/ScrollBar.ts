@@ -5,7 +5,7 @@ import { Slider } from "./Slider";
 export class ScrollBar extends Slider {
     private scroll: Scrollable;
 
-    constructor(game: ColonyCraft, x: number, y: number, width: number, height: number, type: "h" | "v", min: number, max: number, displaySize: number, ppu: number, active: (game: ColonyCraft, x: number, y: number) => boolean, colors?: {bar: string, slider: string, hover: string, held: string}) {
+    constructor(game: ColonyCraft, x: number, y: number, width: number, height: number, type: "h" | "v", min: number, max: number, displaySize: number, ppu: number, active: (game: ColonyCraft, x: number, y: number, prevScreens: string[]) => boolean, colors?: {bar: string, slider: string, hover: string, held: string}) {
         super(game, x, y, width, height, type, min, max, active, displaySize, colors);
         this.scroll = new Scrollable(min, max, ppu, type, active, () => {
             this.value = this.scroll.value;

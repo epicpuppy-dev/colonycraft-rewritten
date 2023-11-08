@@ -11,15 +11,15 @@ export class UIHUD extends Screen {
         
         this.statsButton = new Button(this.width - 152, 0, 52, 50, (game: ColonyCraft) => {
             game.currentScreens.push("stats", "overlay");
-        }, (game: ColonyCraft) => {
-            return game.currentScreens.includes("game") && !game.currentScreens.includes("overlay");
+        }, (game, prevScreens) => {
+            return prevScreens.includes("game") && !prevScreens.includes("overlay");
         });
 
         this.menuButton = new Button(this.width - 100, 0, 100, 50, (game: ColonyCraft) => {
             game.currentScreens.push("pause", "overlay");
             game.simulation.toggleRunning(game, false);
-        }, (game: ColonyCraft) => {
-            return game.currentScreens.includes("game") && !game.currentScreens.includes("overlay");
+        }, (game, prevScreens) => {
+            return prevScreens.includes("game") && !prevScreens.includes("overlay");
         });
 
         game.mouse.registerClickable(this.statsButton);

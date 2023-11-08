@@ -8,7 +8,8 @@ export class PanelTraits extends Screen {
     constructor (game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
         this.traitsButton = new Button(0, 130, Math.floor(width / 3 + 50), 164, (game: ColonyCraft) => {
-            game.currentScreens.push("traits", "overlay");
+            game.currentScreens.splice(game.currentScreens.indexOf("game"), 1);
+            game.currentScreens.push("research");
         }, (game: ColonyCraft) => {
             return game.currentScreens.includes("game") && !game.currentScreens.includes("overlay");
         });

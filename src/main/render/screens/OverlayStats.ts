@@ -34,16 +34,16 @@ export class OverlayStats extends Screen {
         
         game.mouse.registerClickable(this.closeButton);
 
-        game.key.addAction(new KeyAction("closeStats", "Close Stats", (game: ColonyCraft) => {
-            if (game.currentScreens.includes("stats")) {
+        game.key.addAction(new KeyAction("closeStats", "Close Stats", (game, prevScreens) => {
+            if (prevScreens.includes("stats")) {
                 game.currentScreens.splice(game.currentScreens.indexOf("stats"), 1);
                 game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);
             }
         }));
         game.draw.addCloseAction(game.key.actions.closeStats);
 
-        game.key.addAction(new KeyAction("openStats", "Open Stats", (game: ColonyCraft) => {
-            if (game.currentScreens.includes("game") && !game.currentScreens.includes("overlay")) game.currentScreens.push("stats", "overlay");
+        game.key.addAction(new KeyAction("openStats", "Open Stats", (game, prevScreens) => {
+            if (prevScreens.includes("game") && !prevScreens.includes("overlay")) game.currentScreens.push("stats", "overlay");
             else if (game.currentScreens.includes("stats")) {
                 game.currentScreens.splice(game.currentScreens.indexOf("stats"), 1);
                 game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);

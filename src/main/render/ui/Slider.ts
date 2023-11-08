@@ -20,7 +20,7 @@ export class Slider {
         held: string
     }
 
-    constructor(game: ColonyCraft, x: number, y: number, width: number, height: number, type: "h" | "v", min: number, max: number, active: (game: ColonyCraft, x: number, y: number) => boolean = () => true, displaySize: number, 
+    constructor(game: ColonyCraft, x: number, y: number, width: number, height: number, type: "h" | "v", min: number, max: number, active: (game: ColonyCraft, x: number, y: number, prevScreens: string[]) => boolean = () => true, displaySize: number, 
         colors: {bar: string, slider: string, hover: string, held: string} = {bar: "#333333", slider: "#777777", hover: "#999999", held: "#bbbbbb"}) {
         this.min = min;
         this.max = max;

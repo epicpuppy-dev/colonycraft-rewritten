@@ -5,11 +5,11 @@ export class KeyAction {
     public id: string;
     public name: string;
     public bindings: KeyBind[] = [];
-    public keydown: (game: ColonyCraft) => void;
-    public keytick: (game: ColonyCraft) => void;
-    public keyup: (game: ColonyCraft) => void;
+    public keydown: (game: ColonyCraft, prevScreens: string[]) => void;
+    public keytick: (game: ColonyCraft, prevScreens: string[]) => void;
+    public keyup: (game: ColonyCraft, prevScreens: string[]) => void;
 
-    constructor(id: string, name: string, keydown: (game: ColonyCraft) => void, keytick: (game: ColonyCraft) => void = () => {}, keyup: (game: ColonyCraft) => void = () => {}) {
+    constructor(id: string, name: string, keydown: (game: ColonyCraft, prevScreens: string[]) => void, keytick: (game: ColonyCraft, prevScreens: string[]) => void = () => {}, keyup: (game: ColonyCraft, prevScreens: string[]) => void = () => {}) {
         this.id = id;
         this.name = name;
         this.keydown = keydown;

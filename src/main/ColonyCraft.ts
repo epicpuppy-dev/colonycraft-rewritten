@@ -25,11 +25,9 @@ import { JobData } from "./data/JobData";
 import { LayerPanel } from "./render/layers/LayerPanel";
 import { PanelJobs } from "./render/screens/PanelJobs";
 import { PanelResearch } from "./render/screens/PanelResearch";
-import { OverlayResearch } from "./render/screens/OverlayResearch";
 import { KeyController } from "./controllers/KeyController";
 import { PanelTraits } from "./render/screens/PanelTraits";
 import { UnlockableData } from "./data/UnlockableData";
-import { OverlayTraits } from "./render/screens/OverlayTraits";
 import { PanelBuildings } from "./render/screens/PanelBuildings";
 import { BuildingData } from "./data/BuildingData";
 import { OverlayBuildings } from "./render/screens/OverlayBuildings";
@@ -44,6 +42,7 @@ import { LayerOverlay2 } from "./render/layers/LayerOverlay2";
 import { Overlay2Save } from "./render/screens/Overlay2Save";
 import { Overlay2Load } from "./render/screens/Overlay2Load";
 import { ScreenLoading } from "./render/screens/ScreenLoading";
+import { ScreenResearch } from "./render/screens/ScreenResearch";
 
 export class ColonyCraft {
     public width: number;
@@ -92,8 +91,8 @@ export class ColonyCraft {
         this.save = new SaveManager(this);
 
         //Initialize Controls
-        this.mouse = new MouseController();
-        this.key = new KeyController();
+        this.mouse = new MouseController(this);
+        this.key = new KeyController(this);
 
         //Initialize Renderers
         this.renderer = new ScreenController(this);
@@ -126,6 +125,7 @@ export class ColonyCraft {
         this.renderer.addLayerWithScreens(new LayerGame(this), [
             new ScreenTitle(this, this.width, this.height),
             new ScreenLoading(this, this.width, this.height),
+            new ScreenResearch(this, this.width, this.height),
         ]);
         this.renderer.addLayerWithScreens(new LayerPanel(this), [
             new PanelJobs(this, this.width, this.height),
@@ -140,9 +140,7 @@ export class ColonyCraft {
         ]);
         this.renderer.addLayerWithScreens(new LayerOverlay(this), [
             new OverlayPause(this, this.width, this.height),
-            new OverlayInventory(this, this.width, this.height), 
-            new OverlayResearch(this, this.width, this.height),
-            new OverlayTraits(this, this.width, this.height),
+            new OverlayInventory(this, this.width, this.height),
             new OverlayBuildings(this, this.width, this.height),
             new OverlayStats(this, this.width, this.height),
         ]);

@@ -1,4 +1,3 @@
-import { game } from "../..";
 import { ColonyCraft } from "../ColonyCraft";
 import { Clickable } from "../render/ui/Clickable";
 import { Holdable } from "../render/ui/Holdable";
@@ -14,24 +13,26 @@ export class MouseController {
     private holdables: [Holdable, number][] = [];
     private scrollables: [Scrollable, number][] = [];
 
-    constructor() {
+    constructor(game: ColonyCraft) {
         document.addEventListener('mousemove', (event) => {
             this.x = event.clientX;
             this.y = event.clientY;
         });
 
         document.addEventListener('mousedown', (event) => { 
+            let prevScreens = game.currentScreens.slice();
             this.clickables.forEach((clickable) => {
-                clickable[0].click(game);
+                clickable[0].click(game, prevScreens);
             });
             this.holdables.forEach((holdable) => {
-                holdable[0].mousedown(game, this.x, this.y);
+                holdable[0].mousedown(game, this.x, this.y, prevScreens);
             });
         });
 
         document.addEventListener('mouseup', (event) => {
+            let prevScreens = game.currentScreens.slice();
             this.holdables.forEach((holdable) => {
-                holdable[0].mouseup(game, this.x, this.y);
+                holdable[0].mouseup(game, this.x, this.y, prevScreens);
             });
         });
 
@@ -84,16 +85,17 @@ export class MouseController {
     }
 
     public update(game: ColonyCraft): void {
+        let prevScreens = game.currentScreens.slice();
         //perform an update on each button
         this.clickables.forEach((button) => {
-            button[0].update(game, this.x, this.y);
+            button[0].update(game, this.x, this.y, prevScreens);
         });
         this.holdables.forEach((button) => {
-            button[0].update(game, this.x, this.y);
-            button[0].mousetick(game, this.x, this.y);
+            button[0].update(game, this.x, this.y, prevScreens);
+            button[0].mousetick(game, this.x, this.y, prevScreens);
         });
         this.scrollables.forEach((scrollable) => {
-            scrollable[0].tick(game, this.x, this.y, this.lastScrollX, this.lastScrollY);
+            scrollable[0].tick(game, this.x, this.y, this.lastScrollX, this.lastScrollY, prevScreens);
         });
         this.lastScrollX = 0;
         this.lastScrollY = 0;

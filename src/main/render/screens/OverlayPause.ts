@@ -12,12 +12,12 @@ export class OverlayPause extends Screen {
 
     constructor (game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
-        game.key.addAction(new KeyAction("pauseMenu", "Pause Menu", (game: ColonyCraft) => {
-            if (game.currentScreens.includes("game") && !game.currentScreens.includes("overlay")) {
+        game.key.addAction(new KeyAction("pauseMenu", "Pause Menu", (game, prevScreens) => {
+            if (prevScreens.includes("game") && !prevScreens.includes("overlay")) {
                 game.currentScreens.push("pause", "overlay");
                 game.simulation.toggleRunning(game, false);
             }
-            else if (game.currentScreens.includes("pause") && !game.currentScreens.includes("overlay2")) {
+            else if (prevScreens.includes("pause") && !prevScreens.includes("overlay2")) {
                 game.currentScreens.splice(game.currentScreens.indexOf("pause"), 1);
                 game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);
                 game.simulation.toggleRunning(game, true);

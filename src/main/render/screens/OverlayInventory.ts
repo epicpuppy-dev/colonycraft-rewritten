@@ -22,17 +22,17 @@ export class OverlayInventory extends Screen {
 
         game.mouse.registerClickable(this.closeButton);
 
-        game.key.addAction(new KeyAction("closeInventory", "Close Inventory", (game: ColonyCraft) => {
-            if (game.currentScreens.includes("inventory")) {
+        game.key.addAction(new KeyAction("closeInventory", "Close Inventory", (game, prevScreens) => {
+            if (prevScreens.includes("inventory")) {
                 game.currentScreens.splice(game.currentScreens.indexOf("inventory"), 1);
                 game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);
             }
         }));
         game.draw.addCloseAction(game.key.actions.closeInventory);
 
-        game.key.addAction(new KeyAction("openInventory", "Open Inventory", (game: ColonyCraft) => {
-            if (game.currentScreens.includes("game") && !game.currentScreens.includes("overlay")) game.currentScreens.push("inventory", "overlay");
-            else if (game.currentScreens.includes("inventory")) {
+        game.key.addAction(new KeyAction("openInventory", "Open Inventory", (game, prevScreens) => {
+            if (prevScreens.includes("game") && !prevScreens.includes("overlay")) game.currentScreens.push("inventory", "overlay");
+            else if (prevScreens.includes("inventory")) {
                 game.currentScreens.splice(game.currentScreens.indexOf("inventory"), 1);
                 game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);
             }
