@@ -147,8 +147,6 @@ export class ScreenResearch extends Screen {
             if (i % 2 == 0) ctx.fillRect(0, Math.round(i * (Tree.NODE_SIZE[1] + Tree.NODE_SPACING[1]) - this.offsetY + Tree.TOP_MARGIN - (Tree.NODE_SPACING[1] + Tree.NODE_SIZE[1]) / 2), this.width, Math.round(Tree.NODE_SIZE[1] + Tree.NODE_SPACING[1]));
         }
 
-        game.draw.sprite(ctx, "close", this.width - 32, 8, 24, 24);
-
         for (let id of this.layout.nodeList) {
             const node = this.layout.nodes[id];
             if (node.pos[0] - this.offsetX < -Tree.NODE_SIZE * 2 || node.pos[0] - this.offsetX > this.width + Tree.NODE_SIZE[0] * 2 || node.pos[1] - this.offsetY < -Tree.NODE_SIZE[1] * 2 || node.pos[1] - this.offsetY > this.height + Tree.NODE_SIZE[1] * 2) continue;
@@ -354,16 +352,16 @@ export class ScreenResearch extends Screen {
                 } else if (unlockable instanceof Trait) {
                     switch (unlockable.type) {
                         case "s":
-                            game.draw.textSmallCenter("Social", Math.floor(5 * this.width / 6), this.height - 125, 7, "#8a2be2");
+                            game.draw.textSmallCenter("Social Trait", Math.floor(5 * this.width / 6), this.height - 125, 7, "#8a2be2");
                             break;
                         case "c":
-                            game.draw.textSmallCenter("Cultural", Math.floor(5 * this.width / 6), this.height - 125, 7, "#adff2f");
+                            game.draw.textSmallCenter("Cultural Trait", Math.floor(5 * this.width / 6), this.height - 125, 7, "#adff2f");
                             break;
                         case "p":
-                            game.draw.textSmallCenter("Political", Math.floor(5 * this.width / 6), this.height - 125, 7, "#ff7f50");
+                            game.draw.textSmallCenter("Political Trait", Math.floor(5 * this.width / 6), this.height - 125, 7, "#ff7f50");
                             break;
                         case "r":
-                            game.draw.textSmallCenter("Religious", Math.floor(5 * this.width / 6), this.height - 125, 7, "#daa520");
+                            game.draw.textSmallCenter("Religious Trait", Math.floor(5 * this.width / 6), this.height - 125, 7, "#daa520");
                             break;
                     }
 
@@ -395,6 +393,8 @@ export class ScreenResearch extends Screen {
                 }
             }
         }
+
+        game.draw.sprite(ctx, "close", this.width - 32, 8, 24, 24);
 
         game.draw.renderText(ctx);
     }

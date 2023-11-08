@@ -51,7 +51,7 @@ export class PanelJobs extends Screen {
         }, (game) => game.currentScreens.includes("game") && game.currentScreens.length == 1);
         this.minimizeClickable = new ClickHandler(0, 136, this.width, 21 + 50 * maxRows, (game, x, y) => {
             if (x < Math.floor(this.width - 54) || x > Math.floor(this.width - 33)) return;
-            const yRelative = y - 136;
+            const yRelative = y - 146;
             const yLeft = yRelative % 50;
             if (yLeft > 21) return;
             const row = Math.floor(yRelative / 50);
