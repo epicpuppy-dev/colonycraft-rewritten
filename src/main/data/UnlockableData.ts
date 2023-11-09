@@ -50,6 +50,7 @@ export class UnlockableData {
 
         // Mining Tech Line
         research.registerTechnology(new Technology(game, "mining1", "Surface Mining", new TechPoints(1000, 600, 0, 300), ["Unlocks the Miner Job", "", '"The realization that some rocks are more useful than others"'], ["tools2", "math2", "chemistry1"], "progress"));
+        research.registerTechnology(new Technology(game, "coal1", "Surface Coal", new TechPoints(1250, 800, 0, 500), ["Unlocks Coal", "", '"A certain kind of rock that burns"'], ["mining1"], "progress"))
         research.registerTechnology(new Technology(game, "copperOre1", "Surface Copper Ore", new TechPoints(1250, 800, 0, 500), ["Unlocks Copper Ore", "", '"A certain kind of harder rock"'], ["mining1"], "progress"));
         research.registerTechnology(new Technology(game, "tinOre1", "Surface Tin Ore", new TechPoints(1250, 800, 0, 500), ["Unlocks Tin Ore", "", '"Another kind of harder rock"'], ["mining1"], "progress"));
 
@@ -57,8 +58,8 @@ export class UnlockableData {
         research.registerTechnology(new Technology(game, "smelting1", "Furnace", new TechPoints(1500, 1000, 0, 600), ["Unlocks the Furnace Building", "", '"Reaching higher temperatures than a simple fire"'], ["chemistry1"], "progress"));
         research.registerTechnology(new Technology(game, "copper1", "Copper Smelting", new TechPoints(1750, 1250, 0, 750), ["Unlocks the Copper Smelting Recipe", "Crafts 2 copper ore -> 1 copper", "", '"A stronger material than stone"'], ["smelting1", "copperOre1"], "progress"));
         research.registerTechnology(new Technology(game, "tin1", "Tin Smelting", new TechPoints(1750, 1250, 0, 750), ["Unlocks the Tin Smelting Recipe", "Crafts 2 tin ore -> 1 tin", "", '"A more useful material than stone"'], ["smelting1", "tinOre1"], "progress"));
-        //research.registerTechnology(new Technology(game, "smelting2", "Crucible", new TechPoints(4000, 3000, 0, 2000), ["Unlocks the Crucible Building", "", '"An even higher temperature for fusing 2 metals"'], ["smelting1", "curiosity"], "progress"));
-        //research.registerTechnology(new Technology(game, "bronze1", "Bronze Alloying", new TechPoints(5000, 4000, 0, 3000), ["Unlocks the Bronze Alloying Recipe", "Crafts 3 copper + 1 tin -> 2 bronze", "", '"A stronger material than copper"'], ["smelting2", "copper1", "tin1"], "progress"));
+        research.registerTechnology(new Technology(game, "smelting2", "Crucible", new TechPoints(4000, 3000, 0, 2000), ["Unlocks the Crucible Building", "", '"An even higher temperature for fusing 2 metals"'], ["tools3", "curiosity", "coal1"], "progress"));
+        research.registerTechnology(new Technology(game, "bronze1", "Bronze Alloying", new TechPoints(5000, 4000, 0, 3000), ["Unlocks the Bronze Alloying Recipe", "Crafts 3 copper + 1 tin -> 2 bronze", "", '"A stronger material than copper"'], ["smelting2", "copper1", "tin1"], "progress"));
 
         // Tool Tech Line
         research.registerTechnology(new Technology(game, "tools1", "Stone Knapping", new TechPoints(150), ["Unlocks the Stone Knapping Recipe", "Crafts 4 rocks -> 1 primitive tool", "", '"Make rock into sharp rock"'], ["crafting1"], "progress"));

@@ -34,8 +34,9 @@ export class JobData {
         ]);
         //  - Mining
         jobs.addGroupWithJobs(new JobGroup(game, "mining", "Mining", 20), [
-            new ResourceJob(game, "copperOre1", "Surface Copper Miner", 0, 8, tables.copperOre1, () => techs.copperOre1.unlocked, () => Math.min(jobs.jobs.copperOre1.workersAssigned + Math.floor(items.tool2.amount / 2), Math.floor(game.colony.buildings.landMax / 20)), "Cost: 2 basic tool, Limit: 1 per 20 land", {item: items.tool2, amount: 2}),
-            new ResourceJob(game, "tinOre1", "Surface Tin Miner", 0, 8, tables.tinOre1, () => techs.tinOre1.unlocked, () => Math.min(jobs.jobs.tinOre1.workersAssigned + Math.floor(items.tool2.amount / 2), Math.floor(game.colony.buildings.landMax / 20)), "Cost: 2 basic tool, Limit: 1 per 20 land", {item: items.tool2, amount: 2}),
+            new ResourceJob(game, "coal1", "Surface Coal Miner", 0, 8, tables.coal1, () => techs.coal1.unlocked, () => Math.min(jobs.jobs.coal1.workersAssigned + Math.floor(items.tool2.amount / 2), Math.floor(game.colony.buildings.landMax / 20)), "Cost: 2 basic tools, Limit: 1 per 20 land", {item: items.tool2, amount: 2}),
+            new ResourceJob(game, "copperOre1", "Surface Copper Miner", 0, 8, tables.copperOre1, () => techs.copperOre1.unlocked, () => Math.min(jobs.jobs.copperOre1.workersAssigned + Math.floor(items.tool2.amount / 2), Math.floor(game.colony.buildings.landMax / 20)), "Cost: 2 basic tools, Limit: 1 per 20 land", {item: items.tool2, amount: 2}),
+            new ResourceJob(game, "tinOre1", "Surface Tin Miner", 0, 8, tables.tinOre1, () => techs.tinOre1.unlocked, () => Math.min(jobs.jobs.tinOre1.workersAssigned + Math.floor(items.tool2.amount / 2), Math.floor(game.colony.buildings.landMax / 20)), "Cost: 2 basic tools, Limit: 1 per 20 land", {item: items.tool2, amount: 2}),
         ]);
 
         // Farming Jobs
@@ -62,6 +63,7 @@ export class JobData {
         jobs.addGroupWithJobs(new JobGroup(game, "metalCrafters", "Metalworkers", 60), [
             new CraftingJob(game, "craftCopper1", "Copper Smelter", 10, 10, recipes.copper1, () => techs.copper1.unlocked, () => Math.min(jobs.jobs.craftCopper1.workersAssigned + Math.floor(items.tool2.amount / 5), buildings.copper1.amount), "Crafts 2 copper ore -> 1 copper ingot, Cost: 5 basic tools", {item: items.tool2, amount: 5}),
             new CraftingJob(game, "craftTin1", "Tin Smelter", 10, 10, recipes.tin1, () => techs.tin1.unlocked, () => Math.min(jobs.jobs.craftTin1.workersAssigned + Math.floor(items.tool2.amount / 5), buildings.tin1.amount), "Crafts 2 tin ore -> 1 tin ingot, Cost: 5 basic tools", {item: items.tool2, amount: 5}),
+            new CraftingJob(game, "craftBronze1", "Bronze Alloyer", 10, 5, recipes.bronze1, () => techs.bronze1.unlocked, () => Math.min(jobs.jobs.craftBronze1.workersAssigned + Math.floor(items.tool3.amount / 5), buildings.bronze1.amount), "Crafts 3 copper + 1 tin -> 2 bronze, Cost: 5 basic metal tools", {item: items.tool3, amount: 5}),
         ]);
         //  - Tools
         jobs.addGroupWithJobs(new JobGroup(game, "toolCrafters", "Tool Crafters", 70), [

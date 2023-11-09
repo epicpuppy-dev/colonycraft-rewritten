@@ -87,6 +87,11 @@ export class LootData {
             {weight: 1, item: items.tinOre, amount: 1}
         ]));
 
+        manager.addLoot(new LootTable("coal1", 1, [
+            {weight: 2, item: items.stone, amount: 1},
+            {weight: 2, item: items.coal, amount: 1}
+        ]));
+
         manager.addLoot(new LootTable("nothing", 1, [
             {weight: 1, item: null, amount: 0}
         ]));

@@ -24,6 +24,11 @@ export class RecipeData {
         manager.addRecipe(new Recipe("cookedFish1", [{item: items.fish, amount: 1}], tables.cookedFish));
         manager.addRecipe(new Recipe("cookedMeat1", [{item: items.meat, amount: 1}], tables.cookedMeat));
 
+        // Metallurgy
+        manager.addRecipe(new Recipe("copper1", [{item: items.copperOre, amount: 2}], [{item: items.copper, amount: 1}]));
+        manager.addRecipe(new Recipe("tin1", [{item: items.tinOre, amount: 2}], [{item: items.tin, amount: 1}]));
+        manager.addRecipe(new Recipe("bronze1", [{item: items.copper, amount: 3}, {item: items.tin, amount: 1}], [{item: items.bronze, amount: 2}]));
+
         // Cultural
         manager.addRecipe(new Recipe("culture1", [{item: items.logs, amount: 1}], tables.nothing));
 
