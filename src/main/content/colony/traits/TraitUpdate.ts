@@ -24,7 +24,7 @@ export class TraitUpdate extends TickingEntity {
             }
         }
         if (traits.c) {
-            traits.c.current = Math.min(traits.c.current + Math.round(jobs.jobs.cultural1.workersAssigned * workOutput), traits.c.needed);
+            traits.c.current = Math.min(traits.c.current + Math.round(jobs.jobs.culture1.workersAssigned * workOutput), traits.c.needed);
             traits.c.progress = traits.c.current / traits.c.needed;
             if (traits.c.progress == 1) {
                 traits.c.unlocked = true;
@@ -32,7 +32,7 @@ export class TraitUpdate extends TickingEntity {
             }
         }
         if (traits.p) {
-            traits.p.current = Math.min(traits.p.current + Math.round(jobs.jobs.political1.workersAssigned * workOutput), traits.p.needed);
+            traits.p.current = Math.min(traits.p.current + Math.round(jobs.jobs.politic1.workersAssigned * workOutput), traits.p.needed);
             traits.p.progress = traits.p.current / traits.p.needed;
             if (traits.p.progress == 1) {
                 traits.p.unlocked = true;
@@ -40,7 +40,7 @@ export class TraitUpdate extends TickingEntity {
             }
         }
         if (traits.r) {
-            traits.r.current = Math.min(traits.r.current + Math.round(jobs.jobs.religious1.workersAssigned * workOutput), traits.r.needed);
+            traits.r.current = Math.min(traits.r.current + Math.round(jobs.jobs.religion1.workersAssigned * workOutput), traits.r.needed);
             traits.r.progress = traits.r.current / traits.r.needed;
             if (traits.r.progress == 1) {
                 traits.r.unlocked = true;

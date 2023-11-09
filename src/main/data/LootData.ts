@@ -76,5 +76,19 @@ export class LootData {
             {weight: 1, item: items.hide, amount: 1},
             {weight: 2, item: null, amount: 0}
         ]));
+
+        manager.addLoot(new LootTable("copperOre1", 1, [
+            {weight: 3, item: items.stone, amount: 1},
+            {weight: 1, item: items.copperOre, amount: 1}
+        ]));
+
+        manager.addLoot(new LootTable("tinOre1", 1, [
+            {weight: 3, item: items.stone, amount: 1},
+            {weight: 1, item: items.tinOre, amount: 1}
+        ]));
+
+        manager.addLoot(new LootTable("nothing", 1, [
+            {weight: 1, item: null, amount: 0}
+        ]));
     }
 }

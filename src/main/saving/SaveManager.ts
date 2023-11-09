@@ -6,7 +6,7 @@ import { Saveable } from "./Saveable";
 export class SaveManager extends TickingEntity {
     private saveables: {[path: string]: Saveable} = {};
     private static MAX_AUTOSAVES: number = 5;
-    private autosave: number = 0;
+    public autosave: number = 0;
     public storage: number;
     public toSave: string = "";
     public saves: {name: string, id: string, size: number, year: number, timestamp: string, version: string}[] = [];
@@ -19,6 +19,7 @@ export class SaveManager extends TickingEntity {
         const data = JSON.parse(metadata);
         if (data.saves) this.saves = data.saves;
         if (data.storage) this.storage = data.storage;
+        if (data.autosave) this.autosave = data.autosave;
     }
 
     public register (saveable: Saveable, path: string): void {
@@ -67,7 +68,9 @@ export class SaveManager extends TickingEntity {
             this.saves.push({name: "Autosave " + this.autosave, id: "autosave" + this.autosave, size: this.toSave.length * 2, year: game.clock.year, timestamp: date.toLocaleTimeString([], {year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute:'2-digit'}), version: version});
             window.localStorage.setItem("autosave" + this.autosave, this.toSave);
             this.storage += this.toSave.length * 2;
-            window.localStorage.setItem("_CCMeta", JSON.stringify({saves: this.saves, storage: this.storage}));
+            this.autosave++;
+            if (this.autosave >= SaveManager.MAX_AUTOSAVES) this.autosave = 0;
+            window.localStorage.setItem("_CCMeta", JSON.stringify({autosave: this.autosave, saves: this.saves, storage: this.storage}));
         } 
     }
 }

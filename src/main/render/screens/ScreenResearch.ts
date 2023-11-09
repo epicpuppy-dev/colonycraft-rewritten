@@ -268,14 +268,14 @@ export class ScreenResearch extends Screen {
             ctx.fillStyle = "#33dd33";
             ctx.fillRect(10, this.height - 130, Math.floor(this.width / 3 - 20) * (current.progress), 24);
             ctx.strokeRect(10, this.height - 130, Math.floor(this.width / 3 - 20), 24);
-            game.draw.textCenter(Math.round(current.progress * 100) + "%", Math.floor(this.width / 6), this.height - 125, 14, "white");
+            game.draw.textCenter(Math.floor(current.progress * 100) + "%", Math.floor(this.width / 6), this.height - 125, 14, "white");
 
             //invention
             if (current.needed.invention > 0) {
                 ctx.fillStyle = "#1E90FF";
                 ctx.fillRect(10, this.height - 102, Math.floor(this.width / 3 - 20) * (current.current.invention / current.needed.invention), 12);
                 ctx.strokeRect(10, this.height - 102, Math.floor(this.width / 3 - 20), 12);
-                game.draw.textSmallCenter("Invention: " + game.draw.toShortNumber(current.current.invention) + "/" + game.draw.toShortNumber(current.needed.invention), Math.floor(this.width / 6), this.height - 99, 7, "white");
+                game.draw.textSmallCenter("Invention: " + game.draw.toShortNumber(current.current.invention) + "/" + game.draw.toShortNumber(current.needed.invention), Math.floor(this.width / 6), this.height - 100, 7, "white");
             }
 
             //math
@@ -283,7 +283,7 @@ export class ScreenResearch extends Screen {
                 ctx.fillStyle = "#FFD700";
                 ctx.fillRect(10, this.height - 86, Math.floor(this.width / 3 - 20) * (current.current.math / current.needed.math), 12);
                 ctx.strokeRect(10, this.height - 86, Math.floor(this.width / 3 - 20), 12);
-                game.draw.textSmallCenter("Math: " + game.draw.toShortNumber(current.current.math) + "/" + game.draw.toShortNumber(current.needed.math), Math.floor(this.width / 6), this.height - 83, 7, "white");
+                game.draw.textSmallCenter("Math: " + game.draw.toShortNumber(current.current.math) + "/" + game.draw.toShortNumber(current.needed.math), Math.floor(this.width / 6), this.height - 84, 7, "white");
             }
 
             //physics
@@ -291,7 +291,7 @@ export class ScreenResearch extends Screen {
                 ctx.fillStyle = "#48D1CC";
                 ctx.fillRect(10, this.height - 70, Math.floor(this.width / 3 - 20) * (current.current.physics / current.needed.physics), 12);
                 ctx.strokeRect(10, this.height - 70, Math.floor(this.width / 3 - 20), 12);
-                game.draw.textSmallCenter("Physics: " + game.draw.toShortNumber(current.current.physics) + "/" + game.draw.toShortNumber(current.needed.physics), Math.floor(this.width / 6), this.height - 67, 7, "white");
+                game.draw.textSmallCenter("Physics: " + game.draw.toShortNumber(current.current.physics) + "/" + game.draw.toShortNumber(current.needed.physics), Math.floor(this.width / 6), this.height - 68, 7, "white");
             }
 
             //chemistry
@@ -299,7 +299,7 @@ export class ScreenResearch extends Screen {
                 ctx.fillStyle = "#FF4500";
                 ctx.fillRect(10, this.height - 54, Math.floor(this.width / 3 - 20) * (current.current.chemistry / current.needed.chemistry), 12);
                 ctx.strokeRect(10, this.height - 54, Math.floor(this.width / 3 - 20), 12);
-                game.draw.textSmallCenter("Chemistry: " + game.draw.toShortNumber(current.current.chemistry) + "/" + game.draw.toShortNumber(current.needed.chemistry), Math.floor(this.width / 6), this.height - 51, 7, "white");
+                game.draw.textSmallCenter("Chemistry: " + game.draw.toShortNumber(current.current.chemistry) + "/" + game.draw.toShortNumber(current.needed.chemistry), Math.floor(this.width / 6), this.height - 52, 7, "white");
             }
 
             //biology
@@ -307,7 +307,7 @@ export class ScreenResearch extends Screen {
                 ctx.fillStyle = "#32CD32";
                 ctx.fillRect(10, this.height - 38, Math.floor(this.width / 3 - 20) * (current.current.biology / current.needed.biology), 12);
                 ctx.strokeRect(10, this.height - 38, Math.floor(this.width / 3 - 20), 12);
-                game.draw.textSmallCenter("Biology: " + game.draw.toShortNumber(current.current.biology) + "/" + game.draw.toShortNumber(current.needed.biology), Math.floor(this.width / 6), this.height - 35, 7, "white");
+                game.draw.textSmallCenter("Biology: " + game.draw.toShortNumber(current.current.biology) + "/" + game.draw.toShortNumber(current.needed.biology), Math.floor(this.width / 6), this.height - 36, 7, "white");
             }
 
             //quantum
@@ -315,7 +315,7 @@ export class ScreenResearch extends Screen {
                 ctx.fillStyle = "#FF42EE";
                 ctx.fillRect(10, this.height - 22, Math.floor(this.width / 3 - 20) * (current.current.quantum / current.needed.quantum), 12);
                 ctx.strokeRect(10, this.height - 22, Math.floor(this.width / 3 - 20), 12);
-                game.draw.textSmallCenter("Quantum: " + game.draw.toShortNumber(current.current.quantum) + "/" + game.draw.toShortNumber(current.needed.quantum), Math.floor(this.width / 6), this.height - 19, 7, "white");
+                game.draw.textSmallCenter("Quantum: " + game.draw.toShortNumber(current.current.quantum) + "/" + game.draw.toShortNumber(current.needed.quantum), Math.floor(this.width / 6), this.height - 20, 7, "white");
             }
         }
 
@@ -334,19 +334,24 @@ export class ScreenResearch extends Screen {
                 if (unlockable instanceof Technology) {
                     let i = 0;
                     for (let desc of unlockable.desc) {
-                        game.draw.textSmallCenter(desc, Math.floor(5 * this.width / 6), this.height - 125 + i * 10, 7, "white");
+                        game.draw.textSmallCenter(desc, Math.floor(5 * this.width / 6), this.height - 116 + i * 10, 7, "white");
                         i++;
                     }
 
+                    if (unlockable.type == "progress") {
+                        game.draw.textSmallCenter("Unlocks further progress", Math.floor(5 * this.width / 6), this.height - 132, 7, "yellow");
+                    } else if (unlockable.type == "food") {
+                        game.draw.textSmallCenter("Unlocks further food production", Math.floor(5 * this.width / 6), this.height - 132, 7, "cyan");
+                    }
+
                     if (!unlockable.unlocked) {
-                        game.draw.textSmallCenter("Costs:", Math.floor(5 * this.width / 6), this.height - 72, 7, "white");
                         const active = game.colony.research.active;
-                        if (unlockable.needed.invention > 0) game.draw.textSmallCenter("Invention: " + (unlockable.progress > 0 || unlockable === active ? (game.draw.toShortNumber(unlockable.current.invention) + "/") : "") + game.draw.toShortNumber(unlockable.needed.invention), Math.floor(5 * this.width / 6), this.height - 62, 7, "#1e90ff");
-                        if (unlockable.needed.math > 0) game.draw.textSmallCenter("Math: " + (unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.math) + "/") : "") + game.draw.toShortNumber(unlockable.needed.math), Math.floor(5 * this.width / 6), this.height - 52, 7, "#ffd700");
-                        if (unlockable.needed.physics > 0) game.draw.textSmallCenter("Physics: " + (unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.physics) + "/") : "") + game.draw.toShortNumber(unlockable.needed.physics), Math.floor(5 * this.width / 6), this.height - 42, 7, "#48d1cc");
-                        if (unlockable.needed.chemistry > 0) game.draw.textSmallCenter("Chemistry: " + (unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.chemistry) + "/") : "") + game.draw.toShortNumber(unlockable.needed.chemistry), Math.floor(5 * this.width / 6), this.height - 32, 7, "#ff4500");
-                        if (unlockable.needed.biology > 0) game.draw.textSmallCenter("Biology: " + (unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.biology) + "/") : "") + game.draw.toShortNumber(unlockable.needed.biology), Math.floor(5 * this.width / 6), this.height - 22, 7, "#32cd32");
-                        if (unlockable.needed.quantum > 0) game.draw.textSmallCenter("Quantum: " + (unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.quantum) + "/") : "") + game.draw.toShortNumber(unlockable.needed.quantum), Math.floor(5 * this.width / 6), this.height - 12, 7, "#ff42ee");
+                        if (unlockable.needed.invention > 0) game.draw.textSmallCenter((unlockable.progress > 0 || unlockable === active ? (game.draw.toShortNumber(unlockable.current.invention) + "/") : "") + game.draw.toShortNumber(unlockable.needed.invention) + " Invention", Math.floor(5 * this.width / 6), this.height - 62, 7, "#1e90ff");
+                        if (unlockable.needed.math > 0) game.draw.textSmallCenter((unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.math) + "/") : "") + game.draw.toShortNumber(unlockable.needed.math) + " Math", Math.floor(5 * this.width / 6), this.height - 52, 7, "#ffd700");
+                        if (unlockable.needed.physics > 0) game.draw.textSmallCenter((unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.physics) + "/") : "") + game.draw.toShortNumber(unlockable.needed.physics) + " Physics", Math.floor(5 * this.width / 6), this.height - 42, 7, "#48d1cc");
+                        if (unlockable.needed.chemistry > 0) game.draw.textSmallCenter((unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.chemistry) + "/") : "") + game.draw.toShortNumber(unlockable.needed.chemistry) + " Chemistry", Math.floor(5 * this.width / 6), this.height - 32, 7, "#ff4500");
+                        if (unlockable.needed.biology > 0) game.draw.textSmallCenter((unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.biology) + "/") : "") + game.draw.toShortNumber(unlockable.needed.biology) + " Biology", Math.floor(5 * this.width / 6), this.height - 22, 7, "#32cd32");
+                        if (unlockable.needed.quantum > 0) game.draw.textSmallCenter((unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.quantum) + "/") : "") + game.draw.toShortNumber(unlockable.needed.quantum) + " Quantum", Math.floor(5 * this.width / 6), this.height - 12, 7, "#ff42ee");
                     }
 
                 } else if (unlockable instanceof Trait) {

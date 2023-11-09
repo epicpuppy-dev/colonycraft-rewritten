@@ -34,7 +34,7 @@ export class Overlay2Save extends Screen {
             game.save.saves.push({name: this.textInput, id: this.textInput.toLowerCase().replace(" ", ""), size: game.save.toSave.length * 2, year: game.clock.year, timestamp: date.toLocaleTimeString([], {year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute:'2-digit'}), version: version});
             window.localStorage.setItem(this.textInput.toLowerCase().replace(/\s/g, ''), game.save.toSave);
             game.save.storage += game.save.toSave.length * 2;
-            window.localStorage.setItem("_CCMeta", JSON.stringify({saves: game.save.saves, storage: game.save.storage}));
+            window.localStorage.setItem("_CCMeta", JSON.stringify({autosave: game.save.autosave, saves: game.save.saves, storage: game.save.storage}));
             game.currentScreens.splice(game.currentScreens.indexOf("save"), 1);
             game.currentScreens.splice(game.currentScreens.indexOf("overlay2"), 1);
         }, (game: ColonyCraft) => game.currentScreens.includes("save"));

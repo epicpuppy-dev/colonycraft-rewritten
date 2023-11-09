@@ -25,6 +25,7 @@ export class InventoryData {
         inventory.addCategoryWithItems(new ItemGroup("tools", "Tools"), [
             new Item(game, "tool1", 1, "Primitive Tool", 0.005),
             new Item(game, "tool2", 1, "Basic Tool", 0.004),
+            new Item(game, "tool3", 1, "Basic Metal Tool", 0.003),
             new Item(game, "basket1", 10, "Basic Basket", 0.004),
             new Item(game, "bucket1", 10, "Wooden Bucket", 0.004),
         ]);
@@ -45,7 +46,6 @@ export class InventoryData {
             new Item(game, "composite", 4, "Brick Composite", 0.01), //TODO: Balance
             new Item(game, "twine", 0.1, "Plant Twine", 0.005), //TODO: Balance
             new Item(game, "cloth", 0.1, "Cloth", 0.005), //TODO: Balance
-            new Item(game, "flour", 1, "Flour", 0.0025), //TODO: Balance
         ]);
         inventory.addCategoryWithItems(new ItemGroup("lumber", "Lumber"), [
             new Item(game, "logs", 4, "Logs", 0.01), //TODO: Balance
@@ -54,15 +54,17 @@ export class InventoryData {
         ]);
         inventory.addCategoryWithItems(new ItemGroup("agriculture", "Agriculture"), [
             new Item(game, "wheat", 1, "Wheat", 0.005), //TODO: Balance
+            new Item(game, "flour", 1, "Flour", 0.0025), //TODO: Balance
             new FoodItem(game, "potato", 1, "Potato", 0.01, 0.25, 0.4, 0.3, 5), //TODO: Balance
         ]);
         inventory.addCategoryWithItems(new ItemGroup("mining", "Mining"), [
             new Item(game, "stone", 5, "Stone", 0.0025), //TODO: Balance
             new Item(game, "coal", 5, "Coal", 0.0025), //TODO: Balance
-            new Item(game, "ironOre", 5, "Magnetite Ore", 0.0025), //TODO: Balance
-            new Item(game, "tinOre", 5, "Cassiterite Ore", 0.0025), //TODO: Balance
             new Item(game, "copperOre", 5, "Chalcopyrite Ore", 0.0025), //TODO: Balance
+            new Item(game, "tinOre", 5, "Cassiterite Ore", 0.0025), //TODO: Balance
+            new Item(game, "ironOre", 5, "Magnetite Ore", 0.0025), //TODO: Balance
             new Item(game, "zincOre", 5, "Sphalerite Ore", 0.0025), //TODO: Balance
+            new Item(game, "siliconOre", 5, "Silicon Ore", 0.0025), //TODO: Balance
             new Item(game, "goldOre", 8, "Gold Ore", 0.0025), //TODO: Balance
         ]);
         inventory.addCategoryWithItems(new ItemGroup("building", "Building Materials"), [
@@ -70,9 +72,9 @@ export class InventoryData {
             new Item(game, "bricks", 2, "Bricks", 0.002), //TODO: Balance
         ]);
         inventory.addCategoryWithItems(new ItemGroup("metallurgy", "Metallurgy"), [
-            new Item(game, "iron", 2, "Iron", 0.002), //TODO: Balance
-            new Item(game, "tin", 2, "Tin", 0.002), //TODO: Balance
             new Item(game, "copper", 2, "Copper", 0.002), //TODO: Balance
+            new Item(game, "tin", 2, "Tin", 0.002), //TODO: Balance
+            new Item(game, "iron", 2, "Iron", 0.002), //TODO: Balance
             new Item(game, "zinc", 2, "Zinc", 0.002), //TODO: Balance
             new Item(game, "bronze", 2, "Bronze", 0.002), //TODO: Balance
             new Item(game, "steel", 2, "Steel", 0.002), //TODO: Balance

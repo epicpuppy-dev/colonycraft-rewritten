@@ -107,16 +107,17 @@ export class Tree {
             }
         }
 
+        //assign each node a subrank and subtotal
+        //  count number of nodes in each rank
+        let rankCounts: number[] = new Array(this.maxRank).fill(0);
+        for (let id of this.nodeList) {
+            const node = this.nodes[id];
+            rankCounts[node.rank]++;
+        }
+
         //sort nodes by pos index
         //pos index = ([average index of all prereqs] / [max index of all prereqs] + [average index of all postreqs] / [max index of all postreqs]) / 2
         for (let j = 0; j < 3; j++) {
-            //assign each node a subrank and subtotal
-            //  count number of nodes in each rank
-            let rankCounts: number[] = new Array(this.maxRank).fill(0);
-            for (let id of this.nodeList) {
-                const node = this.nodes[id];
-                rankCounts[node.rank]++;
-            }
             //  assign each node a subrank and subtotal
             let subRank: number[] = new Array(this.maxRank).fill(0);
             for (let id of this.nodeList) {
@@ -126,30 +127,26 @@ export class Tree {
             }
             for (let i = 0; i < this.nodeList.length; i++) {
                 const node = this.nodes[this.nodeList[i]];
-                let prereqSum = 0;
-                let prereqMax = 0;
+                let totalNodes = 0;
+                let totalPos = 0;
                 for (let prereq of node.prereqs) {
-                    prereqSum += this.nodes[prereq].subrank;
-                    prereqMax += this.nodes[prereq].subtotal - 1;
+                    totalPos += this.nodes[prereq].subrank / (this.nodes[prereq].subtotal - 1);
+                    totalNodes++;
                 }
-
-                let postreqSum = 0;
-                let postreqMax = 0;
                 for (let postreq of node.postreqs) {
-                    postreqSum += this.nodes[postreq].subrank;
-                    postreqMax += this.nodes[postreq].subtotal - 1;
+                    totalPos += this.nodes[postreq].subrank / (this.nodes[postreq].subtotal - 1);
+                    totalNodes++;
                 }
 
-                if (prereqMax == 0) {prereqSum = 1; prereqMax = 1;}
-                if (postreqMax == 0) {postreqSum = 1; postreqMax = 1;}
+                if (totalNodes == 0) {totalNodes = 1; totalPos = 0;}
 
-                node.priority = (prereqSum / prereqMax + postreqSum / postreqMax) / 2;
-                this.nodeList.sort((a, b) => {
-                    return this.nodes[a].priority - this.nodes[b].priority;
-                });
+                node.priority = totalPos / totalNodes;
             }
-            this.subRanks = rankCounts;
+            this.nodeList.sort((a, b) => {
+                return this.nodes[a].priority - this.nodes[b].priority;
+            });
         }
+        this.subRanks = rankCounts;
     }
 
     private positionNodes(): void {
@@ -201,7 +198,10 @@ export class Tree {
 
         const SPACING = [Tree.NODE_SPACING[0] + Tree.NODE_SIZE[0], Tree.NODE_SPACING[1] + Tree.NODE_SIZE[1]];
 
-        let gapTotals: {[key: number]: number} = {};
+        let gapTotals: {[key: number]: number}[] = [];
+        for (let i = 0; i < this.maxRank; i++) {
+            gapTotals.push({});
+        }
 
         //calculate how many lines are going into each gap
         for (let id of this.nodeList) {
@@ -217,8 +217,8 @@ export class Tree {
                         let nearestGap: number;
                         if (this.subRanks[r + 1] % 2 == 0) nearestGap = Math.floor((prevX + SPACING[0] / 2) / SPACING[0]);
                         else nearestGap = Math.floor(prevX / SPACING[0]) + 0.5;
-                        if (gapTotals[nearestGap]) gapTotals[nearestGap]++;
-                        else gapTotals[nearestGap] = 1;
+                        if (gapTotals[r][nearestGap]) gapTotals[r][nearestGap]++;
+                        else gapTotals[r][nearestGap] = 1;
 
                         prevX = nearestGap * SPACING[0];
                     }
@@ -227,7 +227,10 @@ export class Tree {
             }
         }
 
-        let gapCurrent: {[key: number]: number} = {};
+        let gapCurrent: {[key: number]: number}[] = [];
+        for (let i = 0; i < this.maxRank; i++) {
+            gapCurrent.push({});
+        }
 
         for (let id of this.nodeList) {
             const node = this.nodes[id];
@@ -246,12 +249,12 @@ export class Tree {
                             let nearestGap: number;
                             if (this.subRanks[r + 1] % 2 == 0) nearestGap = Math.floor((prevX + SPACING[0] / 2 - this.width / 2) / SPACING[0]);
                             else nearestGap = Math.floor((prevX - this.width / 2) / SPACING[0]) + 0.5;
-                            if (gapCurrent[nearestGap]) gapCurrent[nearestGap]++;
-                            else gapCurrent[nearestGap] = 1;
+                            if (gapCurrent[r][nearestGap]) gapCurrent[r][nearestGap]++;
+                            else gapCurrent[r][nearestGap] = 1;
 
                             //find the x value of the gap
-                            if (!gapTotals[nearestGap]) gapTotals[nearestGap] = 1;
-                            x = nearestGap * SPACING[0] + this.width / 2 - (gapTotals[nearestGap] - 2) * 2 + (gapCurrent[nearestGap] - 2) * 4;
+                            if (!gapTotals[r][nearestGap]) gapTotals[r][nearestGap] = 1;
+                            x = nearestGap * SPACING[0] + this.width / 2 - (gapTotals[r][nearestGap] - 1) * 2 + (gapCurrent[r][nearestGap] - 1) * 4;
                         }
 
                         //determine if you can combine several lines on the same y level
@@ -313,7 +316,10 @@ export class Tree {
         }
 
         //position lines
-        gapCurrent = {};
+        gapCurrent = [];
+        for (let i = 0; i < this.maxRank; i++) {
+            gapCurrent.push({});
+        }
         for (let id of this.nodeList) {
             const node = this.nodes[id];
             let i = 0
@@ -333,12 +339,12 @@ export class Tree {
                             let nearestGap: number;
                             if (this.subRanks[r + 1] % 2 == 0) nearestGap = Math.floor((prevX + SPACING[0] / 2 - this.width / 2) / SPACING[0]);
                             else nearestGap = Math.floor((prevX - this.width / 2) / SPACING[0]) + 0.5;
-                            if (gapCurrent[nearestGap]) gapCurrent[nearestGap]++;
-                            else gapCurrent[nearestGap] = 1;
+                            if (gapCurrent[r][nearestGap]) gapCurrent[r][nearestGap]++;
+                            else gapCurrent[r][nearestGap] = 1;
 
                             //find the x value of the gap
-                            if (!gapTotals[nearestGap]) gapTotals[nearestGap] = 1;
-                            x = nearestGap * SPACING[0] + this.width / 2 - (gapTotals[nearestGap] - 2) * 2 + (gapCurrent[nearestGap] - 2) * 4;
+                            if (!gapTotals[r][nearestGap]) gapTotals[r][nearestGap] = 1;
+                            x = nearestGap * SPACING[0] + this.width / 2 - (gapTotals[r][nearestGap] - 1) * 2 + (gapCurrent[r][nearestGap] - 1) * 4;
                         }
 
                         //find the y level of the line

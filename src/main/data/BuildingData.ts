@@ -19,7 +19,10 @@ export class BuildingData {
 
         manager.addBuilding(new Building(game, "kiln1", "Basic Kiln", 1, 20, 0, ["Allows the firing of bricks"], [{item: items.composite, amount: 24}, {item: items.campfire, amount: 2}], () => techs.kiln1.unlocked));
         manager.addBuilding(new Building(game, "bakery1", "Basic Oven", 1, 20, 0, ["Allows the baking of bread"], [{item: items.composite, amount: 24}, {item: items.campfire, amount: 2}], () => techs.bakery1.unlocked));
+        
+        manager.addBuilding(new Building(game, "copper1", "Copper Furnace", 2, 200, 0, ["Allows the smelting of copper"], [{item: items.bricks, amount: 24}, {item: items.logs, amount: 8}], () => techs.copper1.unlocked));
+        manager.addBuilding(new Building(game, "tin1", "Tin Furnace", 2, 200, 0, ["Allows the smelting of tin"], [{item: items.bricks, amount: 24}, {item: items.logs, amount: 8}], () => techs.tin1.unlocked));
 
-        manager.addBuilding(new Building(game, "test8", "Test 8", 1, 99, 100, ["it works."], [], () => techs.test8.unlocked));
+        manager.addBuilding(new Building(game, "test8", "Test 8", 1, 9999, 100, ["it works."], [], () => techs.test8.unlocked));
     }
 }

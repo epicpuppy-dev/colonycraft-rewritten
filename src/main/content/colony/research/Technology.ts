@@ -39,6 +39,7 @@ export class Technology extends Unlockable implements Saveable {
             this.progress = 1;
             this.unlocked = true;
             this.current = new TechPoints();
+            return;
         }
         // Backwards compatibility
         if (split.length == 8) {
@@ -47,12 +48,12 @@ export class Technology extends Unlockable implements Saveable {
         }
 
         if (split.length >= 1 && !isNaN(parseFloat(split[0]))) this.progress = parseFloat(split[0]);
-        if (split.length >= 2 && !isNaN(parseInt(split[2], 36))) this.current.invention = parseInt(split[2], 36);
-        if (split.length >= 3 && !isNaN(parseInt(split[3], 36))) this.current.math = parseInt(split[3], 36);
-        if (split.length >= 4 && !isNaN(parseInt(split[4], 36))) this.current.physics = parseInt(split[4], 36);
-        if (split.length >= 5 && !isNaN(parseInt(split[5], 36))) this.current.chemistry = parseInt(split[5], 36);
-        if (split.length >= 6 && !isNaN(parseInt(split[6], 36))) this.current.biology = parseInt(split[6], 36);
-        if (split.length >= 7 && !isNaN(parseInt(split[7], 36))) this.current.quantum = parseInt(split[7], 36);
+        if (split.length >= 2 && !isNaN(parseInt(split[1], 36))) this.current.invention = parseInt(split[2], 36);
+        if (split.length >= 3 && !isNaN(parseInt(split[2], 36))) this.current.math = parseInt(split[3], 36);
+        if (split.length >= 4 && !isNaN(parseInt(split[3], 36))) this.current.physics = parseInt(split[4], 36);
+        if (split.length >= 5 && !isNaN(parseInt(split[4], 36))) this.current.chemistry = parseInt(split[5], 36);
+        if (split.length >= 6 && !isNaN(parseInt(split[5], 36))) this.current.biology = parseInt(split[6], 36);
+        if (split.length >= 7 && !isNaN(parseInt(split[6], 36))) this.current.quantum = parseInt(split[7], 36);
     }
 
     public newGame() {
