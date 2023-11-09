@@ -1,6 +1,6 @@
 {
   "name": "colonycraft-rewritten",
-  "version": "0.1.0-alpha.11",
+  "version": "0.1.0-alpha.12",
   "description": "colonycraft but better",
   "main": "src/index.js",
   "scripts": {
