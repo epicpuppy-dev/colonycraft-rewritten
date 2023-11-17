@@ -31,4 +31,8 @@ export class Item implements Saveable {
     public load (data: string) {
         if (!isNaN(parseInt(data, 36))) this.amount = parseInt(data, 36);
     }
+
+    public newGame() {
+        this.amount = 0;
+    }
 }

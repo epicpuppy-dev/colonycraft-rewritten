@@ -3,11 +3,11 @@ import { LootTable } from "../../../loot/LootTable";
 import { Job } from "../Job";
 
 export class ResourceJob extends Job {
-    private table: LootTable;
-    private rolls: number;
+    protected table: LootTable;
+    protected rolls: number;
 
-    constructor(game: ColonyCraft, id: string, name: string, priority: number, rolls: number, table: LootTable, unlocked: (game: ColonyCraft) => boolean, maxWorkers: (game: ColonyCraft) => number) {
-        super(game, id, name, priority, unlocked, maxWorkers);
+    constructor(game: ColonyCraft, id: string, name: string, priority: number, rolls: number, table: LootTable, unlocked: (game: ColonyCraft) => boolean, maxWorkers: (game: ColonyCraft) => number, desc?: string, cost?: {item: any, amount: number}) {
+        super(game, id, name, priority, unlocked, maxWorkers, desc, cost);
         this.rolls = rolls;
         this.table = table;
     }

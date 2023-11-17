@@ -47,8 +47,8 @@ export class OverlayBuildings extends Screen {
         game.mouse.registerClickable(this.selectionClickable, -10);
         game.mouse.registerClickable(this.closeButton);
         
-        game.key.addAction(new KeyAction("closeBuildings", "Close Buildings", (game: ColonyCraft) => {
-            if (game.currentScreens.includes("buildings")) {
+        game.key.addAction(new KeyAction("closeBuildings", "Close Buildings", (game, prevScreens) => {
+            if (prevScreens.includes("buildings")) {
                 game.currentScreens.splice(game.currentScreens.indexOf("buildings"), 1);
                 game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);
                 this.selected = null;
@@ -56,8 +56,8 @@ export class OverlayBuildings extends Screen {
         }));
         game.draw.addCloseAction(game.key.actions.closeBuildings);
 
-        game.key.addAction(new KeyAction("openBuildings", "Open Buildings", (game: ColonyCraft) => {
-            if (game.currentScreens.includes("game") && !game.currentScreens.includes("overlay")) game.currentScreens.push("buildings", "overlay");
+        game.key.addAction(new KeyAction("openBuildings", "Open Buildings", (game, prevScreens) => {
+            if (prevScreens.includes("game") && !prevScreens.includes("overlay")) game.currentScreens.push("buildings", "overlay");
             else if (game.currentScreens.includes("buildings")) {
                 game.currentScreens.splice(game.currentScreens.indexOf("buildings"), 1);
                 game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);
@@ -130,12 +130,12 @@ export class OverlayBuildings extends Screen {
             let costCurrentColumn = 0;
             for (let i = -2; i < this.selected.cost.length; i++) {
                 if (i == -2) {
-                    game.draw.textSmallCenter(`${game.draw.toShortNumber(this.selected.work * this.increaseSteps[this.increaseIndex][0])} Work Effort`, Math.floor(this.width / 2 - (costColumns - 1) * 50 + costCurrentColumn * 100), Math.floor(this.height / 8 + 158 + 10 * descRow), 7, "#FFFFFF");
+                    game.draw.textSmallCenter(`${game.draw.toShortNumber(this.selected.work * this.increaseSteps[this.increaseIndex][0])} Work Effort`, Math.floor(this.width / 2 - (costColumns - 1) * 75 + costCurrentColumn * 150), Math.floor(this.height / 8 + 158 + 10 * descRow), 7, "#FFFFFF");
                 } else if (i == -1) {
-                    game.draw.textSmallCenter(`${game.draw.toShortNumber(this.selected.area * this.increaseSteps[this.increaseIndex][0])} Land (${game.draw.toShortNumber(game.colony.buildings.landMax - game.colony.buildings.landPending)})`, Math.floor(this.width / 2 - (costColumns - 1) * 50 + costCurrentColumn * 100), Math.floor(this.height / 8 + 158 + 10 * descRow), 7, (game.colony.buildings.landMax - game.colony.buildings.landPending) >= this.selected.area * this.increaseSteps[this.increaseIndex][0] ? "#FFFFFF" : "#FF5555");
+                    game.draw.textSmallCenter(`${game.draw.toShortNumber(this.selected.area * this.increaseSteps[this.increaseIndex][0])} Land (${game.draw.toShortNumber(game.colony.buildings.landMax - game.colony.buildings.landPending)})`, Math.floor(this.width / 2 - (costColumns - 1) * 75 + costCurrentColumn * 150), Math.floor(this.height / 8 + 158 + 10 * descRow), 7, (game.colony.buildings.landMax - game.colony.buildings.landPending) >= this.selected.area * this.increaseSteps[this.increaseIndex][0] ? "#FFFFFF" : "#FF5555");
                 } else {
                     const cost = this.selected.cost[i];
-                    game.draw.textSmallCenter(`${game.draw.toShortNumber(cost.amount * this.increaseSteps[this.increaseIndex][0])} ${cost.item.name} (${game.draw.toShortNumber(cost.item.amount)})`, Math.floor(this.width / 2 - (costColumns - 1) * 50 + costCurrentColumn * 100), Math.floor(this.height / 8 + 158 + 10 * descRow), 7, cost.item.amount >= cost.amount * this.increaseSteps[this.increaseIndex][0] ? "#FFFFFF" : "#FF5555");
+                    game.draw.textSmallCenter(`${game.draw.toShortNumber(cost.amount * this.increaseSteps[this.increaseIndex][0])} ${cost.item.name} (${game.draw.toShortNumber(cost.item.amount)})`, Math.floor(this.width / 2 - (costColumns - 1) * 75 + costCurrentColumn * 150), Math.floor(this.height / 8 + 158 + 10 * descRow), 7, cost.item.amount >= cost.amount * this.increaseSteps[this.increaseIndex][0] ? "#FFFFFF" : "#FF5555");
                 }
                 if (++costCurrentColumn >= costColumns) {
                     costCurrentColumn = 0;

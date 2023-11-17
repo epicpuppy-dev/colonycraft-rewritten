@@ -5,9 +5,9 @@ import { SpriteRenderer } from "./SpriteRenderer";
 import { TextRenderer } from "./TextRenderer";
 
 export class RenderUtil {
-    private font: TextRenderer;
-    private fontSmall: TextRenderer;
-    private sprites: SpriteRenderer;
+    readonly font: TextRenderer;
+    readonly fontSmall: TextRenderer;
+    readonly sprites: SpriteRenderer;
     public closeButton: KeyBind;
 
     constructor(game: ColonyCraft, font: TextRenderer, fontSmall: TextRenderer, sprites: SpriteRenderer) {
@@ -42,9 +42,9 @@ export class RenderUtil {
         return this.fontSmall.getWidth(text, size);
     }
 
-    renderText(ctx: OffscreenCanvasRenderingContext2D): void {
-        this.font.renderAll(ctx);
-        this.fontSmall.renderAll(ctx);
+    renderText(ctx: OffscreenCanvasRenderingContext2D, alpha?: number): void {
+        this.font.renderAll(ctx, alpha);
+        this.fontSmall.renderAll(ctx, alpha);
     }
 
     sprite(ctx: OffscreenCanvasRenderingContext2D, name: string, x: number, y: number, width: number, height: number): void {
@@ -52,6 +52,7 @@ export class RenderUtil {
     }
 
     toShortNumber(num: number): string {
+        if (num < 1 && Math.floor(num) != num) return num.toFixed(2);
         if (num < 1000 && Math.floor(num) != num) return num.toPrecision(3);
         if (num < 1000) return num.toString();
         if (num < 1000000) return (num / 1000).toPrecision(3) + "k";

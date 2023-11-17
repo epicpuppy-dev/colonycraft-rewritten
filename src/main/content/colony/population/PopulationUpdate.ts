@@ -9,12 +9,12 @@ export class PopulationUpdate extends TickingEntity {
     public tick (game: ColonyCraft) {
         const population = game.colony.population;
         const health = game.colony.welfare.healthModifier;
-        //0.2% chance of death per day
+        //0.5% chance of death per day
         if (population.seniors > 10000) {
-            population.seniors -= Math.floor(population.seniors / ((1 / 0.002) * (1 / health)));
+            population.seniors -= Math.floor(population.seniors / ((1 / 0.005) * (1 / health)));
         } else {
             for (let i = 0; i < population.seniors; i++) {
-                if (Math.random() < 0.002 * (1 / health)) {
+                if (Math.random() < 0.005 * (1 / health)) {
                     population.seniors--;
                 }
             }
@@ -68,13 +68,13 @@ export class PopulationUpdate extends TickingEntity {
                 }
             }
         }
-        //0.2% chance for each pair of adults to have a baby
+        //0.4% chance for each pair of adults to have a baby
         if (population.adults > 10000) {
-            const babies = Math.floor(population.adults / ((1 / 0.001) * health));
+            const babies = Math.floor(population.adults / ((1 / 0.002) * health));
             population.babies += babies;
         } else {
             for (let i = 0; i < population.adults / 2; i++) {
-                if (Math.random() < 0.002 * health) {
+                if (Math.random() < 0.004 * health) {
                     population.babies++;
                 }
             }

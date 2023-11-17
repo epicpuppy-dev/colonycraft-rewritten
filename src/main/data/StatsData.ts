@@ -14,5 +14,12 @@ export class StatsData {
         manager.addStatistic(new Statistic(game, "babies", "Infants", intervals, (game: ColonyCraft) => game.colony.population.babies));
         manager.addStatistic(new Statistic(game, "morale", "Morale", intervals, (game: ColonyCraft) => game.colony.welfare.morale));
         manager.addStatistic(new Statistic(game, "health", "Health", intervals, (game: ColonyCraft) => game.colony.welfare.health));
+        manager.addStatistic(new Statistic(game, "storageFree", "Free", intervals, (game: ColonyCraft) => game.colony.inventory.storageCapacity - game.colony.inventory.storageUsed));
+        manager.addStatistic(new Statistic(game, "storageUsed", "Used", intervals, (game: ColonyCraft) => game.colony.inventory.storageUsed));
+        manager.addStatistic(new Statistic(game, "storageCapacity", "Capacity", intervals, (game: ColonyCraft) => game.colony.inventory.storageCapacity));
+        manager.addStatistic(new Statistic(game, "landFree", "Free", intervals, (game: ColonyCraft) => game.colony.buildings.landMax - game.colony.buildings.landPending));
+        manager.addStatistic(new Statistic(game, "landPending", "Pending", intervals, (game: ColonyCraft) => game.colony.buildings.landPending));
+        manager.addStatistic(new Statistic(game, "landUsed", "Used", intervals, (game: ColonyCraft) => game.colony.buildings.landUsed));
+        manager.addStatistic(new Statistic(game, "landMax", "Total", intervals, (game: ColonyCraft) => game.colony.buildings.landMax));
     }
 }

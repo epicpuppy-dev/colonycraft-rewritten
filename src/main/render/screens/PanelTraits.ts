@@ -8,7 +8,8 @@ export class PanelTraits extends Screen {
     constructor (game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
         this.traitsButton = new Button(0, 130, Math.floor(width / 3 + 50), 164, (game: ColonyCraft) => {
-            game.currentScreens.push("traits", "overlay");
+            game.currentScreens.splice(game.currentScreens.indexOf("game"), 1);
+            game.currentScreens.push("research");
         }, (game: ColonyCraft) => {
             return game.currentScreens.includes("game") && !game.currentScreens.includes("overlay");
         });
@@ -29,7 +30,7 @@ export class PanelTraits extends Screen {
 
         //traits
         if (traits.active.s) {
-            game.draw.textCenter(traits.active.s.name, Math.floor(this.width / 6), 138, 14, "white");
+            game.draw.textCenter(traits.active.s.name, Math.floor(this.width / 6), 136, 14, "white");
             ctx.fillStyle = "#8A2BE2";
             ctx.fillRect(10, 156, Math.floor((this.width / 3 - 20) * traits.active.s.progress), 10);
             ctx.strokeRect(10, 156, Math.floor(this.width / 3 - 20), 10);
@@ -38,7 +39,7 @@ export class PanelTraits extends Screen {
         }
 
         if (traits.active.c) {
-            game.draw.textCenter(traits.active.c.name, Math.floor(this.width / 6), 178, 14, "white");
+            game.draw.textCenter(traits.active.c.name, Math.floor(this.width / 6), 176, 14, "white");
             ctx.fillStyle = "#ADFF2F";
             ctx.fillRect(10, 196, Math.floor((this.width / 3 - 20) * traits.active.c.progress), 10);
             ctx.strokeRect(10, 196, Math.floor(this.width / 3 - 20), 10);
@@ -47,7 +48,7 @@ export class PanelTraits extends Screen {
         }
 
         if (traits.active.p) {
-            game.draw.textCenter(traits.active.p.name, Math.floor(this.width / 6), 218, 14, "white");
+            game.draw.textCenter(traits.active.p.name, Math.floor(this.width / 6), 216, 14, "white");
             ctx.fillStyle = "#FF7F50";
             ctx.fillRect(10, 236, Math.floor((this.width / 3 - 20) * traits.active.p.progress), 10);
             ctx.strokeRect(10, 236, Math.floor(this.width / 3 - 20), 10);
@@ -56,7 +57,7 @@ export class PanelTraits extends Screen {
         }
 
         if (traits.active.r) {
-            game.draw.textCenter(traits.active.r.name, Math.floor(this.width / 6), 258, 14, "white");
+            game.draw.textCenter(traits.active.r.name, Math.floor(this.width / 6), 256, 14, "white");
             ctx.fillStyle = "#DAA520";
             ctx.fillRect(10, 276, Math.floor((this.width / 3 - 20) * traits.active.r.progress), 10);
             ctx.strokeRect(10, 276, Math.floor(this.width / 3 - 20), 10);

@@ -30,4 +30,8 @@ export class TraitManager implements Saveable {
         if (split[2].length > 0 && this.traits[split[2]]) this.active.p = this.traits[split[2]];
         if (split[3].length > 0 && this.traits[split[3]]) this.active.r = this.traits[split[3]];
     }
+
+    public newGame() {
+        this.active = {s: null, c: null, p: null, r: null};
+    }
 }

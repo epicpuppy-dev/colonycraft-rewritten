@@ -1,7 +1,7 @@
 import { ColonyCraft } from "../../../ColonyCraft";
 import { TickingEntity } from "../../TickingEntity";
 
-export class InventoryMonitor extends TickingEntity {
+export class InventoryUpdate extends TickingEntity {
     constructor (game: ColonyCraft, priority: number) {
         super(game, priority);
     }

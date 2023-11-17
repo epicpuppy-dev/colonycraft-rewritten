@@ -40,9 +40,15 @@ export class Building implements Saveable {
 
     public load (data: string) {
         let split = data.split("-");
-        if (!isNaN(parseInt(split[0]))) this.amount = parseInt(split[0], 36);
-        if (!isNaN(parseInt(split[1]))) this.target = parseInt(split[1], 36);
-        if (!isNaN(parseInt(split[2]))) this.progress = parseInt(split[2], 36);
+        if (!isNaN(parseInt(split[0], 36))) this.amount = parseInt(split[0], 36);
+        if (!isNaN(parseInt(split[1], 36))) this.target = parseInt(split[1], 36);
+        if (!isNaN(parseInt(split[2], 36))) this.progress = parseInt(split[2], 36);
+    }
+
+    public newGame() {
+        this.amount = 0;
+        this.target = 0;
+        this.progress = 0;
     }
 
     public tick (game: ColonyCraft) {}

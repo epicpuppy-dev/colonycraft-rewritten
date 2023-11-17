@@ -26,8 +26,9 @@ export class PanelInventory extends Screen {
         ctx.stroke();
 
         const inventory = game.colony.inventory;
-        const storageColor = inventory.storageUsed < inventory.storageCapacity ? inventory.storageUsed < inventory.storageCapacity * 2 / 3 ? '#99ff99' : '#ffff99' : '#ff9999';
-        game.draw.textCenter(`Storage is ${(inventory.storageUsed / inventory.storageCapacity * 100).toFixed(1)}% full`, Math.floor(this.width / 6), 376, 14, storageColor);
+        const storageColor = inventory.storageUsed < inventory.storageCapacity ? inventory.storageUsed < inventory.storageCapacity * 2 / 3 ? '#55ff55' : '#ffff55' : '#ff5555';
+        if (game.colony.research.technologies.storage1.unlocked) game.draw.textCenter(`Storage is ${(inventory.storageUsed / inventory.storageCapacity * 100).toFixed(1)}% full`, Math.floor(this.width / 6), 376, 14, storageColor);
+        else game.draw.textCenter(`Storage is ${(inventory.storageUsed / inventory.storageCapacity) < 1 / 3 ? "a little " : (inventory.storageUsed / inventory.storageCapacity) < 2 / 3 ? "somewhat " : (inventory.storageUsed / inventory.storageCapacity) < 1 ? "almost " : ""}full`, Math.floor(this.width / 6), 376, 14, storageColor);
 
         game.draw.renderText(ctx);
     }

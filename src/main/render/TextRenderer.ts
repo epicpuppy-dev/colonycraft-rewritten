@@ -49,8 +49,10 @@ export class TextRenderer {
         this.draw(text, Math.floor(x - textWidth / 2), y, size, color);
     }
 
-    public renderAll (ctx: OffscreenCanvasRenderingContext2D) {
+    public renderAll (ctx: OffscreenCanvasRenderingContext2D, alpha: number = 1) {
+        ctx.globalAlpha = alpha;
         ctx.drawImage(this.canvas, 0, 0);
+        ctx.globalAlpha = 1;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 

@@ -1,3 +1,4 @@
+import { version } from "../../../version";
 import { ColonyCraft } from "../../ColonyCraft";
 import { KeyAction } from "../../player/KeyAction";
 import { Screen } from "../Screen";
@@ -11,12 +12,12 @@ export class OverlayPause extends Screen {
 
     constructor (game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
-        game.key.addAction(new KeyAction("pauseMenu", "Pause Menu", (game: ColonyCraft) => {
-            if (game.currentScreens.includes("game") && !game.currentScreens.includes("overlay")) {
+        game.key.addAction(new KeyAction("pauseMenu", "Pause Menu", (game, prevScreens) => {
+            if (prevScreens.includes("game") && !prevScreens.includes("overlay")) {
                 game.currentScreens.push("pause", "overlay");
                 game.simulation.toggleRunning(game, false);
             }
-            else if (game.currentScreens.includes("pause") && !game.currentScreens.includes("overlay2")) {
+            else if (prevScreens.includes("pause") && !prevScreens.includes("overlay2")) {
                 game.currentScreens.splice(game.currentScreens.indexOf("pause"), 1);
                 game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);
                 game.simulation.toggleRunning(game, true);
@@ -42,6 +43,7 @@ export class OverlayPause extends Screen {
 
         this.exitButton = new Button(Math.floor(this.width / 2 - 130), Math.floor(this.height / 2 + 56), 260, 32, (game: ColonyCraft) => {
             game.currentScreens.splice(game.currentScreens.indexOf("pause"), 1);
+            game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);
             game.currentScreens.splice(game.currentScreens.indexOf("game"), 1);
             game.currentScreens.push("title");
             game.simulation.toggleRunning(game, false);
@@ -74,6 +76,8 @@ export class OverlayPause extends Screen {
         game.draw.textCenter("Save Game", Math.floor(this.width / 2), Math.floor(this.height / 2 - 32), 14, "white");
         game.draw.textCenter("Load Game", Math.floor(this.width / 2), Math.floor(this.height / 2 + 16), 14, "white");
         game.draw.textCenter("Exit to Main Menu", Math.floor(this.width / 2), Math.floor(this.height / 2 + 64), 14, "white");
+
+        game.draw.text("v" + version, 10, this.height - 20, 14, "white");
 
         game.draw.renderText(ctx);
     }

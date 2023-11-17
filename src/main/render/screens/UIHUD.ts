@@ -4,17 +4,26 @@ import { Button } from "../ui/Button";
 
 export class UIHUD extends Screen {
     private statsButton: Button;
+    private menuButton: Button;
 
     constructor(game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
         
-        this.statsButton = new Button(100, -50, this.width - 200, 100, (game: ColonyCraft) => {
+        this.statsButton = new Button(this.width - 152, 0, 52, 50, (game: ColonyCraft) => {
             game.currentScreens.push("stats", "overlay");
-        } , (game: ColonyCraft) => {
-            return game.currentScreens.includes("game") && !game.currentScreens.includes("overlay");
+        }, (game, prevScreens) => {
+            return prevScreens.includes("game") && !prevScreens.includes("overlay");
+        });
+
+        this.menuButton = new Button(this.width - 100, 0, 100, 50, (game: ColonyCraft) => {
+            game.currentScreens.push("pause", "overlay");
+            game.simulation.toggleRunning(game, false);
+        }, (game, prevScreens) => {
+            return prevScreens.includes("game") && !prevScreens.includes("overlay");
         });
 
         game.mouse.registerClickable(this.statsButton);
+        game.mouse.registerClickable(this.menuButton);
     }
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
@@ -33,8 +42,10 @@ export class UIHUD extends Screen {
         //Draw Storage HUD
         game.draw.sprite(ctx, "storageSmall", 104, 4, 16, 16);
         const storageColor = inventory.storageUsed < inventory.storageCapacity ? inventory.storageUsed < inventory.storageCapacity * 2 / 3 ? '#00ff00' : '#ffff00' : '#ff0000';
-        if (inventory.storageCapacity - inventory.storageUsed >= 0) game.draw.text(`${game.draw.toShortNumber(inventory.storageCapacity - inventory.storageUsed)}`, 124, 6, 14, storageColor);
-        else game.draw.text(`-${game.draw.toShortNumber(Math.abs(inventory.storageCapacity - inventory.storageUsed))}`, 124, 6, 14, storageColor);
+        const preciseStorage = game.colony.research.technologies.storage1.unlocked;
+        if (inventory.storageCapacity - inventory.storageUsed >= 0 && preciseStorage) game.draw.text(`${game.draw.toShortNumber(inventory.storageCapacity - inventory.storageUsed)}`, 124, 6, 14, storageColor);
+        else if (preciseStorage) game.draw.text(`-${game.draw.toShortNumber(Math.abs(inventory.storageCapacity - inventory.storageUsed))}`, 124, 6, 14, storageColor);
+        else game.draw.text(`${(inventory.storageUsed / inventory.storageCapacity) < 1 / 3 ? "A lot" : (inventory.storageUsed / inventory.storageCapacity) < 2 / 3 ? "Some" : (inventory.storageUsed / inventory.storageCapacity) < 1 ? "A little" : "None"}`, 124, 6, 14, storageColor);
 
         //Draw Land HUD
         game.draw.sprite(ctx, "landSmall", 104, 28, 16, 16);
@@ -65,6 +76,17 @@ export class UIHUD extends Screen {
         game.draw.sprite(ctx, "workersSmall", 296, 28, 16, 16)
         game.draw.text(`${game.draw.toShortNumber(game.colony.population.adults - game.colony.jobs.workersAssigned)}`, 316, 30, 14, "#6495ED");
         //game.draw.text(`1.11m`, 316, 30, 14, "#6495ED");
+
+        //Draw Stats Icon
+        game.draw.sprite(ctx, "stats", Math.floor(game.width - 142), 8, 32, 32);
+
+        //Draw Menu Button
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.roundRect(this.width - 40, 10, 30, 5, 3);
+        ctx.roundRect(this.width - 40, 20, 30, 5, 3);
+        ctx.roundRect(this.width - 40, 30, 30, 5, 3);
+        ctx.fill();
 
         game.draw.renderText(ctx);
     }

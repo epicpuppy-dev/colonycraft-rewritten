@@ -1,3 +1,4 @@
+import { version } from "../../../version";
 import { ColonyCraft } from "../../ColonyCraft";
 import { Screen } from "../Screen";
 import { Button } from "../ui/Button";
@@ -5,7 +6,7 @@ import { ClickHandler } from "../ui/ClickHandler";
 import { ScrollBar } from "../ui/ScrollBar";
 
 export class Overlay2Save extends Screen {
-    private textInput = "abcdefghijklmnopqrstuvwxyz";
+    private textInput = "";
     private blink = 0;
     private cancelButton: Button;
     private saveButton: Button;
@@ -30,10 +31,10 @@ export class Overlay2Save extends Screen {
                 game.save.saves.splice(game.save.saves.indexOf(overwrite), 1);
             }
             let date = new Date();
-            game.save.saves.push({name: this.textInput, id: this.textInput.toLowerCase().replace(" ", ""), size: game.save.toSave.length * 2, year: game.clock.year, timestamp: `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`});
+            game.save.saves.push({name: this.textInput, id: this.textInput.toLowerCase().replace(" ", ""), size: game.save.toSave.length * 2, year: game.clock.year, timestamp: date.toLocaleTimeString([], {year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute:'2-digit'}), version: version});
             window.localStorage.setItem(this.textInput.toLowerCase().replace(/\s/g, ''), game.save.toSave);
-            window.localStorage.setItem("_CCMeta", JSON.stringify({saves: game.save.saves, storage: game.save.storage}));
             game.save.storage += game.save.toSave.length * 2;
+            window.localStorage.setItem("_CCMeta", JSON.stringify({autosave: game.save.autosave, saves: game.save.saves, storage: game.save.storage}));
             game.currentScreens.splice(game.currentScreens.indexOf("save"), 1);
             game.currentScreens.splice(game.currentScreens.indexOf("overlay2"), 1);
         }, (game: ColonyCraft) => game.currentScreens.includes("save"));
@@ -91,7 +92,7 @@ export class Overlay2Save extends Screen {
                     ctx.fillStyle = "#777777";
                 }
                 game.draw.textCenter(save.name, Math.floor(this.width / 4 + areaWidth / 2), Math.floor(this.height / 8 + 50 + 38 * (currentRow - this.rowScroll)), 14, "white");
-                game.draw.textSmallCenter(`Year ${save.year} - ${save.timestamp} - ${(save.size / 1024).toFixed(1)}KB`, Math.floor(this.width / 4 + areaWidth / 2), Math.floor(this.height / 8 + 70 + 38 * (currentRow - this.rowScroll)), 7, "white");
+                game.draw.textSmallCenter(`Year ${save.year} - ${save.timestamp} - ${save.version ? "v" + save.version : "Unknown Version"} - ${(save.size / 1024).toFixed(1)}KB`, Math.floor(this.width / 4 + areaWidth / 2), Math.floor(this.height / 8 + 70 + 38 * (currentRow - this.rowScroll)), 7, "white");
                 ctx.fillRect(Math.floor(this.width / 4 + 20), Math.floor(this.height / 8 + 80 + 38 * (currentRow - this.rowScroll)), Math.floor(this.width / 2 - 64), 2);
                 this.available.push(save.name);
             }
@@ -102,8 +103,9 @@ export class Overlay2Save extends Screen {
         game.draw.text(this.textInput, Math.floor(this.width / 4 + 14), Math.floor(7 * this.height / 8 - 88), 14, "white");
         
         ctx.fillStyle = '#ffffff';
-        if (++this.blink > 5) ctx.fillRect(Math.floor(this.width / 4 + 14 + game.draw.textWidth(this.textInput, 14)), Math.floor(7 * this.height / 8 - 89), 2, 18);
-        if (this.blink > 10) this.blink = 0;
+        this.blink += game.clock.getFrameTime(game);
+        if (this.blink > 400) ctx.fillRect(Math.floor(this.width / 4 + 14 + game.draw.textWidth(this.textInput, 14)), Math.floor(7 * this.height / 8 - 89), 2, 18);
+        if (this.blink > 800) this.blink = 0;
 
         ctx.fillStyle = '#777777';
         const barWidth = (this.width / 2 - 20) * game.save.storage / (4096 * 1024);

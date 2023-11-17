@@ -8,6 +8,7 @@ export class SimulationController {
     }
 
     public toggleRunning (game: ColonyCraft, running: boolean) {
+        if (this.running == running) return;
         this.running = running;
         if (this.running) {
             game.clock.resetTickTime();

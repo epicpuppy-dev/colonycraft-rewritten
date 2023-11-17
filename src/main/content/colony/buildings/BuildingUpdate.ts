@@ -15,8 +15,16 @@ export class BuildingUpdate extends TickingEntity {
         }
 
         const buildings = game.colony.buildings;
-        if (game.colony.jobs.jobs.builder1.workersAssigned == 0) return;
-        let work = Math.max(Math.floor(game.colony.jobs.jobs.builder1.workersAssigned * game.colony.welfare.workModifier), 1);
+
+        // Calculate Work Effort
+        let work = 0;
+        for (const builder of buildings.builders) {
+            work += builder.build(game);
+        }
+
+        if (work == 0) return;
+        work = Math.max(Math.floor(work * game.colony.welfare.workModifier), 1);
+
         for (const key of buildings.buildingPriority) {
             const building = buildings.buildings[key];
             if (building.amount == building.target) continue;

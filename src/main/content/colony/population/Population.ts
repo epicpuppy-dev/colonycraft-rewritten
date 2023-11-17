@@ -7,6 +7,7 @@ export class Population implements Saveable {
     public children: number;
     public adults: number;
     public seniors: number;
+    readonly initial: {b: number, c: number, a: number, s: number};
     private update: PopulationUpdate;
 
     constructor (game: ColonyCraft, babies: number, children: number, adults: number, seniors: number) {
@@ -14,6 +15,7 @@ export class Population implements Saveable {
         this.children = children;
         this.adults = adults;
         this.seniors = seniors;
+        this.initial = {b: babies, c: children, a: adults, s: seniors};
         this.update = new PopulationUpdate(game);
 
         game.save.register(this, "pop");
@@ -29,5 +31,12 @@ export class Population implements Saveable {
         if (!isNaN(parseInt(split[1], 36))) this.children = parseInt(split[1], 36);
         if (!isNaN(parseInt(split[2], 36))) this.adults = parseInt(split[2], 36);
         if (!isNaN(parseInt(split[3], 36))) this.seniors = parseInt(split[3], 36);
+    }
+
+    public newGame() {
+        this.babies = this.initial.b;
+        this.children = this.initial.c;
+        this.adults = this.initial.a;
+        this.seniors = this.initial.s;
     }
 }

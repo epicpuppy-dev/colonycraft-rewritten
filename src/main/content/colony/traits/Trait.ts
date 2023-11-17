@@ -9,11 +9,11 @@ export class Trait extends Unlockable implements Saveable {
     public needed: number;
     public current: number = 0;
     public desc: string[];
-    public prereqs: Unlockable[] = [];
+    public prereqs: string[] = [];
     public unlocked: boolean = false;
     public progress: number = 0;
 
-    constructor (game: ColonyCraft, id: string, name: string, type: "s"|"c"|"p"|"r", needed: number, desc: string[] = [], prereqs: Unlockable[] = []) {
+    constructor (game: ColonyCraft, id: string, name: string, type: "s"|"c"|"p"|"r", needed: number, desc: string[] = [], prereqs: string[] = []) {
         super();
         this.id = id;
         this.name = name;
@@ -35,5 +35,11 @@ export class Trait extends Unlockable implements Saveable {
         if (!isNaN(parseFloat(split[0]))) this.progress = parseFloat(split[0]);
         if (split[1] === "1") this.unlocked = true;
         if (!isNaN(parseInt(split[2], 36))) this.current = parseInt(split[2], 36);
+    }
+
+    public newGame() {
+        this.progress = 0;
+        this.unlocked = false;
+        this.current = 0;
     }
 }

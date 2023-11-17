@@ -25,11 +25,9 @@ import { JobData } from "./data/JobData";
 import { LayerPanel } from "./render/layers/LayerPanel";
 import { PanelJobs } from "./render/screens/PanelJobs";
 import { PanelResearch } from "./render/screens/PanelResearch";
-import { OverlayResearch } from "./render/screens/OverlayResearch";
 import { KeyController } from "./controllers/KeyController";
 import { PanelTraits } from "./render/screens/PanelTraits";
 import { UnlockableData } from "./data/UnlockableData";
-import { OverlayTraits } from "./render/screens/OverlayTraits";
 import { PanelBuildings } from "./render/screens/PanelBuildings";
 import { BuildingData } from "./data/BuildingData";
 import { OverlayBuildings } from "./render/screens/OverlayBuildings";
@@ -43,6 +41,9 @@ import { OverlayPause } from "./render/screens/OverlayPause";
 import { LayerOverlay2 } from "./render/layers/LayerOverlay2";
 import { Overlay2Save } from "./render/screens/Overlay2Save";
 import { Overlay2Load } from "./render/screens/Overlay2Load";
+import { ScreenLoading } from "./render/screens/ScreenLoading";
+import { ScreenResearch } from "./render/screens/ScreenResearch";
+import { OverlayWin } from "./render/screens/OverlayWin";
 
 export class ColonyCraft {
     public width: number;
@@ -71,6 +72,8 @@ export class ColonyCraft {
         //Set width and height
         this.width = window.innerWidth;
         this.height = window.innerHeight;
+        //this.width = 1280;
+        //this.height = 720;
 
         //Create canvas
         this.canvas = document.createElement('canvas');
@@ -82,12 +85,15 @@ export class ColonyCraft {
         this.canvas.style.top = '0';
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
 
-        //Initalize Save Manager
-        this.save = new SaveManager();
-
         //Initialize Entity Ticker
         this.entities = new EntityController();
-        this.key = new KeyController();
+
+        //Initalize Save Manager
+        this.save = new SaveManager(this);
+
+        //Initialize Controls
+        this.mouse = new MouseController(this);
+        this.key = new KeyController(this);
 
         //Initialize Renderers
         this.renderer = new ScreenController(this);
@@ -95,9 +101,6 @@ export class ColonyCraft {
         this.fontSmall = new TextRenderer(this, FontData.small, fontImageSmall, 7, 9, 1);
         this.sprites = new SpriteRenderer();
         this.draw = new RenderUtil(this, this.font, this.fontSmall, this.sprites);
-
-        //Initialize Controls
-        this.mouse = new MouseController();
 
         //Initialize Colony
         this.colony = new Colony(this);
@@ -107,7 +110,7 @@ export class ColonyCraft {
         this.stats = new StatsManager(this);
 
         //Add data
-        UnlockableData.addUnlockables(this);
+        UnlockableData.addUnlockables(this, this.colony.research, this.colony.traits);
         InventoryData.addItems(this, this.colony.inventory);
         LootData.addLoot(this.loot, this.colony.inventory);
         RecipeData.addRecipes(this, this.colony.recipes);
@@ -122,6 +125,8 @@ export class ColonyCraft {
         //Initialize Screens
         this.renderer.addLayerWithScreens(new LayerGame(this), [
             new ScreenTitle(this, this.width, this.height),
+            new ScreenLoading(this, this.width, this.height),
+            new ScreenResearch(this, this.width, this.height),
         ]);
         this.renderer.addLayerWithScreens(new LayerPanel(this), [
             new PanelJobs(this, this.width, this.height),
@@ -136,17 +141,18 @@ export class ColonyCraft {
         ]);
         this.renderer.addLayerWithScreens(new LayerOverlay(this), [
             new OverlayPause(this, this.width, this.height),
-            new OverlayInventory(this, this.width, this.height), 
-            new OverlayResearch(this, this.width, this.height),
-            new OverlayTraits(this, this.width, this.height),
+            new OverlayInventory(this, this.width, this.height),
             new OverlayBuildings(this, this.width, this.height),
             new OverlayStats(this, this.width, this.height),
+            new OverlayWin(this, this.width, this.height),
         ]);
         this.renderer.addLayerWithScreens(new LayerOverlay2(this), [
             new Overlay2Save(this, this.width, this.height),
             new Overlay2Load(this, this.width, this.height)
         ]);
-        this.currentScreens.push("title");
+
+        //set screen to loading
+        this.currentScreens.push("loading");
 
         SpriteData.addSprites(this.sprites);
 
@@ -161,6 +167,7 @@ export class ColonyCraft {
 
     public tick() {
         if (!this.simulation.running) return;
+        if (this.colony.jobs.workersAssigned == 0 && this.clock.dayTotal == 0) return;
         this.clock.dayTotal++;
         if (++this.clock.day > 30) {
             this.clock.day = 1;

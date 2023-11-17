@@ -1,5 +1,6 @@
 import { ColonyCraft } from "../../../ColonyCraft";
 import { Saveable } from "../../../saving/Saveable";
+import { Builder } from "./Builder";
 import { Building } from "./Building";
 import { BuildingUpdate } from "./BuildingUpdate";
 
@@ -11,6 +12,7 @@ export class BuildingManager implements Saveable {
     public buildingPriority: string[] = [];
     public queueSize: number = 0;
     public workLeft: number = 0;
+    public builders: Builder[] = [];
     private update: BuildingUpdate;
 
     constructor (game: ColonyCraft) {
@@ -25,6 +27,10 @@ export class BuildingManager implements Saveable {
         this.buildingPriority.sort((a, b) => {
             return this.buildings[a].priority - this.buildings[b].priority;
         });
+    }
+
+    public addBuilder (builder: Builder) {
+        this.builders.push(builder);
     }
 
     public queueBuilding (game: ColonyCraft, building: Building, amount: number) {
@@ -97,5 +103,13 @@ export class BuildingManager implements Saveable {
         if (!isNaN(parseInt(split[2], 36))) this.landPending = parseInt(split[2], 36);
         if (!isNaN(parseInt(split[3], 36))) this.queueSize = parseInt(split[3], 36);
         if (!isNaN(parseInt(split[4], 36))) this.workLeft = parseInt(split[4], 36);
+    }
+
+    public newGame() {
+        this.landMax = 10;
+        this.landUsed = 0;
+        this.landPending = 0;
+        this.queueSize = 0;
+        this.workLeft = 0;
     }
 }

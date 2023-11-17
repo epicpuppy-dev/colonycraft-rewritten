@@ -6,7 +6,7 @@ export class LootTable {
     private items: {weight: number, item: Item | null, amount: number}[];
     private totalWeight: number;
 
-    constructor (id: string, rolls: number, items: {weight: number, item: Item, amount: number}[]) {
+    constructor (id: string, rolls: number, items: {weight: number, item: Item | null, amount: number}[]) {
         this.id = id;
         this.rolls = rolls;
         this.items = items;

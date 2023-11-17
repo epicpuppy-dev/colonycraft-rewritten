@@ -1,5 +1,7 @@
 import { ColonyCraft } from "../../../ColonyCraft";
 import { Saveable } from "../../../saving/Saveable";
+import { WelfareItem } from "../inventory/items/WelfareItem";
+import { WelfareModifier } from "./WelfareModifier";
 import { WelfareUpdate } from "./WelfareUpdate";
 
 export class Welfare implements Saveable {
@@ -7,10 +9,14 @@ export class Welfare implements Saveable {
     public morale: number = 0.5;
     public healthModifier: number = 1;
     public workModifier: number = 1;
+    public welfareItems: WelfareItem[] = [];
+    public welfareModifiers: WelfareModifier[] = [];
     private update: WelfareUpdate;
 
     constructor(game: ColonyCraft) {
         this.update = new WelfareUpdate(game);
+        
+        game.save.register(this, "welfare");
     }
 
     public save (): string {
@@ -21,5 +27,18 @@ export class Welfare implements Saveable {
         let split = data.split("-");
         if (!isNaN(parseFloat(split[0]))) this.health = parseFloat(split[0]);
         if (!isNaN(parseFloat(split[1]))) this.morale = parseFloat(split[1]);
+    }
+
+    public newGame() {
+        this.health = 0.5;
+        this.morale = 0.5;
+    }
+
+    public addWelfareItem (item: WelfareItem) {
+        this.welfareItems.push(item);
+    }
+
+    public addWelfareModifier (modifier: WelfareModifier) {
+        this.welfareModifiers.push(modifier);
     }
 }

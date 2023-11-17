@@ -8,7 +8,8 @@ export class PanelResearch extends Screen {
     constructor(game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
         this.researchButton = new Button(0, 50, Math.floor(width / 3), 80, (game: ColonyCraft) => {
-            game.currentScreens.push("research", "overlay");
+            game.currentScreens.push("research");
+            game.currentScreens.splice(game.currentScreens.indexOf("game"), 1);
         }, (game: ColonyCraft) => {
             return game.currentScreens.includes("game") && !game.currentScreens.includes("overlay");
         });
@@ -82,7 +83,7 @@ export class PanelResearch extends Screen {
             }
         } else {
             game.draw.textCenter(`Press '${game.key.actions.openResearch.bindings[0].key}' to select`, Math.floor(this.width / 6), 72, 14, "#FFFFFF");
-            game.draw.textCenter("a new research", Math.floor(this.width / 6), 94, 14, "#FFFFFF");
+            game.draw.textCenter("a new discovery", Math.floor(this.width / 6), 94, 14, "#FFFFFF");
         }
 
         game.draw.renderText(ctx);

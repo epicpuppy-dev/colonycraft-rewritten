@@ -11,6 +11,9 @@ export class JobTicker extends TickingEntity {
     }
 
     public tick(game: ColonyCraft): void {
+        if (this.job.workersAssigned > this.job.maxWorkers(game)) {
+            this.job.unassign(game, this.job.workersAssigned - this.job.maxWorkers(game));
+        }
         this.job.tick(game);
     }
 }
