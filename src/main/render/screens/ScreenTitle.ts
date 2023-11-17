@@ -36,7 +36,7 @@ export class ScreenTitle extends Screen {
 
         game.draw.textCenter("Start", Math.floor(this.width / 2), Math.floor(this.height / 2), 28, "white");
         game.draw.textCenter("Load Game", Math.floor(this.width / 2), Math.floor(this.height / 2 + 70), 28, "white");
-        game.draw.textCenter("Settings", Math.floor(this.width / 2), Math.floor(this.height / 2 + 140), 28, "white");
+        //game.draw.textCenter("Settings", Math.floor(this.width / 2), Math.floor(this.height / 2 + 140), 28, "white");
         game.draw.text("v" + version, 10, this.height - 20, 14, "white");
         game.draw.renderText(ctx);
     }
