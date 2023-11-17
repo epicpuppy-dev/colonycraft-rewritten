@@ -90,7 +90,7 @@ export class Graph {
             ctx.moveTo(this.x, this.y + i * this.height / this.gridlinesY);
             ctx.lineTo(this.x + this.width, this.y + i * this.height / this.gridlinesY);
             ctx.stroke();
-            game.draw.textSmall(labels[i], this.x - game.draw.textSmallWidth(labels[i], 7) - 6, this.y + this.height - i * this.height / this.gridlinesY - 4, 7, this.colors.text);
+            game.draw.textSmall(labels[i], this.x - game.draw.textSmallWidth(labels[i], 7) - 6, Math.floor(this.y + this.height - i * this.height / this.gridlinesY - 4), 7, this.colors.text);
         }
         
         //array storing y values already rendered
