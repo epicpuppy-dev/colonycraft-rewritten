@@ -26,7 +26,7 @@ export class Tree {
     public processTree(): void {
         this.processNodes();
         this.rankNodes();
-        this.orderNodes();
+        this.orderNodes(10);
         this.positionNodes();
         this.processRequirements();
     }
@@ -88,7 +88,7 @@ export class Tree {
         this.maxRank = rank;
     }
 
-    private orderNodes(): void {
+    private orderNodes(times: number = 3): void {
         this.nodeList = [];
         //add base nodes first
         for (let id in this.nodes) {
@@ -117,7 +117,7 @@ export class Tree {
 
         //sort nodes by pos index
         //pos index = ([average index of all prereqs] / [max index of all prereqs] + [average index of all postreqs] / [max index of all postreqs]) / 2
-        for (let j = 0; j < 3; j++) {
+        for (let j = 0; j < times; j++) {
             //  assign each node a subrank and subtotal
             let subRank: number[] = new Array(this.maxRank).fill(0);
             for (let id of this.nodeList) {
@@ -141,6 +141,16 @@ export class Tree {
                 if (totalNodes == 0) {totalNodes = 1; totalPos = 0;}
 
                 node.priority = totalPos / totalNodes;
+
+                //sort list of prereqs
+                node.prereqs.sort((a, b) => {
+                    return this.nodes[a].subrank - (this.nodes[a].subtotal - 1) / 2 - this.nodes[b].subrank - (this.nodes[b].subtotal - 1) / 2;
+                });
+
+                //sort list of postreqs
+                node.postreqs.sort((a, b) => {
+                    return this.nodes[a].subrank - (this.nodes[a].subtotal - 1) / 2 - this.nodes[b].subrank - (this.nodes[b].subtotal - 1) / 2;
+                });
             }
             this.nodeList.sort((a, b) => {
                 return this.nodes[a].priority - this.nodes[b].priority;
@@ -235,27 +245,13 @@ export class Tree {
         for (let id of this.nodeList) {
             const node = this.nodes[id];
             let i = 0
-            let offsetLeft = node.postreqs.length * 2;
+            let offsetLeft = (node.postreqs.length - 1) * 2;
             for (let postreq of node.postreqs) {
                 let postnode = this.nodes[postreq];
                 if (postnode.rank - 1 != node.rank) {
                     let prevX = node.pos[0] - offsetLeft + i * 4;
                     for (let r = node.rank; r < postnode.rank; r++) {
-                        let x: number;
-                        if (r == postnode.rank - 1) {
-                            x = postnode.pos[0] - postnode.prereqs.length * 2 + postnode.prereqs.indexOf(node.id) * 4;
-                        } else {
-                            //find nearest available gap in rank
-                            let nearestGap: number;
-                            if (this.subRanks[r + 1] % 2 == 0) nearestGap = Math.floor((prevX + SPACING[0] / 2 - this.width / 2) / SPACING[0]);
-                            else nearestGap = Math.floor((prevX - this.width / 2) / SPACING[0]) + 0.5;
-                            if (gapCurrent[r][nearestGap]) gapCurrent[r][nearestGap]++;
-                            else gapCurrent[r][nearestGap] = 1;
-
-                            //find the x value of the gap
-                            if (!gapTotals[r][nearestGap]) gapTotals[r][nearestGap] = 1;
-                            x = nearestGap * SPACING[0] + this.width / 2 - (gapTotals[r][nearestGap] - 1) * 2 + (gapCurrent[r][nearestGap] - 1) * 4;
-                        }
+                        let x: number = this.findNearestGap(node, postnode, r, prevX, gapCurrent, gapTotals);
 
                         //determine if you can combine several lines on the same y level
                         let newXRange: [number, number] = [Math.round(prevX) + 0.5, Math.round(x) + 0.5];
@@ -323,7 +319,7 @@ export class Tree {
         for (let id of this.nodeList) {
             const node = this.nodes[id];
             let i = 0
-            let offsetLeft = node.postreqs.length * 2;
+            let offsetLeft = (node.postreqs.length - 1) * 2;
             for (let postreq of node.postreqs) {
                 let postnode = this.nodes[postreq];
 
@@ -331,21 +327,7 @@ export class Tree {
                     let prevX = node.pos[0] - offsetLeft + i * 4;
                     let points: [number, number][] = [[Math.round(prevX) + 0.5, Math.round(node.pos[1] + Tree.NODE_SIZE[1] / 2) + 0.5]];
                     for (let r = node.rank; r < postnode.rank; r++) {
-                        let x: number;
-                        if (r == postnode.rank - 1) {
-                            x = postnode.pos[0] - postnode.prereqs.length * 2 + postnode.prereqs.indexOf(node.id) * 4;
-                        } else {
-                            //find nearest available gap in rank
-                            let nearestGap: number;
-                            if (this.subRanks[r + 1] % 2 == 0) nearestGap = Math.floor((prevX + SPACING[0] / 2 - this.width / 2) / SPACING[0]);
-                            else nearestGap = Math.floor((prevX - this.width / 2) / SPACING[0]) + 0.5;
-                            if (gapCurrent[r][nearestGap]) gapCurrent[r][nearestGap]++;
-                            else gapCurrent[r][nearestGap] = 1;
-
-                            //find the x value of the gap
-                            if (!gapTotals[r][nearestGap]) gapTotals[r][nearestGap] = 1;
-                            x = nearestGap * SPACING[0] + this.width / 2 - (gapTotals[r][nearestGap] - 1) * 2 + (gapCurrent[r][nearestGap] - 1) * 4;
-                        }
+                        let x: number = this.findNearestGap(node, postnode, r, prevX, gapCurrent, gapTotals);
 
                         //find the y level of the line
                         let yLevel = 0;
@@ -397,6 +379,27 @@ export class Tree {
                 }
                 i++;
             }
+        }
+    }
+
+    private findNearestGap (node: Node, postnode: Node, r: number, prevX: number, gapCurrent: {[key: number]: number}[], gapTotals: {[key: number]: number}[]): number {
+        const SPACING: [number, number] = [Tree.NODE_SIZE[0] + Tree.NODE_SPACING[0], Tree.NODE_SIZE[1] + Tree.NODE_SPACING[1]];
+        if (r == postnode.rank - 1) {
+            return postnode.pos[0] - postnode.prereqs.length * 2 + postnode.prereqs.indexOf(node.id) * 4;
+        //if the line is to the right or left of all nodes in the next rank, just draw a straight line down
+        } else if (prevX > this.width / 2 + (this.subRanks[r + 1]) / 2 * -SPACING[0] && prevX < this.width / 2 + (this.subRanks[r + 1]) / 2 * SPACING[0]) {
+            //find nearest available gap in rank
+            let nearestGap: number;
+            if (this.subRanks[r + 1] % 2 == 0) nearestGap = Math.floor((prevX + SPACING[0] / 2 - this.width / 2) / SPACING[0]);
+            else nearestGap = Math.floor((prevX - this.width / 2) / SPACING[0]) + 0.5;
+            if (gapCurrent[r][nearestGap]) gapCurrent[r][nearestGap]++;
+            else gapCurrent[r][nearestGap] = 1;
+
+            //find the x value of the gap
+            if (!gapTotals[r][nearestGap]) gapTotals[r][nearestGap] = 1;
+            return nearestGap * SPACING[0] + this.width / 2 - (gapTotals[r][nearestGap] - 1) * 2 + (gapCurrent[r][nearestGap] - 1) * 4;
+        } else {
+            return prevX;
         }
     }
 }
