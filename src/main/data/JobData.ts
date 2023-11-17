@@ -24,6 +24,7 @@ export class JobData {
             new ResourceJob(game, "woodcutter", "Woodcutter", 0, 3, tables.woodcutter, () => techs.chopping1.unlocked, () => jobs.jobs.woodcutter.workersAssigned + items.tool1.amount, "Cost: 1 primitive tool", {item: items.tool1, amount: 1}),
             new ResourceJob(game, "digger", "Digger", 0, 8, tables.digger, () => techs.digging1.unlocked, () => jobs.jobs.digger.workersAssigned + items.tool1.amount, "Cost: 1 primitive tool", {item: items.tool1, amount: 1}),
             new ResourceJob(game, "water", "Water Gatherer", 0, 12, tables.water, () => techs.water1.unlocked, () => jobs.jobs.water.workersAssigned + Math.floor(items.bucket1.amount / 2), "Cost: 2 wooden buckets", {item: items.bucket1, amount: 2}),
+            new ResourceJob(game, "well", "Well Worker", 0, 20, tables.well, () => techs.water2.unlocked, () => buildings.well1.amount, "Req: 1 water well"),
         ]);
         //  - Food
         jobs.addGroupWithJobs(new JobGroup(game, "foodGather", "Food Gatherers", 10), [

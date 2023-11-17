@@ -17,12 +17,15 @@ export class UnlockableData {
         // Trait Tech Line
         research.registerTechnology(new Technology(game, "culture1", "Carving", new TechPoints(200), ["Unlocks the Carver Job", "", '"Carving wood into shapes"'], ["tools1", "chopping1"], "progress"));
 
-        // 'Core' Techs
+        // 'Core' Tech Lines
         research.registerTechnology(new Technology(game, "survival1", "Basic Survivalibility", new TechPoints(50), ['"The act of not dying"'], [], "progress"));
         research.registerTechnology(new Technology(game, "crafting1", "Basic Crafting", new TechPoints(50), ["Unlocks Crafting Jobs", "New recipes will unlock a new job that crafts it", "", '"Combine stick with stick to make big stick"'], [], "progress"));
         research.registerTechnology(new Technology(game, "build1", "Basic Construction", new TechPoints(150), ["Unlocks the Builder Job", "", '"The idea that some things are more stable than others"'], ["crafting1", "survival1"], "progress"));
         research.registerTechnology(new Technology(game, "build2", "Intermediate Construction", new TechPoints(500, 300, 200), ["Allows the building of more sturdy buildings", "", '"W A L L"'], ["physics1", "build1", "planks1"]));
         research.registerTechnology(new Technology(game, "farming1", "Basic Farming", new TechPoints(500, 250), ["Unlocks Farming Buildings and Jobs", "New crops will unlock a new job and building", "", '"A sustainable source of food"'], ["tools1", "survival1", "math1"], "food"));
+
+        // Monument Tech Line
+        research.registerTechnology(new Technology(game, "monument1", "Monumentism", new TechPoints(7500, 6000, 4000, 4000), ["Unlocks the Bronze Monument Building", "", '"To commemorate our accomplishments"'], ["bronze1"]));
 
         // Exploration Tech Line
         research.registerTechnology(new Technology(game, "explore1", "Exploration", new TechPoints(100), ["Unlocks the Scout Job", "", '"Exploring the area around us"'], ["survival1"], "progress"));
@@ -36,6 +39,7 @@ export class UnlockableData {
         research.registerTechnology(new Technology(game, "hunting1", "Endurance Hunting", new TechPoints(300), ["Unlocks the Hunter Job", "Risky, but more rewarding than fishing", "", '"Hunting animals for food"'], ["explore1"], "food"));
         research.registerTechnology(new Technology(game, "hunting2", "Spear Hunting", new TechPoints(800, 400), ["Unlocks the Spear Hunter Job", "", '"A much more effective way of hunting"'], ["hunting1", "tools2", "math1"], "food"));
         research.registerTechnology(new Technology(game, "water1", "Water Gathering", new TechPoints(300), ["Unlocks the Water Gatherer Job", "", '"By training foragers to use buckets, they can collect more water"'], ["buckets1", "explore1"]));
+        research.registerTechnology(new Technology(game, "water2", "Water Wells", new TechPoints(2500, 1500, 1000), ["Unlocks the Water Well Bulding", "", '"Fresh water can simply be found by digging deep"'], ["water1", "build2", "bricks1"]));
 
         // Cooking Tech Line
         research.registerTechnology(new Technology(game, "cooking1", "Cooking", new TechPoints(200), ["Unlocks the Cooking Jobs", "", '"Cooking food makes it taste better"'], ["survival1", "fire1"], "food"));
@@ -96,8 +100,5 @@ export class UnlockableData {
         development.registerTrait(new WelfareTrait(game, "art", "Artistry", "c", 750, 0, 1, ["Creating visually pleasing things", "+0.1% base morale per tick"], ["culture1"]));
         development.registerTrait(new WelfareTrait(game, "decor", "Decoration", "c", 1500, 0, 1, ["Placing nice things around common areas", "+0.1% base morale per tick"], ["art", "community"]));
         development.registerTrait(new WelfareTrait(game, "intricacy", "Intricacy", "c", 3500, 0, 2, ["Paying attention to fine details and intricacies", "+0.2% base morale per tick"], ["decor", "hope"]));
-
-        // Other Unlockables
-        research.registerTechnology(new Technology(game, "test8", "???", new TechPoints(99999, 99999, 99999, 99999), ['"Does... something?"'], ["physics1", "chemistry1"]));
     }
 }

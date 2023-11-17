@@ -42,9 +42,9 @@ export class RenderUtil {
         return this.fontSmall.getWidth(text, size);
     }
 
-    renderText(ctx: OffscreenCanvasRenderingContext2D): void {
-        this.font.renderAll(ctx);
-        this.fontSmall.renderAll(ctx);
+    renderText(ctx: OffscreenCanvasRenderingContext2D, alpha?: number): void {
+        this.font.renderAll(ctx, alpha);
+        this.fontSmall.renderAll(ctx, alpha);
     }
 
     sprite(ctx: OffscreenCanvasRenderingContext2D, name: string, x: number, y: number, width: number, height: number): void {

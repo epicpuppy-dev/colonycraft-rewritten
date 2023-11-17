@@ -41,6 +41,10 @@ export class LootData {
             {weight: 4, item: items.muddyWater, amount: 1},
         ]));
 
+        manager.addLoot(new LootTable("well", 1, [
+            {weight: 1, item: items.freshWater, amount: 1}
+        ]));
+
         manager.addLoot(new LootTable("campfire", 1, [
             {weight: 3, item: items.campfire, amount: 1},
             {weight: 1, item: null, amount: 0}

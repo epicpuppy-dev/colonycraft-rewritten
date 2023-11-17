@@ -43,6 +43,7 @@ import { Overlay2Save } from "./render/screens/Overlay2Save";
 import { Overlay2Load } from "./render/screens/Overlay2Load";
 import { ScreenLoading } from "./render/screens/ScreenLoading";
 import { ScreenResearch } from "./render/screens/ScreenResearch";
+import { OverlayWin } from "./render/screens/OverlayWin";
 
 export class ColonyCraft {
     public width: number;
@@ -143,6 +144,7 @@ export class ColonyCraft {
             new OverlayInventory(this, this.width, this.height),
             new OverlayBuildings(this, this.width, this.height),
             new OverlayStats(this, this.width, this.height),
+            new OverlayWin(this, this.width, this.height),
         ]);
         this.renderer.addLayerWithScreens(new LayerOverlay2(this), [
             new Overlay2Save(this, this.width, this.height),
