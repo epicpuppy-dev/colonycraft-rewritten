@@ -15,8 +15,8 @@ export class MouseController {
 
     constructor(game: ColonyCraft) {
         document.addEventListener('mousemove', (event) => {
-            this.x = event.clientX;
-            this.y = event.clientY;
+            this.x = event.clientX / game.scaleX;
+            this.y = event.clientY / game.scaleY;
         });
 
         document.addEventListener('mousedown', (event) => { 

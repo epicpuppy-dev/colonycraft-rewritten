@@ -96,12 +96,12 @@ export class JobData {
 
         // Discovery Jobs
         jobs.addGroupWithJobs(new JobGroup(game, "discover", "Discovery", 110), [
-            new Job(game, "invention1", "Thinker", 20, () => true, () => Infinity, "Generates Invention Discoveries"),
-            new Job(game, "math1", "Counter", 20, () => techs.math1.unlocked, () => Infinity, "Generates Math Discoveries"),
-            new Job(game, "physics1", "Motion Tester", 20, () => techs.physics1.unlocked, () => Infinity, "Generates Physics Discoveries"),
-            new Job(game, "chemistry1", "Rock Observer", 20, () => techs.chemistry1.unlocked, () => Infinity, "Generates Chemistry Discoveries"),
-            new Job(game, "biology1", "Biologist", 20, () => false, () => Infinity, "Generates Biology Discoveries"),
-            new Job(game, "quantum1", "Quantum Scientist", 20, () => false, () => Infinity, "Generates Quantum Discoveries"),
+            new Job(game, "invention1", "Thinker", 20, () => true, () => Math.floor(game.colony.population.adults / 6), "Generates Invention Discoveries, Limit: 1 per 6 Workers"),
+            new Job(game, "math1", "Counter", 20, () => techs.math1.unlocked, () => Math.floor(game.colony.population.adults / 8), "Generates Math Discoveries, Limit: 1 per 8 Workers"),
+            new Job(game, "physics1", "Motion Tester", 20, () => techs.physics1.unlocked, () => Math.floor(game.colony.population.adults / 10), "Generates Physics Discoveries, Limit: 1 per 10 Workers"),
+            new Job(game, "chemistry1", "Rock Observer", 20, () => techs.chemistry1.unlocked, () => Math.floor(game.colony.population.adults / 10), "Generates Chemistry Discoveries, Limit: 1 per 10 Workers"),
+            new Job(game, "biology1", "Biologist", 20, () => false, () => Math.floor(game.colony.population.adults / 10), "Generates Biology Discoveries, Limit: 1 per 10 Workers"),
+            new Job(game, "quantum1", "Quantum Scientist", 20, () => false, () => Math.floor(game.colony.population.adults / 12), "Generates Quantum Discoveries, Limit: 1 per 12 Workers"),
         ]);
 
         // Development Jobs

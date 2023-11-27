@@ -23,7 +23,7 @@ export class Colony {
 
     constructor (game: ColonyCraft) {
         this.inventory = new Inventory(game);
-        this.population = new Population(game, 2, 4, 10, 0);
+        this.population = new Population(game, 2, 5, 12, 1);
         this.jobs = new JobManager(game);
         this.research = new ResearchManager(game);
         this.traits = new TraitManager(game);

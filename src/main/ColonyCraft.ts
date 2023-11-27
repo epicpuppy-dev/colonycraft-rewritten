@@ -60,11 +60,15 @@ export class ColonyCraft {
     public key: KeyController;
     public stats: StatsManager;
     public save: SaveManager;
+    public scaleX: number = 0.5;
+    public scaleY: number = 0.5;
 
     private font: TextRenderer;
     private fontSmall: TextRenderer;
-    private canvas: HTMLCanvasElement;
-    private ctx: CanvasRenderingContext2D;
+    private canvas: OffscreenCanvas;
+    private displayCanvas: HTMLCanvasElement;
+    private ctx: OffscreenCanvasRenderingContext2D;
+    private displayCtx: CanvasRenderingContext2D;
     private renderer: ScreenController;
     private sprites: SpriteRenderer;
 
@@ -73,17 +77,24 @@ export class ColonyCraft {
         this.width = window.innerWidth;
         this.height = window.innerHeight;
         //this.width = 1280;
-        //this.height = 720;
+        //this.height = 640;
 
-        //Create canvas
-        this.canvas = document.createElement('canvas');
-        this.canvas.width = this.width;
-        this.canvas.height = this.height;
-        document.body.appendChild(this.canvas);
-        this.canvas.style.position = 'absolute';
-        this.canvas.style.left = '0';
-        this.canvas.style.top = '0';
-        this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+        //Create rendering canvas
+        this.canvas = new OffscreenCanvas(this.width, this.height);
+        this.ctx = this.canvas.getContext('2d') as OffscreenCanvasRenderingContext2D;
+
+        //Create display canvas
+        this.displayCanvas = document.createElement('canvas');
+        this.displayCanvas.width = window.innerWidth;
+        this.displayCanvas.height = window.innerHeight;
+        this.displayCanvas.style.position = "absolute";
+        this.displayCanvas.style.left = "0";
+        this.displayCanvas.style.top = "0";
+        this.displayCtx = this.displayCanvas.getContext('2d') as CanvasRenderingContext2D;
+        document.body.appendChild(this.displayCanvas);
+
+        this.scaleX = this.displayCanvas.width / this.width;
+        this.scaleY = this.displayCanvas.height / this.height;
 
         //Initialize Entity Ticker
         this.entities = new EntityController();
@@ -192,6 +203,14 @@ export class ColonyCraft {
 
         //draw to canvas
         this.ctx.drawImage(this.renderer.canvas, 0, 0);
+
+        //draw canvas to display canvas
+        if (this.scaleX == Math.floor(this.scaleX) && this.scaleY == Math.floor(this.scaleY)) {
+            this.displayCtx.imageSmoothingEnabled = false;
+        } else {
+            this.displayCtx.imageSmoothingEnabled = true;
+        }
+        this.displayCtx.drawImage(this.canvas, 0, 0, this.displayCanvas.width, this.displayCanvas.height);
     }
 
     public resize() {
