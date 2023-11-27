@@ -90,8 +90,8 @@ export class JobData {
 
         // Building Jobs
         jobs.addGroupWithJobs(new JobGroup(game, "build", "Construction", 100), [
-            new BuilderJob(game, "builder1", "Primitive Builder", 10, 1, () => techs.build1.unlocked, () => Infinity, "Builds basic structures, 1 work per tick"),
-            new BuilderJob(game, "builder2", "Basic Builder", 10, 5, () => techs.builder2.unlocked, () => jobs.jobs.builder2.workersAssigned + items.tool2.amount, "Builds basic structures, 5 work per tick, Cost: 1 basic tool", {item: items.tool2, amount: 1}),
+            new BuilderJob(game, "builder1", "Primitive Builder", 10, 1, () => techs.build1.unlocked, () => Infinity, "Builds basic structures, 1 work per day"),
+            new BuilderJob(game, "builder2", "Basic Builder", 10, 5, () => techs.builder2.unlocked, () => jobs.jobs.builder2.workersAssigned + items.tool2.amount, "Builds basic structures, 5 work per day, Cost: 1 basic tool", {item: items.tool2, amount: 1}),
         ]);
 
         // Discovery Jobs

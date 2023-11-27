@@ -47,8 +47,8 @@ export class UIHUD extends Screen {
 
         //Draw Land HUD
         game.draw.sprite(ctx, "landSmall", 104, 28, 16, 16);
-        //game.draw.text(`${game.draw.toShortNumber(game.colony.buildings.landMax - game.colony.buildings.landPending)}/${game.draw.toShortNumber(game.colony.buildings.landMax)}`, 124, 30, 14, "#ffffff");
-        game.draw.text(`2.22m/2.22m`, 124, 30, 14, "#ffffff");
+        game.draw.text(`${game.draw.toShortNumber(game.colony.buildings.landMax - game.colony.buildings.landPending)}/${game.draw.toShortNumber(game.colony.buildings.landMax)}`, 124, 30, 14, "#ffffff");
+        //game.draw.text(`2.22m/2.22m`, 124, 30, 14, "#ffffff");
 
         //Draw Welfare HUD
         game.draw.sprite(ctx, "healthSmall", Math.floor(this.width) - 234, 4, 16, 16);

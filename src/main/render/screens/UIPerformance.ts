@@ -8,7 +8,7 @@ export class UIPerformance extends Screen {
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
         game.draw.textSmall(`FPS: ${game.clock.getFPS(game).toFixed(0)}`, 6, 6, 7, "white");
-        game.draw.textSmall(`TPS: ${game.clock.getTPS(game).toFixed(2)}`, 6, 16, 7, "white");
+        game.draw.textSmall(`DPS: ${game.clock.getTPS(game).toFixed(2)}`, 6, 16, 7, "white");
         game.draw.renderText(ctx);
     }
 
