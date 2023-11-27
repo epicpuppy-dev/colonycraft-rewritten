@@ -1,5 +1,6 @@
 import { ColonyCraft } from "../../../ColonyCraft";
 import { TickingEntity } from "../../TickingEntity";
+import { FluidItem } from "../inventory/items/FluidItem";
 import { FoodItem } from "../inventory/items/FoodItem";
 
 export class WelfareUpdate extends TickingEntity {
@@ -58,12 +59,14 @@ export class WelfareUpdate extends TickingEntity {
             moraleChange -= (foodRequired - foodConsumed) * 6;
         }
 
+        welfare.foodSatisfaction = Math.min(foodConsumed / foodRequired, 1);
+
         //consume fluids
         const fluidsRequired = Math.ceil(game.colony.population.adults + game.colony.population.children / 2 + game.colony.population.seniors / 2 + game.colony.population.babies / 5);
-        const fluidsAvailable: FoodItem[] = [];
+        const fluidsAvailable: FluidItem[] = [];
         for (const item in inventory.items) {
-            if (inventory.items[item] instanceof FoodItem) {
-                fluidsAvailable.push(inventory.items[item] as FoodItem);   
+            if (inventory.items[item] instanceof FluidItem) {
+                fluidsAvailable.push(inventory.items[item] as FluidItem);   
             }
         }
         fluidsAvailable.sort((a, b) => b.priority - a.priority);
@@ -81,6 +84,8 @@ export class WelfareUpdate extends TickingEntity {
             healthChange -= (fluidsRequired - fluidsConsumed) * 25;
             moraleChange -= (fluidsRequired - fluidsConsumed) * 8;
         }
+
+        welfare.fluidSatisfaction = Math.min(fluidsConsumed / fluidsRequired, 1);
 
         // Welfare Items and Modifiers
         const itemsMax = Math.ceil(game.colony.population.adults + game.colony.population.children / 2 + game.colony.population.seniors / 2 + game.colony.population.babies / 5);
@@ -101,7 +106,7 @@ export class WelfareUpdate extends TickingEntity {
         // Make health take 3x longer to change
         healthChange /= 3;
 
-        let negativeChangeModifier = Math.max(0, Math.log(game.colony.population.adults + game.colony.population.children / 2 + game.colony.population.seniors / 2 + game.colony.population.babies / 5) / Math.log(100) - (5 / (game.colony.population.adults + game.colony.population.children / 2 + game.colony.population.seniors / 2 + game.colony.population.babies / 5)));
+        let negativeChangeModifier = Math.max(0, 2 * Math.log(game.colony.population.adults + game.colony.population.children / 2 + game.colony.population.seniors / 2 + game.colony.population.babies / 5) / Math.log(100) - (5 / (game.colony.population.adults + game.colony.population.children / 2 + game.colony.population.seniors / 2 + game.colony.population.babies / 5)));
 
         if (healthChange < 0) healthChange *= negativeChangeModifier;
         if (moraleChange < 0) moraleChange *= negativeChangeModifier;

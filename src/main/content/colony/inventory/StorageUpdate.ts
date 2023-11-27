@@ -12,6 +12,8 @@ export class StorageUpdate extends TickingEntity {
         const inventory = game.colony.inventory;
         const buildings = game.colony.buildings;
         inventory.storageCapacity = 10;
+        inventory.foodTotal = 0;
+        inventory.fluidTotal = 0;
         for (let key in this.storageBuildings) {
             inventory.storageCapacity += buildings.buildings[key].amount * this.storageBuildings[key];
         }

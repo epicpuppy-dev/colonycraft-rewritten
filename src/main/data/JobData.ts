@@ -19,8 +19,8 @@ export class JobData {
         // Gathering Jobs
         //  - Basic
         jobs.addGroupWithJobs(new JobGroup(game, "basicGather", "Basic Gatherers", 0), [
-            new ResourceJob(game, "forager", "Forager", 0, 10, tables.forager, () => true, () => Infinity, "Forages for materials and food"),
-            new ResourceJob(game, "gatherer", "Gatherer", 0, 20, tables.gatherer, () => techs.gatherer1.unlocked, () => jobs.jobs.gatherer.workersAssigned + Math.floor(items.basket1.amount / 2), "Cost: 2 basic baskets", {item: items.basket1, amount: 2}),
+            new ResourceJob(game, "forager", "Forager", 0, 8, tables.forager, () => true, () => Infinity, "Forages for materials and food"),
+            new ResourceJob(game, "gatherer", "Gatherer", 0, 16, tables.gatherer, () => techs.gatherer1.unlocked, () => jobs.jobs.gatherer.workersAssigned + Math.floor(items.basket1.amount / 2), "Cost: 2 basic baskets", {item: items.basket1, amount: 2}),
             new ResourceJob(game, "woodcutter", "Woodcutter", 0, 3, tables.woodcutter, () => techs.chopping1.unlocked, () => jobs.jobs.woodcutter.workersAssigned + items.tool1.amount, "Cost: 1 primitive tool", {item: items.tool1, amount: 1}),
             new ResourceJob(game, "digger", "Digger", 0, 8, tables.digger, () => techs.digging1.unlocked, () => jobs.jobs.digger.workersAssigned + items.tool1.amount, "Cost: 1 primitive tool", {item: items.tool1, amount: 1}),
             new ResourceJob(game, "water", "Water Gatherer", 0, 12, tables.water, () => techs.water1.unlocked, () => jobs.jobs.water.workersAssigned + Math.floor(items.bucket1.amount / 2), "Cost: 2 wooden buckets", {item: items.bucket1, amount: 2}),

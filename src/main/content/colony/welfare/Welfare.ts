@@ -7,6 +7,8 @@ import { WelfareUpdate } from "./WelfareUpdate";
 export class Welfare implements Saveable {
     public health: number = 0.5;
     public morale: number = 0.5;
+    public foodSatisfaction: number = 1;
+    public fluidSatisfaction: number = 1;
     public healthModifier: number = 1;
     public workModifier: number = 1;
     public welfareItems: WelfareItem[] = [];

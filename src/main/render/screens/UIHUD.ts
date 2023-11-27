@@ -42,10 +42,8 @@ export class UIHUD extends Screen {
         //Draw Storage HUD
         game.draw.sprite(ctx, "storageSmall", 104, 4, 16, 16);
         const storageColor = inventory.storageUsed < inventory.storageCapacity ? inventory.storageUsed < inventory.storageCapacity * 2 / 3 ? '#00ff00' : '#ffff00' : '#ff0000';
-        const preciseStorage = game.colony.research.technologies.storage1.unlocked;
-        if (inventory.storageCapacity - inventory.storageUsed >= 0 && preciseStorage) game.draw.text(`${game.draw.toShortNumber(inventory.storageCapacity - inventory.storageUsed)}`, 124, 6, 14, storageColor);
-        else if (preciseStorage) game.draw.text(`-${game.draw.toShortNumber(Math.abs(inventory.storageCapacity - inventory.storageUsed))}`, 124, 6, 14, storageColor);
-        else game.draw.text(`${(inventory.storageUsed / inventory.storageCapacity) < 1 / 3 ? "A lot" : (inventory.storageUsed / inventory.storageCapacity) < 2 / 3 ? "Some" : (inventory.storageUsed / inventory.storageCapacity) < 1 ? "A little" : "None"}`, 124, 6, 14, storageColor);
+        const preciseStorage = true;
+        game.draw.text(`${game.draw.toShortNumber(inventory.storageUsed)}/${game.draw.toShortNumber(inventory.storageCapacity)}`, 124, 6, 14, storageColor);
 
         //Draw Land HUD
         game.draw.sprite(ctx, "landSmall", 104, 28, 16, 16);

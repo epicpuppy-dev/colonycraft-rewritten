@@ -3,7 +3,6 @@ import { Item } from "./Item";
 import { InventoryDecay } from "./InventoryDecay";
 import { ItemGroup } from "./ItemGroup";
 import { ColonyCraft } from "../../../ColonyCraft";
-import { Saveable } from "../../../saving/Saveable";
 import { StorageUpdate } from "./StorageUpdate";
 
 export class Inventory {
@@ -11,6 +10,8 @@ export class Inventory {
     public items: { [key: string]: Item } = {};
     public storageCapacity: number = 10;
     public storageUsed: number = 0;
+    public foodTotal: number = 0;
+    public fluidTotal: number = 0;
     public storageUpdate: StorageUpdate;
     public preUpdate: InventoryUpdate;
     private postUpdate: InventoryUpdate;

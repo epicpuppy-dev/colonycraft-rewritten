@@ -6,13 +6,14 @@ export class LootData {
     public static addLoot (manager: LootManager, inventory: Inventory) {
         const items = inventory.items;
         manager.addLoot(new LootTable("forager", 1, [
-            {weight: 26, item: items.sticks, amount: 1},
-            {weight: 18, item: items.rocks, amount: 1},
-            {weight: 15, item: items.leaves, amount: 2},
-            {weight: 24, item: items.berries, amount: 2},
-            {weight: 18, item: items.herbs, amount: 2},
-            {weight: 20, item: items.fiber, amount: 2},
-            {weight: 8, item: items.muddyWater, amount: 1},
+            {weight: 10, item: items.sticks, amount: 1},
+            {weight: 7, item: items.rocks, amount: 1},
+            {weight: 6, item: items.leaves, amount: 2},
+            {weight: 9, item: items.berries, amount: 2},
+            {weight: 7, item: items.herbs, amount: 2},
+            {weight: 7, item: items.fiber, amount: 2},
+            {weight: 10, item: items.muddyWater, amount: 2},
+            {weight: 1, item: items.freshWater, amount: 2}
         ]));
 
         manager.addLoot(new LootTable("gatherer", 1, [

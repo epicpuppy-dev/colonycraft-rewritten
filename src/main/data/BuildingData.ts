@@ -12,8 +12,8 @@ export class BuildingData {
         const techs = game.colony.research.technologies;
         const buildings = game.colony.buildings.buildings;
 
-        manager.addBuilding(new StorageBuilding(game, "storage1", "Storage Pit", 1, 10, 0, 5, ["+5 storage capacity"], [{item: items.sticks, amount: 15}, {item: items.rocks, amount: 5}, {item: items.leaves, amount: 25}], () => techs.storage1.unlocked));
-        manager.addBuilding(new StorageBuilding(game, "storage2", "Storage Hut", 2, 250, 0, 25, ["+50 storage capacity"], [{item: items.planks, amount: 25}, {item: items.rocks, amount: 20}, {item: items.twine, amount: 100}], () => techs.storage2.unlocked));
+        manager.addBuilding(new StorageBuilding(game, "storage1", "Storage Pit", 1, 10, 0, 10, ["+10 storage capacity"], [{item: items.sticks, amount: 15}, {item: items.rocks, amount: 5}, {item: items.leaves, amount: 25}], () => techs.storage1.unlocked));
+        manager.addBuilding(new StorageBuilding(game, "storage2", "Storage Hut", 2, 250, 0, 50, ["+50 storage capacity"], [{item: items.planks, amount: 25}, {item: items.rocks, amount: 20}, {item: items.twine, amount: 100}], () => techs.storage2.unlocked));
 
         manager.addBuilding(new Building(game, "wheat1", "Wheat Patch", 5, 250, 0, ["Allows the growing of wheat"], [{item: items.tool1, amount: 10}, {item: items.fiber, amount: 50}], () => techs.wheat1.unlocked));
         manager.addBuilding(new Building(game, "potato1", "Potato Patch", 5, 250, 0, ["Allows the growing of potatoes"], [{item: items.tool1, amount: 10}, {item: items.fiber, amount: 50}], () => techs.potato1.unlocked));

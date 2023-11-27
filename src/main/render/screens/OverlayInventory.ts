@@ -45,7 +45,7 @@ export class OverlayInventory extends Screen {
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
         const inventory = game.colony.inventory;
-        const preciseInventory = game.colony.research.technologies.storage1.unlocked;
+        const preciseInventory = true;
 
         ctx.fillStyle = '#00000077';
         ctx.fillRect(0, 0, this.width, this.height);
