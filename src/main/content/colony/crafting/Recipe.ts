@@ -15,7 +15,7 @@ export class Recipe {
     public craft (times: number) {
         let maxCrafts = times;
         for (const input of this.inputs) {
-            const amount = input.item.amount;
+            const amount = Math.max(input.item.amount - input.item.min, 0);
             if (amount < input.amount * times) {
                 maxCrafts = Math.min(maxCrafts, Math.floor(amount / input.amount));
             }
@@ -27,10 +27,10 @@ export class Recipe {
 
         if (this.outputs instanceof LootTable) for (const output of this.outputs.roll(maxCrafts)) {
             if (output[0] != null) {
-                output[0].amount += output[1];
+                output[0].add(output[1]);
             }
         } else for (const output of this.outputs) {
-            output.item.amount += output.amount * maxCrafts;
+            output.item.add(output.amount * maxCrafts);
         }
     }
 }

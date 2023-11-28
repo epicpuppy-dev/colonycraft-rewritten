@@ -20,10 +20,10 @@ export class InventoryUpdate extends TickingEntity {
             //inventory.items[key].amount += 100;
             inventory.storageUsed += item.volume * item.amount * 0.001;
             if (item instanceof FoodItem) {
-                inventory.foodTotal += item.amount * item.saturation;
+                inventory.foodTotal += Math.max(0, item.amount - item.min) * item.saturation;
             }
             if (item instanceof FluidItem) {
-                inventory.fluidTotal += item.amount * item.saturation;
+                inventory.fluidTotal += Math.max(0, item.amount - item.min) * item.saturation;
             }
         }
     }

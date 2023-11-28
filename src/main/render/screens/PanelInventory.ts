@@ -18,7 +18,7 @@ export class PanelInventory extends Screen {
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
         ctx.beginPath();
-        ctx.roundRect(-50, 364, Math.floor(this.width / 3 + 50), 80, 10);
+        ctx.roundRect(-50, 364, Math.floor(this.width / 3 + 50), 108, 10);
         ctx.fillStyle = "#222222";
         ctx.fill();
         ctx.strokeStyle = '#777777';
@@ -32,15 +32,16 @@ export class PanelInventory extends Screen {
 
         let consumption = Math.ceil(game.colony.population.adults + game.colony.population.children / 2 + game.colony.population.seniors / 2 + game.colony.population.babies / 5);
         if (welfare.foodSatisfaction == 1) {
-            game.draw.textCenter(`${game.draw.toShortNumber(inventory.foodTotal / consumption)} days of food in storage`, Math.floor(this.width / 6), 396, 14, inventory.foodTotal / consumption > 1 ? inventory.foodTotal / consumption > 10 ? "#ff5555" : "#ffff55" : "#ffaa55");
+            game.draw.textCenter(`${game.draw.toShortNumber(inventory.foodTotal / consumption)} days of food in storage`, Math.floor(this.width / 6), 396, 14, inventory.foodTotal / consumption > 1 ? inventory.foodTotal / consumption > 10 ? "#55ff55" : "#ffff55" : "#ffaa55");
         } else {
             game.draw.textCenter(`${Math.floor(100 - welfare.foodSatisfaction * 100)}% of the colony is starving`, Math.floor(this.width / 6), 396, 14, `#ff5555`);
         }
         if (welfare.fluidSatisfaction == 1) {
-            game.draw.textCenter(`${game.draw.toShortNumber(inventory.fluidTotal / consumption)} days of water in storage`, Math.floor(this.width / 6), 416, 14, inventory.fluidTotal / consumption > 1 ? inventory.foodTotal / consumption > 10 ? "#ff5555" : "#ffff55" : "#ffaa55");
+            game.draw.textCenter(`${game.draw.toShortNumber(inventory.fluidTotal / consumption)} days of water in storage`, Math.floor(this.width / 6), 420, 14, inventory.fluidTotal / consumption > 1 ? inventory.foodTotal / consumption > 10 ? "#55ff55" : "#ffff55" : "#ffaa55");
         } else {
-            game.draw.textCenter(`${Math.floor(100 - welfare.fluidSatisfaction * 100)}% of the colony is dehydrated`, Math.floor(this.width / 6), 416, 14, `#ff5555`);
+            game.draw.textCenter(`${Math.floor(100 - welfare.fluidSatisfaction * 100)}% of the colony is dehydrated`, Math.floor(this.width / 6), 420, 14, `#ff5555`);
         }
+        game.draw.textCenter(`Press '${game.key.actions.openInventory.bindings[0].key}' to open the inventory`, Math.floor(this.width / 6), 444, 14, `#FFFFFF`);
         
         game.draw.renderText(ctx);
     }

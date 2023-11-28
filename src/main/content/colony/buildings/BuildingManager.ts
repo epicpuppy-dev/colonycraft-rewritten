@@ -64,7 +64,7 @@ export class BuildingManager implements Saveable {
             clampAmount += builds;
             for (const cost of building.cost) {
                 const resource = cost.item;
-                resource.amount += cost.amount * builds;
+                resource.add(cost.amount * builds, true);
             }
         }
         if (clampAmount > 0) {

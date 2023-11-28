@@ -47,7 +47,7 @@ export class WelfareUpdate extends TickingEntity {
         while (foodConsumed < foodRequired && foodAvailable.length > 0) {
             const food = foodAvailable.shift();
             if (food == null) break;
-            const foodConsumedThisItem = Math.min(food.amount, Math.ceil((foodRequired - foodConsumed) / food.saturation));
+            const foodConsumedThisItem = Math.min(Math.max(0, food.amount - food.min), Math.ceil((foodRequired - foodConsumed) / food.saturation));
             foodConsumed += foodConsumedThisItem * food.saturation;
             healthChange += foodConsumedThisItem * food.health * food.saturation;
             moraleChange += foodConsumedThisItem * food.morale * food.saturation;
@@ -75,7 +75,7 @@ export class WelfareUpdate extends TickingEntity {
         while (fluidsConsumed < fluidsRequired && fluidsAvailable.length > 0) {
             const fluid = fluidsAvailable.shift();
             if (fluid == null) break;
-            const fluidsConsumedThisItem = Math.min(fluid.amount, Math.ceil((fluidsRequired - fluidsConsumed) / fluid.saturation));
+            const fluidsConsumedThisItem = Math.min(Math.max(0, fluid.amount - fluid.min), Math.ceil((fluidsRequired - fluidsConsumed) / fluid.saturation));
             fluidsConsumed += fluidsConsumedThisItem * fluid.saturation;
             fluid.amount -= fluidsConsumedThisItem;
         }
@@ -90,7 +90,7 @@ export class WelfareUpdate extends TickingEntity {
         // Welfare Items and Modifiers
         const itemsMax = Math.ceil(game.colony.population.adults + game.colony.population.children / 2 + game.colony.population.seniors / 2 + game.colony.population.babies / 5);
         for (const item of welfare.welfareItems) {
-            let maxConsumed = Math.min(item.amount, itemsMax / item.saturation);
+            let maxConsumed = Math.min(Math.max(0, item.amount - item.min), itemsMax / item.saturation);
             healthChange += maxConsumed * item.health * item.saturation;
             moraleChange += maxConsumed * item.morale * item.saturation;
             if (item.type == "active") {

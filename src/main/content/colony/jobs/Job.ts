@@ -38,7 +38,7 @@ export class Job implements Saveable {
     public unassign (game: ColonyCraft, amount: number) {
         this.workersAssigned -= amount;
         game.colony.jobs.workersAssigned -= amount;
-        if (this.cost) this.cost.item.amount += this.cost.amount * amount;
+        if (this.cost) this.cost.item.add(this.cost.amount * amount, true);
     }
 
     public save (): string {
