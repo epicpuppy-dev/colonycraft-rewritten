@@ -3,8 +3,8 @@ import { LootTable } from "../../../loot/LootTable";
 import { Job } from "../Job";
 
 export class ResourceJob extends Job {
-    protected table: LootTable;
-    protected rolls: number;
+    readonly table: LootTable;
+    public rolls: number;
 
     constructor(game: ColonyCraft, id: string, name: string, priority: number, rolls: number, table: LootTable, unlocked: (game: ColonyCraft) => boolean, maxWorkers: (game: ColonyCraft) => number, desc?: string, cost?: {item: any, amount: number}) {
         super(game, id, name, priority, unlocked, maxWorkers, desc, cost);

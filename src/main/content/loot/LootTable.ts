@@ -2,9 +2,9 @@ import { Item } from "../colony/inventory/Item";
 
 export class LootTable {
     public id: string;
-    private rolls: number;
-    private items: {weight: number, item: Item | null, amount: number}[];
-    private totalWeight: number;
+    readonly rolls: number;
+    readonly items: {weight: number, item: Item | null, amount: number}[];
+    readonly totalWeight: number;
 
     constructor (id: string, rolls: number, items: {weight: number, item: Item | null, amount: number}[]) {
         this.id = id;

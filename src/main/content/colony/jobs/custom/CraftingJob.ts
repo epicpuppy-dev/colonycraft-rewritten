@@ -3,8 +3,8 @@ import { Recipe } from "../../crafting/Recipe";
 import { Job } from "../Job";
 
 export class CraftingJob extends Job {
-    private recipe: Recipe;
-    private crafts: number;
+    readonly recipe: Recipe;
+    readonly crafts: number;
 
     constructor(game: ColonyCraft, id: string, name: string, priority: number, crafts: number, recipe: Recipe, unlocked: (game: ColonyCraft) => boolean, maxWorkers: (game: ColonyCraft) => number, desc?: string, cost?: {item: any, amount: number}) {
         super(game, id, name, priority, unlocked, maxWorkers, desc, cost);

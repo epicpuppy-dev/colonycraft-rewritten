@@ -1,8 +1,9 @@
-import { game } from "../../..";
 import { ColonyCraft } from "../../ColonyCraft";
 import { Job } from "../../content/colony/jobs/Job";
 import { JobGroup } from "../../content/colony/jobs/JobGroup";
+import { KeyBind } from "../../player/KeyBind";
 import { Screen } from "../Screen";
+import { JobPanelTooltip } from "../tooltip/custom/JobPanelTooltip";
 import { Button } from "../ui/Button";
 import { ClickHandler } from "../ui/ClickHandler";
 import { ScrollBar } from "../ui/ScrollBar";
@@ -16,9 +17,11 @@ export class PanelJobs extends Screen {
     private minimizeClickable: ClickHandler;
     private plusClickable: ClickHandler;
     private minusClickable: ClickHandler;
-    private jobsAvailable: (Job | JobGroup)[] = [];
+    public jobsAvailable: (Job | JobGroup)[] = [];
     private buttonOffset: number = 100;
     private scrollBar: ScrollBar;
+    private jobTooltips: JobPanelTooltip[] = [];
+    public viewExtraKeyBind: KeyBind;
 
     constructor(game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
@@ -74,6 +77,14 @@ export class PanelJobs extends Screen {
                 x < Math.floor(this.width) &&
                 y > 50 && y < Math.floor(this.height);
         });
+
+        this.viewExtraKeyBind = new KeyBind("viewExtra", "Left Shift", "ShiftLeft", []);
+        game.key.addBinding(this.viewExtraKeyBind);
+
+        for (let i = 0; i < maxRows; i++) {
+            this.jobTooltips.push(new JobPanelTooltip(game, this, `job${i}`, Math.floor(2 * this.width / 3) + 10, 128 + 50 * i, Math.floor(this.width / 3) - 32, 50, (game) => game.currentScreens.includes("game") && !game.currentScreens.includes("overlay"), i));
+            game.draw.tooltip.addTooltip(this.jobTooltips[i]);
+        }
     }
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {

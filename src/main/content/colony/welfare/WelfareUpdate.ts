@@ -106,7 +106,7 @@ export class WelfareUpdate extends TickingEntity {
         // Make health take 3x longer to change
         healthChange /= 3;
 
-        let negativeChangeModifier = Math.max(0, 2 * Math.log(game.colony.population.adults + game.colony.population.children / 2 + game.colony.population.seniors / 2 + game.colony.population.babies / 5) / Math.log(100) - (5 / (game.colony.population.adults + game.colony.population.children / 2 + game.colony.population.seniors / 2 + game.colony.population.babies / 5)));
+        let negativeChangeModifier = Math.max(0, Math.log(game.colony.population.adults + game.colony.population.children / 2 + game.colony.population.seniors / 2 + game.colony.population.babies / 5) / Math.log(100) - (5 / (game.colony.population.adults + game.colony.population.children / 2 + game.colony.population.seniors / 2 + game.colony.population.babies / 5)));
 
         if (healthChange < 0) healthChange *= negativeChangeModifier;
         if (moraleChange < 0) moraleChange *= negativeChangeModifier;

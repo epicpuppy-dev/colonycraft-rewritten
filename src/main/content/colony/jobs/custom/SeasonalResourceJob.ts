@@ -11,7 +11,7 @@ export class SeasonalResourceJob extends ResourceJob {
     }
 
     public tick (game: ColonyCraft) {
-        this.rolls = this.seasons[game.clock.season];
+        this.rolls = this.seasons[game.clock.season - 1];
         super.tick(game);
     }
 }
