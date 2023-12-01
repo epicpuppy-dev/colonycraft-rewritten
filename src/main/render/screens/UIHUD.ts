@@ -1,10 +1,17 @@
 import { ColonyCraft } from "../../ColonyCraft";
 import { Screen } from "../Screen";
+import { Tooltip } from "../tooltip/Tooltip";
 import { Button } from "../ui/Button";
 
 export class UIHUD extends Screen {
     private statsButton: Button;
     private menuButton: Button;
+    private storageTooltip: Tooltip;
+    private landTooltip: Tooltip;
+    private healthTooltip: Tooltip;
+    private moraleTooltip: Tooltip;
+    private populationTooltip: Tooltip;
+    private workersTooltip: Tooltip;
 
     constructor(game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
@@ -24,6 +31,59 @@ export class UIHUD extends Screen {
 
         game.mouse.registerClickable(this.statsButton);
         game.mouse.registerClickable(this.menuButton);
+
+        this.storageTooltip = new Tooltip(game, "storageTooltip", [
+            {text: "Colony Storage", color: "#9d7955"},
+            {text: "All resources are stored in the colony storage", color: "#ffffff"},
+            {text: (game) => `Current Storage: ${game.draw.toShortNumber(game.colony.inventory.storageUsed)}/${game.draw.toShortNumber(game.colony.inventory.storageCapacity)}`, color: "#ffffff"},
+            {text: (game) => `Storage is ${(game.colony.inventory.storageUsed / game.colony.inventory.storageCapacity * 100).toFixed(1)}% full`, color: "#ffffff"},
+        ], 102, 2, 24 + game.draw.textWidth("2.22m/2.22m", 14), 20, (game) => game.currentScreens.includes("game") && !game.currentScreens.includes("overlay"), undefined, 0);
+
+        this.landTooltip = new Tooltip(game, "landTooltip", [
+            {text: "Colony Land", color: "#ffffff"},
+            {text: "All buildings require land", color: "#ffffff"},
+            {text: (game) => `Current Land: ${game.draw.toShortNumber(game.colony.buildings.landMax - game.colony.buildings.landPending)}/${game.draw.toShortNumber(game.colony.buildings.landMax)}`, color: "#ffffff"},
+        ], 102, 26, 24 + game.draw.textWidth("2.22m/2.22m", 14), 20, (game) => game.currentScreens.includes("game") && !game.currentScreens.includes("overlay"), undefined, 0);
+
+        this.healthTooltip = new Tooltip(game, "healthTooltip", [
+            {text: "Colony Health", color: "#dc1414"},
+            {text: "The overall health of your colony", color: "#ffffff"},
+            {text: "Affects birth and death rates", color: "#ffffff"},
+            {text: (game) => `Current death rate: ${(1 / game.colony.welfare.healthModifier * 100).toFixed(1)}% Current birth rate: ${(game.colony.welfare.healthModifier * 100).toFixed(1)}%`, color: "#ffffff"},
+            {text: (game) => `All health loss is multiplied by ${(Math.max(0, Math.log(game.colony.population.adults + game.colony.population.children / 2 + game.colony.population.seniors / 2 + game.colony.population.babies / 5) / Math.log(100) - (5 / (game.colony.population.adults + game.colony.population.children / 2 + game.colony.population.seniors / 2 + game.colony.population.babies / 5))) * 100).toFixed(1)}% due to population`, color: "#ffff55"},
+        ], Math.floor(this.width) - 236, 2, 24 + game.draw.textWidth("100.0%", 14), 20, (game) => game.currentScreens.includes("game") && !game.currentScreens.includes("overlay"), undefined, 0);
+
+        this.moraleTooltip = new Tooltip(game, "moraleTooltip", [
+            {text: "Colony Morale", color: "#dcd614"},
+            {text: "The overall happiness of your colony", color: "#ffffff"},
+            {text: (game) => `Affects work rate, currently: ${(game.colony.welfare.workModifier * 100).toFixed(1)}%`, color: "#ffffff"},
+            {text: (game) => `All morale loss is multiplied by ${(Math.max(0, Math.log(game.colony.population.adults + game.colony.population.children / 2 + game.colony.population.seniors / 2 + game.colony.population.babies / 5) / Math.log(100) - (5 / (game.colony.population.adults + game.colony.population.children / 2 + game.colony.population.seniors / 2 + game.colony.population.babies / 5))) * 100).toFixed(1)}% due to population`, color: "#ffff55"},
+        ], Math.floor(this.width) - 236, 26, 24 + game.draw.textWidth("100.0%", 14), 20, (game) => game.currentScreens.includes("game") && !game.currentScreens.includes("overlay"), undefined, 0);
+
+        this.populationTooltip = new Tooltip(game, "populationTooltip", [
+            {text: "Colony Population", color: "#ffffff"},
+            {text: "People in your colony progress through 4 stages of life:", color: "#ffffff"},
+            {text: "Baby -> Child -> Adult -> Senior", color: "#ffffff"},
+            {text: (game) => `Current Babies: ${game.colony.population.babies}`, color: "#98fb98"},
+            {text: (game) => `Current Children: ${game.colony.population.children}`, color: "#48d1cc"},
+            {text: (game) => `Current Adults: ${game.colony.population.adults}`, color: "#6495ed"},
+            {text: (game) => `Current Seniors: ${game.colony.population.seniors}`, color: "#9370db"},
+        ], Math.floor(this.width) - 378, 2, 24 + game.draw.textWidth("2.22m", 14), 20, (game) => game.currentScreens.includes("game") && !game.currentScreens.includes("overlay"), undefined, 0);
+
+        this.workersTooltip = new Tooltip(game, "workersTooltip", [
+            {text: "Colony Workers", color: "#6495ed"},
+            {text: "The colony worker count is determined by the amount of adults", color: "#ffffff"},
+            {text: (game) => `All workers are working at ${(game.colony.welfare.workModifier * 100).toFixed(1)}% speed due to morale`, color: "#ffffff"},
+            {text: (game) => `Workers Total: ${game.colony.population.adults}`, color: "#ffffff"},
+            {text: (game) => `Workers Unassigned: ${game.colony.population.adults - game.colony.jobs.workersAssigned}`, color: "#6495ed"},
+        ], Math.floor(this.width) - 378, 26, 24 + game.draw.textWidth("2.22m/2.22m", 14), 20, (game) => game.currentScreens.includes("game") && !game.currentScreens.includes("overlay"), undefined, 0);
+
+        game.draw.tooltip.addTooltip(this.storageTooltip);
+        game.draw.tooltip.addTooltip(this.landTooltip);
+        game.draw.tooltip.addTooltip(this.healthTooltip);
+        game.draw.tooltip.addTooltip(this.moraleTooltip);
+        game.draw.tooltip.addTooltip(this.populationTooltip);
+        game.draw.tooltip.addTooltip(this.workersTooltip);
     }
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {

@@ -44,6 +44,9 @@ import { Overlay2Load } from "./render/screens/Overlay2Load";
 import { ScreenLoading } from "./render/screens/ScreenLoading";
 import { ScreenResearch } from "./render/screens/ScreenResearch";
 import { OverlayWin } from "./render/screens/OverlayWin";
+import { LayerTop } from "./render/layers/LayerTop";
+import { TopTooltip } from "./render/screens/TopTooltip";
+import { TooltipRenderer } from "./render/tooltip/TooltipRenderer";
 
 export class ColonyCraft {
     public width: number;
@@ -71,6 +74,7 @@ export class ColonyCraft {
     private displayCtx: CanvasRenderingContext2D;
     private renderer: ScreenController;
     private sprites: SpriteRenderer;
+    private tooltip: TooltipRenderer;
 
     constructor () {
         //Set width and height
@@ -111,7 +115,8 @@ export class ColonyCraft {
         this.font = new TextRenderer(this, FontData.normal, fontImage, 14, 18, 2);
         this.fontSmall = new TextRenderer(this, FontData.small, fontImageSmall, 7, 9, 1);
         this.sprites = new SpriteRenderer();
-        this.draw = new RenderUtil(this, this.font, this.fontSmall, this.sprites);
+        this.tooltip = new TooltipRenderer();
+        this.draw = new RenderUtil(this, this.font, this.fontSmall, this.sprites, this.tooltip);
 
         //Initialize Colony
         this.colony = new Colony(this);
@@ -155,11 +160,14 @@ export class ColonyCraft {
             new OverlayInventory(this, this.width, this.height),
             new OverlayBuildings(this, this.width, this.height),
             new OverlayStats(this, this.width, this.height),
-            new OverlayWin(this, this.width, this.height),
+            new OverlayWin(this, this.width, this.height)
         ]);
         this.renderer.addLayerWithScreens(new LayerOverlay2(this), [
             new Overlay2Save(this, this.width, this.height),
             new Overlay2Load(this, this.width, this.height)
+        ]);
+        this.renderer.addLayerWithScreens(new LayerTop(this), [
+            new TopTooltip(this.width, this.height, 0, 0)
         ]);
 
         //set screen to loading

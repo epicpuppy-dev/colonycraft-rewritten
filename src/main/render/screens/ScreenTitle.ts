@@ -1,6 +1,7 @@
 import { version } from "../../../version";
 import { ColonyCraft } from "../../ColonyCraft";
 import { Screen } from "../Screen";
+import { Tooltip } from "../tooltip/Tooltip";
 import { Button } from "../ui/Button";
 
 export class ScreenTitle extends Screen {

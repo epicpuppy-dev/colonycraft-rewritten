@@ -15,7 +15,6 @@ export class KeyController {
     }
 
     private keydown(event: KeyboardEvent, game: ColonyCraft): void {
-        event.preventDefault();
         //loop through all bindings
         let prevScreens = game.currentScreens.slice();
         for (const binding of this.bindings) if (binding.code === event.code) {

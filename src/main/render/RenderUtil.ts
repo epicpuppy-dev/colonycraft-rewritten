@@ -3,17 +3,20 @@ import { KeyAction } from "../player/KeyAction";
 import { KeyBind } from "../player/KeyBind";
 import { SpriteRenderer } from "./SpriteRenderer";
 import { TextRenderer } from "./TextRenderer";
+import { TooltipRenderer } from "./tooltip/TooltipRenderer";
 
 export class RenderUtil {
     readonly font: TextRenderer;
     readonly fontSmall: TextRenderer;
     readonly sprites: SpriteRenderer;
+    readonly tooltip: TooltipRenderer;
     public closeButton: KeyBind;
 
-    constructor(game: ColonyCraft, font: TextRenderer, fontSmall: TextRenderer, sprites: SpriteRenderer) {
+    constructor(game: ColonyCraft, font: TextRenderer, fontSmall: TextRenderer, sprites: SpriteRenderer, tooltip: TooltipRenderer) {
         this.font = font;
         this.fontSmall = fontSmall;
         this.sprites = sprites;
+        this.tooltip = tooltip;
         this.closeButton = new KeyBind("Close Menu", "Esc", "Escape", []);
         game.key.addBinding(this.closeButton);
     }
