@@ -9,6 +9,7 @@ export class OverlayPause extends Screen {
     private saveButton: Button;
     private loadButton: Button;
     private exitButton: Button;
+    private settingsButton: Button;
 
     constructor (game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
@@ -41,7 +42,11 @@ export class OverlayPause extends Screen {
             game.currentScreens.push("load", "overlay2");
         }, (game: ColonyCraft) => game.currentScreens.includes("pause") && !game.currentScreens.includes("overlay2"));
 
-        this.exitButton = new Button(Math.floor(this.width / 2 - 130), Math.floor(this.height / 2 + 56), 260, 32, (game: ColonyCraft) => {
+        this.settingsButton = new Button(Math.floor(this.width / 2 - 130), Math.floor(this.height / 2 + 56), 260, 32, (game: ColonyCraft) => {
+            game.currentScreens.push("settings", "overlay2");
+        }, (game: ColonyCraft) => game.currentScreens.includes("pause") && !game.currentScreens.includes("overlay2"));
+
+        this.exitButton = new Button(Math.floor(this.width / 2 - 130), Math.floor(this.height / 2 + 104), 260, 32, (game: ColonyCraft) => {
             game.currentScreens.splice(game.currentScreens.indexOf("pause"), 1);
             game.currentScreens.splice(game.currentScreens.indexOf("overlay"), 1);
             game.currentScreens.splice(game.currentScreens.indexOf("game"), 1);
@@ -52,6 +57,7 @@ export class OverlayPause extends Screen {
         game.mouse.registerClickable(this.resumeButton);
         game.mouse.registerClickable(this.saveButton);
         game.mouse.registerClickable(this.loadButton);
+        game.mouse.registerClickable(this.settingsButton);
         game.mouse.registerClickable(this.exitButton);
     }
 
@@ -59,7 +65,7 @@ export class OverlayPause extends Screen {
         ctx.fillStyle = '#00000077';
         ctx.fillRect(0, 0, this.width, this.height);
         ctx.beginPath();
-        ctx.roundRect(Math.floor(this.width / 2 - 150), Math.floor(this.height / 2 - 110), 300, 220, 10);
+        ctx.roundRect(Math.floor(this.width / 2 - 150), Math.floor(this.height / 2 - 110), 300, 266, 10);
         ctx.fillStyle = "#222222";
         ctx.fill();
         ctx.strokeStyle = '#777777';
@@ -71,11 +77,13 @@ export class OverlayPause extends Screen {
         ctx.roundRect(Math.floor(this.width / 2 - 130), Math.floor(this.height / 2 - 40), 260, 32, 5);
         ctx.roundRect(Math.floor(this.width / 2 - 130), Math.floor(this.height / 2 + 8), 260, 32, 5);
         ctx.roundRect(Math.floor(this.width / 2 - 130), Math.floor(this.height / 2 + 56), 260, 32, 5);
+        ctx.roundRect(Math.floor(this.width / 2 - 130), Math.floor(this.height / 2 + 104), 260, 32, 5);
         ctx.stroke();
         game.draw.textCenter("Back to Game", Math.floor(this.width / 2), Math.floor(this.height / 2 - 80), 14, "white");
         game.draw.textCenter("Save Game", Math.floor(this.width / 2), Math.floor(this.height / 2 - 32), 14, "white");
         game.draw.textCenter("Load Game", Math.floor(this.width / 2), Math.floor(this.height / 2 + 16), 14, "white");
-        game.draw.textCenter("Exit to Main Menu", Math.floor(this.width / 2), Math.floor(this.height / 2 + 64), 14, "white");
+        game.draw.textCenter("Settings", Math.floor(this.width / 2), Math.floor(this.height / 2 + 64), 14, "white");
+        game.draw.textCenter("Exit to Main Menu", Math.floor(this.width / 2), Math.floor(this.height / 2 + 112), 14, "white");
 
         game.draw.text("v" + version, 10, this.height - 20, 14, "white");
 

@@ -1,12 +1,12 @@
 import { version } from "../../../version";
 import { ColonyCraft } from "../../ColonyCraft";
 import { Screen } from "../Screen";
-import { Tooltip } from "../tooltip/Tooltip";
 import { Button } from "../ui/Button";
 
 export class ScreenTitle extends Screen {
     private newGame: Button;
     private loadGame: Button;
+    private settings: Button;
 
     constructor(game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
@@ -24,8 +24,13 @@ export class ScreenTitle extends Screen {
             game.currentScreens.push("load", "overlay2");
         }, () => game.currentScreens.includes("title") && !game.currentScreens.includes("overlay2"));
 
+        this.settings = new Button(Math.floor(this.width / 2 - 200), Math.floor(this.height / 2 + 130), 400, 52, () => {
+            game.currentScreens.push("settings", "overlay2");
+        }, () => game.currentScreens.includes("title") && !game.currentScreens.includes("overlay2"));
+
         game.mouse.registerClickable(this.newGame);
         game.mouse.registerClickable(this.loadGame);
+        game.mouse.registerClickable(this.settings);
     }
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {
@@ -37,7 +42,7 @@ export class ScreenTitle extends Screen {
 
         game.draw.textCenter("New Game", Math.floor(this.width / 2), Math.floor(this.height / 2), 28, "white");
         game.draw.textCenter("Load Game", Math.floor(this.width / 2), Math.floor(this.height / 2 + 70), 28, "white");
-        //game.draw.textCenter("Settings", Math.floor(this.width / 2), Math.floor(this.height / 2 + 140), 28, "white");
+        game.draw.textCenter("Settings", Math.floor(this.width / 2), Math.floor(this.height / 2 + 140), 28, "white");
         game.draw.text("v" + version, 10, this.height - 20, 14, "white");
         game.draw.renderText(ctx);
     }

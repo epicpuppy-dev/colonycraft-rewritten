@@ -60,28 +60,28 @@ export class UnlockableData {
 
         // Metalworking Tech Line
         research.registerTechnology(new Technology(game, "smelting1", "Furnace", new TechPoints(1500, 1000, 0, 600), ["Unlocks the Furnace Building", "", '"Reaching higher temperatures than a simple fire"'], ["chemistry1"], "progress"));
-        research.registerTechnology(new Technology(game, "copper1", "Copper Smelting", new TechPoints(1750, 1250, 0, 750), ["Unlocks the Copper Smelting Recipe", "Crafts 2 copper ore -> 1 copper", "", '"A stronger material than stone"'], ["smelting1", "copperOre1"], "progress"));
-        research.registerTechnology(new Technology(game, "tin1", "Tin Smelting", new TechPoints(1750, 1250, 0, 750), ["Unlocks the Tin Smelting Recipe", "Crafts 2 tin ore -> 1 tin", "", '"A more useful material than stone"'], ["smelting1", "tinOre1"], "progress"));
+        research.registerTechnology(new Technology(game, "copper1", "Copper Smelting", new TechPoints(1750, 1250, 0, 750), ["Unlocks the Copper Smelting Recipe", "", '"A stronger material than stone"'], ["smelting1", "copperOre1"], "progress"));
+        research.registerTechnology(new Technology(game, "tin1", "Tin Smelting", new TechPoints(1750, 1250, 0, 750), ["Unlocks the Tin Smelting Recipe", "", '"A more useful material than stone"'], ["smelting1", "tinOre1"], "progress"));
         research.registerTechnology(new Technology(game, "smelting2", "Crucible", new TechPoints(4000, 3000, 0, 2000), ["Unlocks the Crucible Building", "", '"An even higher temperature for fusing 2 metals"'], ["tools3", "curiosity", "coal1"], "progress"));
-        research.registerTechnology(new Technology(game, "bronze1", "Bronze Alloying", new TechPoints(5000, 4000, 0, 3000), ["Unlocks the Bronze Alloying Recipe", "Crafts 3 copper + 1 tin -> 2 bronze", "", '"A stronger material than copper"'], ["smelting2", "copper1", "tin1"], "progress"));
+        research.registerTechnology(new Technology(game, "bronze1", "Bronze Alloying", new TechPoints(5000, 4000, 0, 3000), ["Unlocks the Bronze Alloying Recipe", "", '"A stronger material than copper"'], ["smelting2", "copper1", "tin1"], "progress"));
 
         // Tool Tech Line
-        research.registerTechnology(new Technology(game, "tools1", "Stone Knapping", new TechPoints(50), ["Unlocks the Stone Knapping Recipe", "Crafts 4 rocks -> 1 primitive tool", "", '"Make rock into sharp rock"'], ["crafting1"], "progress"));
-        research.registerTechnology(new Technology(game, "tools2", "Toolmaking", new TechPoints(200, 100), ["Unlocks the Basic Tools Recipe", "Crafts 2 primitive tools + 4 twine -> 1 basic tool", "", '"Putting together some rocks and sticks"'], ["tools1", "math1", "twine1"], "progress"));
-        research.registerTechnology(new Technology(game, "tools3", "Basic Metal Tools", new TechPoints(2500, 1600, 1000, 1000), ["Unlocks the Basic Metal Tools Recipe", "Crafts 2 copper or 2 tin + 2 basic tools -> 1 basic metal tool", "", '"Putting together some metal and basic tools"'], ["tools2", "copper1", "tin1", "physics1"], "progress"));
+        research.registerTechnology(new Technology(game, "tools1", "Stone Knapping", new TechPoints(50), ["Unlocks the Stone Knapping Recipe", "", '"Make rock into sharp rock"'], ["crafting1"], "progress"));
+        research.registerTechnology(new Technology(game, "tools2", "Toolmaking", new TechPoints(200, 100), ["Unlocks the Basic Tools Recipe", "", '"Putting together some rocks and sticks"'], ["tools1", "math1", "twine1"], "progress"));
+        research.registerTechnology(new Technology(game, "tools3", "Basic Metal Tools", new TechPoints(2500, 1600, 1000, 1000), ["Unlocks the Basic Metal Tools Recipe", "", '"Putting together some metal and basic tools"'], ["tools2", "copper1", "tin1", "physics1"], "progress"));
 
         // Production Tech Line
-        research.registerTechnology(new Technology(game, "twine1", "Plant Twine", new TechPoints(30), ["Unlocks the Plant Twine Recipe", "Crafts 4 fiber -> 1 twine", "", '"Roll grass make rope"'], ["crafting1"], "progress"));
-        research.registerTechnology(new Technology(game, "planks1", "Basic Carpentry", new TechPoints(130), ["Unlocks the Planks Recipe", "Crafts 1 log -> 4 planks", "", '"It\'s easier to build with flat slabs of wood than with thick logs"'], ["chopping1", "build1"], "progress"));
-        research.registerTechnology(new Technology(game, "buckets1", "Wooden Buckets", new TechPoints(250), ["Unlocks the Wooden Bucket Recipe", "Crafts 2 planks -> 1 bucket", "", '"Useful for carrying things"'], ["planks1"]));
-        research.registerTechnology(new Technology(game, "composite1", "Clay/Mud Working", new TechPoints(130), ["Unlocks the Brick Composite Recipe", "Crafts 2 mud + 2 clay -> 1 brick composite", "", '"Clay and mud is very soft and easy to work with"'], ["digging1"], "progress"));
-        research.registerTechnology(new Technology(game, "bricks1", "Brick Firing", new TechPoints(250), ["Unlocks the Brick Recipe", "Crafts 2 brick composite -> 1 brick", "", '"Bricks are a very sturdy building material"'], ["composite1", "kiln1"], "progress"));
-        research.registerTechnology(new Technology(game, "weaving1", "Weaving", new TechPoints(100), ["Unlocks the Cloth Recipe", "Crafts 8 fiber -> 1 cloth", "", '"Cloth is a very flexible material made from fiber"'], ["twine1", "tools1"]));
-        research.registerTechnology(new Technology(game, "baskets1", "Basket Weaving", new TechPoints(170), ["Unlocks the Basket Recipe", "1 cloth + Crafts 4 twine -> 1 basket", "", '"Baskets are useful for carrying things"'], ["weaving1"]));
+        research.registerTechnology(new Technology(game, "twine1", "Plant Twine", new TechPoints(30), ["Unlocks the Plant Twine Recipe", "", '"Roll grass make rope"'], ["crafting1"], "progress"));
+        research.registerTechnology(new Technology(game, "planks1", "Basic Carpentry", new TechPoints(130), ["Unlocks the Planks Recipe", "", '"It\'s easier to build with flat slabs of wood than with thick logs"'], ["chopping1", "build1"], "progress"));
+        research.registerTechnology(new Technology(game, "buckets1", "Wooden Buckets", new TechPoints(250), ["Unlocks the Wooden Bucket Recipe", "", '"Useful for carrying things"'], ["planks1"]));
+        research.registerTechnology(new Technology(game, "composite1", "Clay/Mud Working", new TechPoints(130), ["Unlocks the Brick Composite Recipe", "", '"Clay and mud is very soft and easy to work with"'], ["digging1"], "progress"));
+        research.registerTechnology(new Technology(game, "bricks1", "Brick Firing", new TechPoints(250), ["Unlocks the Brick Recipe", "", '"Bricks are a very sturdy building material"'], ["composite1", "kiln1"], "progress"));
+        research.registerTechnology(new Technology(game, "weaving1", "Weaving", new TechPoints(100), ["Unlocks the Cloth Recipe", "", '"Cloth is a very flexible material made from fiber"'], ["twine1", "tools1"]));
+        research.registerTechnology(new Technology(game, "baskets1", "Basket Weaving", new TechPoints(170), ["Unlocks the Basket Recipe", "", '"Baskets are useful for carrying things"'], ["weaving1"]));
 
         // Amenity Tech Line
-        research.registerTechnology(new Technology(game, "fire1", "Firemaking", new TechPoints(75), ["Unlocks the Firemaker Job", "Crafts 8 sticks + 4 twine -> 75% chance of 1 campfire", "", '"Big hot burny stuff"'], ["tools1", "twine1"], "progress"));
-        research.registerTechnology(new Technology(game, "clothing1", "Primitive Clothing", new TechPoints(200), ["Unlocks the Primitive Clothing Recipe", "Crafts 2 cloth -> 1 clothing", "", '"Provides warmth and protection"'], ["weaving1"]));
+        research.registerTechnology(new Technology(game, "fire1", "Firemaking", new TechPoints(75), ["Unlocks the Firemaker Job", "", '"Big hot burny stuff"'], ["tools1", "twine1"], "progress"));
+        research.registerTechnology(new Technology(game, "clothing1", "Primitive Clothing", new TechPoints(200), ["Unlocks the Primitive Clothing Recipe", "", '"Provides warmth and protection"'], ["weaving1"]));
 
         // Construction Tech Line
         research.registerTechnology(new Technology(game, "storage1", "Stockpiling", new TechPoints(75, 50), ["Unlocks the Storage Pit Building", "Unlocks precise inventory", "", '"Put stuff in hole"'], ["build1", "math1"], "progress"));

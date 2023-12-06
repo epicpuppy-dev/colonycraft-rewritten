@@ -78,7 +78,7 @@ export class PanelJobs extends Screen {
                 y > 50 && y < Math.floor(this.height);
         });
 
-        this.viewExtraKeyBind = new KeyBind("viewExtra", "Left Shift", "ShiftLeft", []);
+        this.viewExtraKeyBind = new KeyBind("expandTooltip", "Expand Tooltip", "Left Shift", "ShiftLeft", "Other", []);
         game.key.addBinding(this.viewExtraKeyBind);
 
         for (let i = 0; i < maxRows; i++) {

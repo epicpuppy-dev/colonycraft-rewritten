@@ -47,7 +47,7 @@ export class OverlayInventory extends Screen {
             }
         }));
 
-        game.key.addBinding(new KeyBind("Open Inventory", "I", "KeyI", [game.key.actions.openInventory]));
+        game.key.addBinding(new KeyBind("openInventory", "Open Inventory", "I", "KeyI", "Menus", [game.key.actions.openInventory]));
 
         const maxRows = Math.floor((3 * this.height / 4 - 104) / 22);
         const textOffset = game.draw.textWidth("2.22m", 14);

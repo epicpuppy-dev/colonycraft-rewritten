@@ -76,8 +76,8 @@ export class ScreenResearch extends Screen {
             }
         }));
 
-        game.key.addBinding(new KeyBind("Open Tree", "T", "KeyT", [game.key.actions.openResearch]));
-        game.key.addBinding(new KeyBind("Center Tree", "C", "KeyC", [game.key.actions.centerTree]));
+        game.key.addBinding(new KeyBind("openTree", "Open Tree", "T", "KeyT", "Discovery", [game.key.actions.openResearch]));
+        game.key.addBinding(new KeyBind("centerTree", "Center Tree", "C", "KeyC", "Discovery", [game.key.actions.centerTree]));
 
         this.layout = new Tree(width, height);
 

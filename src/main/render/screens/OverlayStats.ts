@@ -50,7 +50,7 @@ export class OverlayStats extends Screen {
             }
         }));
         
-        game.key.addBinding(new KeyBind("Open Stats", "Tab", "Tab", [game.key.actions.openStats]));
+        game.key.addBinding(new KeyBind("openStats", "Open Stats", "Tab", "Tab", "Menus", [game.key.actions.openStats]));
 
         this.populationButton = new Button(Math.floor(this.width / 2 - 300), Math.floor(this.height / 4 - 32), 150, 24, (game: ColonyCraft) => {
             this.type = "population";

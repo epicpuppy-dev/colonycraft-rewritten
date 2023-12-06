@@ -65,7 +65,7 @@ export class OverlayBuildings extends Screen {
             }
         }));
 
-        game.key.addBinding(new KeyBind("Open Buildings", "B", "KeyB", [game.key.actions.openBuildings]));
+        game.key.addBinding(new KeyBind("openBuildings", "Open Buildings", "B", "KeyB", "Menus", [game.key.actions.openBuildings]));
     
         this.plusButton = new Button(Math.floor(this.width / 2) + 38, Math.floor(this.height / 8 + 272), 21, 21, () => {
             if (this.selected == null) return;

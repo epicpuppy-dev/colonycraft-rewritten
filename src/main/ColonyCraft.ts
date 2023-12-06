@@ -47,6 +47,7 @@ import { OverlayWin } from "./render/screens/OverlayWin";
 import { LayerTop } from "./render/layers/LayerTop";
 import { TopTooltip } from "./render/screens/TopTooltip";
 import { TooltipRenderer } from "./render/tooltip/TooltipRenderer";
+import { Overlay2Settings } from "./render/screens/Overlay2Settings";
 
 export class ColonyCraft {
     public width: number;
@@ -164,7 +165,8 @@ export class ColonyCraft {
         ]);
         this.renderer.addLayerWithScreens(new LayerOverlay2(this), [
             new Overlay2Save(this, this.width, this.height),
-            new Overlay2Load(this, this.width, this.height)
+            new Overlay2Load(this, this.width, this.height),
+            new Overlay2Settings(this, this.width, this.height)
         ]);
         this.renderer.addLayerWithScreens(new LayerTop(this), [
             new TopTooltip(this.width, this.height, 0, 0)
@@ -174,6 +176,18 @@ export class ColonyCraft {
         this.currentScreens.push("loading");
 
         SpriteData.addSprites(this.sprites);
+
+        //Load Keybinds
+        let data = localStorage.getItem("keybinds");
+        if (data != null) {
+            let keybinds = JSON.parse(data);
+            for (const binding in keybinds) {
+                if (this.key.bindings[binding] != undefined) {
+                    this.key.bindings[binding].code = keybinds[binding].code;
+                    this.key.bindings[binding].key = keybinds[binding].key;
+                }
+            }
+        }
 
         //Initialize Simulation
         this.simulation = new SimulationController();

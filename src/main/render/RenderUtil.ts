@@ -17,7 +17,7 @@ export class RenderUtil {
         this.fontSmall = fontSmall;
         this.sprites = sprites;
         this.tooltip = tooltip;
-        this.closeButton = new KeyBind("Close Menu", "Esc", "Escape", []);
+        this.closeButton = new KeyBind("close", "Close Menu/Pause Game", "Esc", "Escape", "Menus", []);
         game.key.addBinding(this.closeButton);
     }
 
