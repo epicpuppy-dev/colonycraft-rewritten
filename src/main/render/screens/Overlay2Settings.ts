@@ -2,10 +2,12 @@ import { ColonyCraft } from "../../ColonyCraft";
 import { KeyAction } from "../../player/KeyAction";
 import { KeyBind } from "../../player/KeyBind";
 import { Screen } from "../Screen";
+import { Button } from "../ui/Button";
 import { ClickHandler } from "../ui/ClickHandler";
 
 export class Overlay2Settings extends Screen {
     private submenu: string = "controls";
+    private closeButton: Button;
     private rebindClickable: ClickHandler;
     private keysAvailable: (KeyBind | null)[] = [];
 
@@ -21,6 +23,13 @@ export class Overlay2Settings extends Screen {
 
         game.draw.addCloseAction(game.key.actions.closeSettings);
 
+        this.closeButton = new Button(Math.floor(3 * this.width / 4 - 31), Math.floor(this.height / 8 + 6), 24, 24, (game) => {
+            if (game.currentScreens.includes("settings")) {
+                game.currentScreens.splice(game.currentScreens.indexOf("settings"), 1);
+                game.currentScreens.splice(game.currentScreens.indexOf("overlay2"), 1);
+            }
+        }, (game) => game.currentScreens.includes("settings"));
+
         this.rebindClickable = new ClickHandler(Math.floor(3 * this.width / 4 - 128), Math.floor(this.height / 8 + 80 + 28 - 5), 120, Math.floor(3 * this.height / 4), (game, x, y) => {
             if ((y - Math.floor(this.height / 8 + 80 + 28 - 5)) % 28 > 24) return;
             let row = Math.floor((y - Math.floor(this.height / 8 + 80 + 28 - 5)) / 28);
@@ -28,6 +37,7 @@ export class Overlay2Settings extends Screen {
             game.key.rebind = this.keysAvailable[row];
         }, (game) => game.currentScreens.includes("settings") && this.submenu == "controls");
 
+        game.mouse.registerClickable(this.closeButton);
         game.mouse.registerClickable(this.rebindClickable);
     }
 
@@ -43,7 +53,7 @@ export class Overlay2Settings extends Screen {
         ctx.stroke();
 
         ctx.fillStyle = '#555555';
-        game.draw.sprite(ctx, "close", Math.floor(7 * this.width / 8 - 31), Math.floor(this.height / 8 + 6), 24, 24);
+        game.draw.sprite(ctx, "close", Math.floor(3 * this.width / 4 - 31), Math.floor(this.height / 8 + 6), 24, 24);
         game.draw.textCenter("Settings", Math.floor(this.width / 2), Math.floor(this.height / 8 + 8), 28, "white");
 
         //draw submenu selector
