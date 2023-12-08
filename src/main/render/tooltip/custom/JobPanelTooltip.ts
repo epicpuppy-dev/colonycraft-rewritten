@@ -11,7 +11,7 @@ export class JobPanelTooltip extends Tooltip {
     constructor(game: ColonyCraft, screen: PanelJobs, id: string, x: number, y: number, width: number, height: number, active: (game: ColonyCraft) => boolean, 
         jobIndex: number, 
         hoverTime: number = 0.5) {
-        super(game, id, [{text: (game: ColonyCraft) => screen.jobsAvailable[jobIndex].name, color: "#FFFFFF"}], x, y, width, height, (game) => active(game) && screen.jobsAvailable.length >= jobIndex - 1 && screen.jobsAvailable[jobIndex] instanceof Job, undefined, hoverTime);
+        super(game, id, [{text: () => screen.jobsAvailable[jobIndex].name, color: "#FFFFFF"}], x, y, width, height, (game) => active(game) && screen.jobsAvailable.length >= jobIndex - 1 && screen.jobsAvailable[jobIndex] instanceof Job, undefined, hoverTime);
         this.lines = (game: ColonyCraft) => {
             let job = screen.jobsAvailable[jobIndex];
             if (!(job instanceof Job)) return [];

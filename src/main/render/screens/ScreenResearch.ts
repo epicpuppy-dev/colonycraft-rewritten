@@ -5,6 +5,7 @@ import { Trait } from "../../content/colony/traits/Trait";
 import { KeyAction } from "../../player/KeyAction";
 import { KeyBind } from "../../player/KeyBind";
 import { Screen } from "../Screen";
+import { DiscoveryTooltip } from "../tooltip/custom/DiscoveryTooltip";
 import { Button } from "../ui/Button";
 import { ClickHandler } from "../ui/ClickHandler";
 import { Scrollable } from "../ui/Scrollable";
@@ -22,8 +23,9 @@ export class ScreenResearch extends Screen {
     private offsetY: number = 0;
     private initialX: number = 0;
     private initialY: number = 0;
-    private hover: string = "";
+    public hover: string = "";
     private selectionClickable: ClickHandler;
+    private discoveryTooltip: DiscoveryTooltip;
 
     constructor(game: ColonyCraft, width: number, height: number) {
         super(width, height, 0, 0);
@@ -131,6 +133,12 @@ export class ScreenResearch extends Screen {
         });
 
         game.mouse.registerClickable(this.selectionClickable);
+
+        this.discoveryTooltip = new DiscoveryTooltip(game, this, "discoveryTooltip", 0, 0, this.width, this.height, (game: ColonyCraft) => {
+            return this.hover != "";
+        }, 0);
+
+        game.draw.tooltip.addTooltip(this.discoveryTooltip);
     }
 
     public render(game: ColonyCraft, ctx: OffscreenCanvasRenderingContext2D): void {

@@ -20,8 +20,8 @@ export class InventoryData {
             new FoodItem(game, "meat", 0.25, "Raw Meat", 0.08, 0.5, 0, 0, 3), //O
         ]);
         inventory.addCategoryWithItems(new ItemGroup("liquids", "Water"), [
-            new FluidItem(game, "freshWater", 0.5, "Fresh Water", 0.05, 0.5, 0, 0.5, 10), //O
-            new FluidItem(game, "muddyWater", 0.5, "Muddy Water", 0.1, 0.5, -12, -8, 2), //O
+            new FluidItem(game, "freshWater", 0.5, "Fresh Water", 0.05, 0.5, 0, 0.5, 10), //OS
+            new FluidItem(game, "muddyWater", 0.5, "Muddy Water", 0.1, 0.5, -12, -8, 2), //OS
         ]);
         inventory.addCategoryWithItems(new ItemGroup("tools", "Tools"), [
             new Item(game, "tool1", 1, "Primitive Tool", 0.005), //O
