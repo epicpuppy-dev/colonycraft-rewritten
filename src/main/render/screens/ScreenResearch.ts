@@ -135,7 +135,7 @@ export class ScreenResearch extends Screen {
         game.mouse.registerClickable(this.selectionClickable);
 
         this.discoveryTooltip = new DiscoveryTooltip(game, this, "discoveryTooltip", 0, 0, this.width, this.height, (game: ColonyCraft) => {
-            return this.hover != "";
+            return this.hover != "" && game.currentScreens.includes("research");
         }, 0);
 
         game.draw.tooltip.addTooltip(this.discoveryTooltip);

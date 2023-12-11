@@ -32,7 +32,7 @@ export class PanelBuildings extends Screen {
         if (buildings.queueSize > 0) {
             game.draw.textCenter(`${game.draw.toShortNumber(buildings.workLeft)} work effort left`, Math.floor(this.width / 6), 334, 14, "white");
         } else {
-            game.draw.textCenter(`Press 'B' to open the build menu`, Math.floor(this.width / 6), 334, 14, "white");
+            game.draw.textCenter(`Press '${game.key.bindings.openBuildings.key}' to open the build menu`, Math.floor(this.width / 6), 334, 14, "white");
         }
 
         game.draw.renderText(ctx);

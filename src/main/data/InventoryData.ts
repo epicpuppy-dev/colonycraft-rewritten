@@ -35,10 +35,10 @@ export class InventoryData {
             new WelfareItem(game, "clothing1", 1, "Primitive Clothing", 0.02, 1, 1, 1, "passive"), //O
         ]);
         inventory.addCategoryWithItems(new ItemGroup("primitive", "Primitive Materials"), [
-            new Item(game, "sticks", 1, "Sticks", 0.01), //O
-            new Item(game, "rocks", 2, "Rocks", 0.005), //O
-            new Item(game, "leaves", 0.5, "Leaves", 0.02), //O
-            new Item(game, "fiber", 0.5, "Plant Fiber", 0.01), //O
+            new Item(game, "sticks", 1, "Sticks", 0.01), //OS
+            new Item(game, "rocks", 2, "Rocks", 0.005), //OS
+            new Item(game, "leaves", 0.5, "Leaves", 0.02), //OS
+            new Item(game, "fiber", 0.5, "Plant Fiber", 0.01), //OS
             new Item(game, "hide", 0.5, "Animal Hide", 0.01), //O
             new Item(game, "clay", 4, "Clay", 0.01), //O
             new Item(game, "mud", 4, "Mud", 0.01), //O
@@ -59,14 +59,14 @@ export class InventoryData {
             new FoodItem(game, "potato", 1, "Potato", 0.01, 0.25, 0.4, 0.3, 5), //O
         ]);
         inventory.addCategoryWithItems(new ItemGroup("mining", "Mining"), [
-            new Item(game, "stone", 5, "Stone", 0.0025), //O
-            new Item(game, "coal", 5, "Coal", 0.0025), //O
-            new Item(game, "copperOre", 5, "Chalcopyrite Ore", 0.0025), //O
-            new Item(game, "tinOre", 5, "Cassiterite Ore", 0.0025), //O
-            new Item(game, "ironOre", 5, "Magnetite Ore", 0.0025), //
-            new Item(game, "zincOre", 5, "Sphalerite Ore", 0.0025), //
-            new Item(game, "siliconOre", 5, "Silicon Ore", 0.0025), //
-            new Item(game, "goldOre", 8, "Gold Ore", 0.0025), //
+            new Item(game, "stone", 5, "Stone", 0.0025), //OS
+            new Item(game, "coal", 5, "Coal", 0.0025), //OS
+            new Item(game, "copperOre", 5, "Chalcopyrite Ore", 0.0025), //OS
+            new Item(game, "tinOre", 5, "Cassiterite Ore", 0.0025), //OS
+            new Item(game, "ironOre", 5, "Magnetite Ore", 0.0025), //S
+            new Item(game, "zincOre", 5, "Sphalerite Ore", 0.0025), //S
+            new Item(game, "siliconOre", 5, "Silicon Ore", 0.0025), //S
+            new Item(game, "goldOre", 8, "Gold Ore", 0.0025), //S
         ]);
         inventory.addCategoryWithItems(new ItemGroup("building", "Building Materials"), [
             new Item(game, "stoneBricks", 2, "Stone Bricks", 0.002), //
