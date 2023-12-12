@@ -1,5 +1,6 @@
 import { ColonyCraft } from "../../../ColonyCraft";
 import { Technology } from "../../../content/colony/research/Technology";
+import { Trait } from "../../../content/colony/traits/Trait";
 import { ScreenResearch } from "../../screens/ScreenResearch";
 import { Tooltip } from "../Tooltip";
 
@@ -29,6 +30,17 @@ export class DiscoveryTooltip extends Tooltip {
                     if (unlockable.needed.chemistry) text.push({text: (unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.chemistry) + "/") : "") + game.draw.toShortNumber(unlockable.needed.chemistry) + " Chemistry", color: "#ff4500"});
                     if (unlockable.needed.biology) text.push({text: (unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.biology) + "/") : "") + game.draw.toShortNumber(unlockable.needed.biology) + " Biology", color: "#32cd32"});
                     if (unlockable.needed.quantum) text.push({text: (unlockable.progress > 0 || unlockable === active  ? (game.draw.toShortNumber(unlockable.current.quantum) + "/") : "") + game.draw.toShortNumber(unlockable.needed.quantum) + " Quantum", color: "#ff42ee"});
+                }
+            } else if (unlockable instanceof Trait) {
+                let typeText = unlockable.type == "s" ? "Social" : unlockable.type == "c" ? "Cultural" : unlockable.type == "p" ? "Political" : "Religious";
+                let typeColor = unlockable.type == "s" ? "#8a2be2" : unlockable.type == "c" ? "#adff2f" : unlockable.type == "p" ? "#ff7f50" : "#daa520";
+                text.push({text: typeText + " Trait", color: typeColor});
+                for (let desc of unlockable.desc) {
+                    text.push({text: desc, color: "#ffffff"});
+                }
+                if (!unlockable.unlocked) {
+                    let active = game.colony.traits.active;
+                    text.push({text: (unlockable.progress > 0 || unlockable === active[unlockable.type]  ? (game.draw.toShortNumber(unlockable.current) + "/") : "") + game.draw.toShortNumber(unlockable.needed) + ` ${typeText} Development Points`, color: typeColor});
                 }
             }
             return text;

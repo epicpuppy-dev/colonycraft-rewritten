@@ -327,6 +327,7 @@ export class ScreenResearch extends Screen {
             }
         }
 
+        /*
         if (this.hover != "") {
             ctx.fillStyle = "#222222";
             ctx.strokeStyle = "#777777";
@@ -406,6 +407,7 @@ export class ScreenResearch extends Screen {
                 }
             }
         }
+        */
 
         game.draw.sprite(ctx, "close", this.width - 32, 8, 24, 24);
 
