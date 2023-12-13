@@ -3,7 +3,7 @@ import { Job } from "../../content/colony/jobs/Job";
 import { JobGroup } from "../../content/colony/jobs/JobGroup";
 import { KeyBind } from "../../player/KeyBind";
 import { Screen } from "../Screen";
-import { JobPanelTooltip } from "../tooltip/custom/JobPanelTooltip";
+import { JobPanelTooltip } from "../tooltip/custom/JobTooltip";
 import { Button } from "../ui/Button";
 import { ClickHandler } from "../ui/ClickHandler";
 import { ScrollBar } from "../ui/ScrollBar";

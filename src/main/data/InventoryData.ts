@@ -24,14 +24,14 @@ export class InventoryData {
             new FluidItem(game, "muddyWater", 0.5, "Muddy Water", 0.1, 0.5, -12, -8, 2), //OS
         ]);
         inventory.addCategoryWithItems(new ItemGroup("tools", "Tools"), [
-            new Item(game, "tool1", 1, "Primitive Tool", 0.005), //O
-            new Item(game, "tool2", 1, "Basic Tool", 0.004), //O
+            new Item(game, "tool1", 1, "Primitive Tool", 0.005), //OS
+            new Item(game, "tool2", 1, "Basic Tool", 0.004), //OS
             new Item(game, "tool3", 1, "Basic Metal Tool", 0.003), //O
             new Item(game, "basket1", 10, "Basic Basket", 0.004), //O
             new Item(game, "bucket1", 10, "Wooden Bucket", 0.004), //O
         ]);
         inventory.addCategoryWithItems(new ItemGroup("amenities", "Amenities"), [
-            new WelfareItem(game, "campfire", 20, "Campfire", 0.1, 10, 1.5, 1.5, "passive"), //O
+            new WelfareItem(game, "campfire", 20, "Campfire", 0.1, 10, 1.5, 1.5, "passive"), //OS
             new WelfareItem(game, "clothing1", 1, "Primitive Clothing", 0.02, 1, 1, 1, "passive"), //O
         ]);
         inventory.addCategoryWithItems(new ItemGroup("primitive", "Primitive Materials"), [
@@ -39,7 +39,7 @@ export class InventoryData {
             new Item(game, "rocks", 2, "Rocks", 0.005), //OS
             new Item(game, "leaves", 0.5, "Leaves", 0.02), //OS
             new Item(game, "fiber", 0.5, "Plant Fiber", 0.01), //OS
-            new Item(game, "hide", 0.5, "Animal Hide", 0.01), //O
+            new Item(game, "hide", 0.5, "Animal Hide", 0.01), //OS
             new Item(game, "clay", 4, "Clay", 0.01), //O
             new Item(game, "mud", 4, "Mud", 0.01), //O
         ]);

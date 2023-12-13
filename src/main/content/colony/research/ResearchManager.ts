@@ -1,11 +1,13 @@
 import { ColonyCraft } from "../../../ColonyCraft";
 import { Saveable } from "../../../saving/Saveable";
 import { ResearchUpdate } from "./ResearchUpdate";
+import { Discoverer } from "./Researcher";
 import { Technology } from "./Technology";
 
 export class ResearchManager implements Saveable {
     public technologies: {[key: string]: Technology} = {};
     public active: Technology | null = null;
+    public researchers: Discoverer[] = [];
     private update: ResearchUpdate;
 
     constructor (game: ColonyCraft) {
@@ -33,4 +35,10 @@ export class ResearchManager implements Saveable {
     public newGame() {
         this.active = null;
     }
+
+    public addResearcher (researcher: Discoverer) {
+        this.researchers.push(researcher);
+    }
 }
+
+export type ResearchTypes = "invention" | "math" | "physics" | "chemistry" | "biology" | "quantum";

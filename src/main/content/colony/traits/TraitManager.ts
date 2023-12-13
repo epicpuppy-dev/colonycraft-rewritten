@@ -1,11 +1,13 @@
 import { ColonyCraft } from "../../../ColonyCraft";
 import { Saveable } from "../../../saving/Saveable";
 import { Trait } from "./Trait";
+import { Developer } from "./Developer";
 import { TraitUpdate } from "./TraitUpdate";
 
 export class TraitManager implements Saveable {
     public traits: {[key: string]: Trait} = {};
     public active: {s: Trait | null, c: Trait | null, p: Trait | null, r: Trait | null} = {s: null, c: null, p: null, r: null};
+    public developers: Developer[] = [];
     private update: TraitUpdate;
     
     constructor (game: ColonyCraft) {
@@ -34,4 +36,10 @@ export class TraitManager implements Saveable {
     public newGame() {
         this.active = {s: null, c: null, p: null, r: null};
     }
+
+    public addDeveloper (developer: Developer) {
+        this.developers.push(developer);
+    }
 }
+
+export type TraitTypes = "s" | "c" | "p" | "r";

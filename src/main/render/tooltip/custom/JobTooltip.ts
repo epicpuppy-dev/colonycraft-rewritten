@@ -1,6 +1,9 @@
 import { ColonyCraft } from "../../../ColonyCraft";
 import { Job } from "../../../content/colony/jobs/Job";
+import { BuilderJob } from "../../../content/colony/jobs/custom/BuilderJob";
 import { CraftingJob } from "../../../content/colony/jobs/custom/CraftingJob";
+import { DevelopmentJob } from "../../../content/colony/jobs/custom/DevelopmentJob";
+import { DiscoveryJob } from "../../../content/colony/jobs/custom/DiscoveryJob";
 import { ResourceJob } from "../../../content/colony/jobs/custom/ResourceJob";
 import { SeasonalResourceJob } from "../../../content/colony/jobs/custom/SeasonalResourceJob";
 import { LootTable } from "../../../content/loot/LootTable";
@@ -70,6 +73,19 @@ export class JobPanelTooltip extends Tooltip {
                             text.push({text: `  ${entry.amount}x ${entry.item.name}`, color: "#FFFFFF"});
                         }
                     }
+                } else if (job instanceof BuilderJob) {
+                    text.push({text: `Builds Structures:`, color: "#55FF55"});
+                    text.push({text: `  Generates ${game.draw.toShortNumber(job.buildAmount)} work effort per day (${game.draw.toShortNumber(job.build(game))} total)`, color: "#FFFFFF"});
+                } else if (job instanceof DiscoveryJob) {
+                    text.push({text: `Generates Discovery Points:`, color: "#55FF55"});
+                    let typeText = job.type == "invention" ? "Invention" : job.type == "math" ? "Math" : job.type == "physics" ? "Physics" : job.type == "chemistry" ? "Chemistry" : job.type == "biology" ? "Biology" : "Quantum";
+                    let typeColor = job.type == "invention" ? "#1e90ff" : job.type == "math" ? "#ffd700" : job.type == "physics" ? "#48d1cc" : job.type == "chemistry" ? "#ff4500" : job.type == "biology" ? "#32cd32" : "#ff42ee";
+                    text.push({text: `  Generates ${game.draw.toShortNumber(job.researchAmount)} ${typeText} points per day (${game.draw.toShortNumber(job.research(game))} total)`, color: typeColor});
+                } else if (job instanceof DevelopmentJob) {
+                    let typeText = job.type == "s" ? "Social" : job.type == "c" ? "Cultural" : job.type == "p" ? "Political" : "Religious";
+                    let typeColor = job.type == "s" ? "#8a2be2" : job.type == "c" ? "#adff2f" : job.type == "p" ? "#ff7f50" : "#daa520";
+                    text.push({text: `Generates Development Points:`, color: "#55FF55"});
+                    text.push({text: `  Generates ${game.draw.toShortNumber(job.developAmount)} ${typeText} points per day (${game.draw.toShortNumber(job.develop(game))} total)`, color: typeColor});
                 }
             } else {
                 text.push({text: `Hold ${screen.viewExtraKeyBind.key} for more info`, color: "#FFFF55"});

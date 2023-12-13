@@ -4,6 +4,8 @@ import { JobGroup } from "../content/colony/jobs/JobGroup";
 import { JobManager } from "../content/colony/jobs/JobManager";
 import { BuilderJob } from "../content/colony/jobs/custom/BuilderJob";
 import { CraftingJob } from "../content/colony/jobs/custom/CraftingJob";
+import { DevelopmentJob } from "../content/colony/jobs/custom/DevelopmentJob";
+import { DiscoveryJob } from "../content/colony/jobs/custom/DiscoveryJob";
 import { ResourceJob } from "../content/colony/jobs/custom/ResourceJob";
 import { SeasonalResourceJob } from "../content/colony/jobs/custom/SeasonalResourceJob";
 
@@ -90,25 +92,25 @@ export class JobData {
 
         // Building Jobs
         jobs.addGroupWithJobs(new JobGroup(game, "build", "Construction", 100), [
-            new BuilderJob(game, "builder1", "Primitive Builder", 10, 1, () => techs.build1.unlocked, () => Infinity, "Builds basic structures, 1 work per day"),
-            new BuilderJob(game, "builder2", "Basic Builder", 10, 5, () => techs.builder2.unlocked, () => jobs.jobs.builder2.workersAssigned + items.tool2.amount, "Builds basic structures, 5 work per day, Cost: 1 basic tool", {item: items.tool2, amount: 1}),
+            new BuilderJob(game, "builder1", "Primitive Builder", 10, 1, () => techs.build1.unlocked, () => Infinity, "Builds structures"),
+            new BuilderJob(game, "builder2", "Basic Builder", 10, 5, () => techs.builder2.unlocked, () => jobs.jobs.builder2.workersAssigned + items.tool2.amount, "Builds structures, Cost: 1 basic tool", {item: items.tool2, amount: 1}),
         ]);
 
         // Discovery Jobs
         jobs.addGroupWithJobs(new JobGroup(game, "discover", "Discovery", 110), [
-            new Job(game, "invention1", "Thinker", 20, () => true, () => Math.floor(game.colony.population.adults / 6), "Generates Invention Discoveries, Limit: 1 per 6 Workers"),
-            new Job(game, "math1", "Counter", 20, () => techs.math1.unlocked, () => Math.floor(game.colony.population.adults / 8), "Generates Math Discoveries, Limit: 1 per 8 Workers"),
-            new Job(game, "physics1", "Motion Tester", 20, () => techs.physics1.unlocked, () => Math.floor(game.colony.population.adults / 10), "Generates Physics Discoveries, Limit: 1 per 10 Workers"),
-            new Job(game, "chemistry1", "Rock Observer", 20, () => techs.chemistry1.unlocked, () => Math.floor(game.colony.population.adults / 10), "Generates Chemistry Discoveries, Limit: 1 per 10 Workers"),
-            new Job(game, "biology1", "Biologist", 20, () => false, () => Math.floor(game.colony.population.adults / 10), "Generates Biology Discoveries, Limit: 1 per 10 Workers"),
-            new Job(game, "quantum1", "Quantum Scientist", 20, () => false, () => Math.floor(game.colony.population.adults / 12), "Generates Quantum Discoveries, Limit: 1 per 12 Workers"),
+            new DiscoveryJob(game, "invention1", "Thinker", 20, 1, "invention", () => true, () => Math.floor(game.colony.population.adults / 6), "Generates Invention Discoveries, Limit: 1 per 6 Workers"),
+            new DiscoveryJob(game, "math1", "Counter", 20, 1, "math", () => techs.math1.unlocked, () => Math.floor(game.colony.population.adults / 8), "Generates Math Discoveries, Limit: 1 per 8 Workers"),
+            new DiscoveryJob(game, "physics1", "Motion Tester", 20, 1, "physics", () => techs.physics1.unlocked, () => Math.floor(game.colony.population.adults / 10), "Generates Physics Discoveries, Limit: 1 per 10 Workers"),
+            new DiscoveryJob(game, "chemistry1", "Rock Observer", 20, 1, "chemistry", () => techs.chemistry1.unlocked, () => Math.floor(game.colony.population.adults / 10), "Generates Chemistry Discoveries, Limit: 1 per 10 Workers"),
+            new DiscoveryJob(game, "biology1", "Biologist", 20, 1, "biology", () => false, () => Math.floor(game.colony.population.adults / 10), "Generates Biology Discoveries, Limit: 1 per 10 Workers"),
+            new DiscoveryJob(game, "quantum1", "Quantum Scientist", 20, 1, "quantum", () => false, () => Math.floor(game.colony.population.adults / 12), "Generates Quantum Discoveries, Limit: 1 per 12 Workers"),
         ]);
 
         // Development Jobs
         jobs.addGroupWithJobs(new JobGroup(game, "development", "Development", 120), [
-            new Job(game, "culture1", "Carver", 20, () => techs.culture1.unlocked, () => jobs.jobs.culture1.workersAssigned + items.tool1.amount, "Generates Cultural Developments, Costs: 1 primitive tool", {item: items.tool1, amount: 1}),
-            new Job(game, "politic1", "Politician", 20, () => false, () => Infinity, "Generates Political Developments"),
-            new Job(game, "religion1", "Cleric", 20, () => false, () => Infinity, "Generates Religious Developments"),
+            new DevelopmentJob(game, "culture1", "Carver", 20, 1, "c", () => techs.culture1.unlocked, () => jobs.jobs.culture1.workersAssigned + items.tool1.amount, "Generates Cultural Developments, Costs: 1 primitive tool", {item: items.tool1, amount: 1}),
+            new DevelopmentJob(game, "politic1", "Politician", 20, 1, "p", () => false, () => Infinity, "Generates Political Developments"),
+            new DevelopmentJob(game, "religion1", "Cleric", 20, 1, "r", () => false, () => Infinity, "Generates Religious Developments"),
         ]);
     }
 }

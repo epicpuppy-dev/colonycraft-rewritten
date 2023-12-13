@@ -12,7 +12,7 @@ export class RecipeData {
 
         // Tools
         manager.addRecipe(new Recipe("tool1", [{item: items.rocks, amount: 2}], [{item: items.tool1, amount: 1}]));
-        manager.addRecipe(new Recipe("tool2", [{item: items.tool1, amount: 2}, {item: items.twine, amount: 2}], [{item: items.tool2, amount: 1}]));
+        manager.addRecipe(new Recipe("tool2", [{item: items.tool1, amount: 2}, {item: items.twine, amount: 2}, {item: items.sticks, amount: 2}], [{item: items.tool2, amount: 1}]));
         manager.addRecipe(new Recipe("tool3c", [{item: items.tool2, amount: 2}, {item: items.copper, amount: 2}], [{item: items.tool3, amount: 1}]));
         manager.addRecipe(new Recipe("tool3t", [{item: items.tool2, amount: 2}, {item: items.tin, amount: 2}], [{item: items.tool3, amount: 1}]));
         manager.addRecipe(new Recipe("basket1", [{item: items.twine, amount: 4}, {item: items.cloth, amount: 1}], [{item: items.basket1, amount: 1}]));

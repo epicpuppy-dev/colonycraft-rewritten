@@ -1,0 +1,7 @@
+new inventory menu - DONE
+sprites
+preliminary alert system - NO
+storage minimums - DONE
+more user feedback - DONE
+tooltips - DONE
+keybinds menu - DONE
