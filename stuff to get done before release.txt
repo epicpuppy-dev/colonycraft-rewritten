@@ -1,6 +1,5 @@
 new inventory menu - DONE
-sprites
-preliminary alert system - NO
+sprites - WIP
 storage minimums - DONE
 more user feedback - DONE
 tooltips - DONE
