@@ -22,7 +22,35 @@ export class ResearchUpdate extends TickingEntity {
             research.current[type] = Math.min(research.current[type] + progress, research.needed[type]);
         }
 
-        research.progress = (research.current.invention + research.current.math + research.current.physics + research.current.chemistry + research.current.biology + research.current.quantum) / (research.needed.invention + research.needed.math + research.needed.physics + research.needed.chemistry + research.needed.biology + research.needed.quantum);
+        research.progress = 0;
+        research.progress = 0;
+        let count = 0;
+        if (research.needed.invention > 0) {
+            research.progress += research.current.invention / research.needed.invention;
+            count++;
+        }
+        if (research.needed.math > 0) {
+            research.progress += research.current.math / research.needed.math;
+            count++;
+        }
+        if (research.needed.physics > 0) {
+            research.progress += research.current.physics / research.needed.physics;
+            count++;
+        }
+        if (research.needed.chemistry > 0) {
+            research.progress += research.current.chemistry / research.needed.chemistry;
+            count++;
+        }
+        if (research.needed.biology > 0) {
+            research.progress += research.current.biology / research.needed.biology;
+            count++;
+        }
+        if (research.needed.quantum > 0) {
+            research.progress += research.current.quantum / research.needed.quantum;
+            count++;
+        }
+
+        research.progress /= count;
 
         if (research.progress >= 1) {
             research.unlocked = true;
