@@ -59,7 +59,7 @@ export class JobData {
             new CraftingJob(game, "craftTwine1", "Twine Maker", 10, 2, recipes.twine1, () => techs.twine1.unlocked, () => Infinity, "Crafts twine"),
             new CraftingJob(game, "craftCloth1", "Weaver", 10, 1, recipes.cloth1, () => techs.weaving1.unlocked, () => jobs.jobs.craftCloth1.workersAssigned + items.tool1.amount, "Crafts cloth, Cost: 1 primitive tool", {item: items.tool1, amount: 1}),
             new CraftingJob(game, "craftPlanks1", "Carpenter", 10, 2, recipes.planks1, () => techs.planks1.unlocked, () => jobs.jobs.craftPlanks1.workersAssigned + items.tool1.amount, "Crafts planks, Cost: 1 primitive tool", {item: items.tool1, amount: 1}),
-            new CraftingJob(game, "craftComposite1", "Composite Shaper", 10, 4, recipes.composite1, () => techs.composite1.unlocked, () => jobs.jobs.craftBricks1.workersAssigned + items.tool1.amount, "Mixes brick composite, Cost: 1 primitive tool", {item: items.tool1, amount: 1}),
+            new CraftingJob(game, "craftComposite1", "Brick Shaper", 10, 4, recipes.composite1, () => techs.composite1.unlocked, () => jobs.jobs.craftBricks1.workersAssigned + items.tool1.amount, "Makes unfired bricks, Cost: 1 primitive tool", {item: items.tool1, amount: 1}),
             new CraftingJob(game, "craftBricks1", "Brickmaker", 10, 2, recipes.brick1, () => techs.bricks1.unlocked, () => buildings.kiln1.amount, "Fires brick, Req: 1 basic kiln"),
         ]);
         //  - Metallurgy

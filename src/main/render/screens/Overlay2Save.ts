@@ -101,6 +101,9 @@ export class Overlay2Save extends Screen {
 
         ctx.strokeRect(Math.floor(this.width / 4 + 10), Math.floor(7 * this.height / 8 - 92), Math.floor(this.width / 2 - 20), 24);
         game.draw.text(this.textInput, Math.floor(this.width / 4 + 14), Math.floor(7 * this.height / 8 - 88), 14, "white");
+
+        //Characters left
+        game.draw.textSmall(`${32 - this.textInput.length}`, Math.floor(3 * this.width / 4 - 16 - game.draw.textSmallWidth(`${32 - this.textInput.length}`, 7)), Math.floor(7 * this.height / 8 - 84), 7, "white");
         
         ctx.fillStyle = '#ffffff';
         this.blink += game.clock.getFrameTime(game);

@@ -33,8 +33,8 @@ export class LootData {
 
         manager.addLoot(new LootTable("digger", 1, [
             {weight: 1, item: items.clay, amount: 1},
-            {weight: 1, item: items.mud, amount: 1},
-            {weight: 2, item: null, amount: 0}
+            {weight: 1, item: items.rocks, amount: 1},
+            {weight: 1, item: null, amount: 0}
         ]));
 
         manager.addLoot(new LootTable("water", 1, [

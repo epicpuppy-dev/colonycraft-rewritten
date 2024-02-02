@@ -37,7 +37,7 @@ export class RecipeData {
         manager.addRecipe(new Recipe("cloth1", [{item: items.fiber, amount: 8}], [{item: items.cloth, amount: 1}]));
         manager.addRecipe(new Recipe("clothing1", [{item: items.cloth, amount: 2}], [{item: items.clothing1, amount: 1}]));
         manager.addRecipe(new Recipe("campfire1", [{item: items.sticks, amount: 8}, {item: items.twine, amount: 3}], tables.campfire));
-        manager.addRecipe(new Recipe("composite1", [{item: items.clay, amount: 1}, {item: items.mud, amount: 1}], [{item: items.composite, amount: 1}]));
+        manager.addRecipe(new Recipe("composite1", [{item: items.clay, amount: 2}], [{item: items.composite, amount: 1}]));
         manager.addRecipe(new Recipe("brick1", [{item: items.sticks, amount: 10}, {item: items.composite, amount: 2}], [{item: items.bricks, amount: 1}]));
 
     }

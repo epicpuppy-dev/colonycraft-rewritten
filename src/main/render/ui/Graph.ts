@@ -74,6 +74,9 @@ export class Graph {
             }
         }
 
+        //some hacky thing to make sure the graph doesn't look empty (except for welfare)
+        if (max > 1) max = max * 1.05;
+
         let range = max - min;
 
         //generate labels
